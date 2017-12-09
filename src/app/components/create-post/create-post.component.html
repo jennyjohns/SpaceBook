@@ -20,9 +20,13 @@
          <!--placeholder="1-100%"-->
          <!--id = "width"-->
          <!--[(ngModel)] = "width" name = "width">-->
-  <!--<label>Tags</label>-->
-  <!--<input type="text" class = "form-control" id = "tags"-->
-         <!--[(ngModel)] = "tags" name = "tags">-->
+  <label>Tags</label>
+  <input type="text" class = "form-control" id = "tag"
+         [(ngModel)] = "tag" name = "tag">
+  <button (click)="addTag()" type="button" id="submit">Add Tag</button>
+  <div *ngFor="let aTag of tags">
+    {{aTag}}
+  </div>
   <!--<label>Upload</label>-->
   <!--<form ngNoForm action="{{baseUrl}}/api/upload" method="post" enctype="multipart/form-data">-->
   <!--<input  name="myFile"   type="file" class="form-control"/>-->

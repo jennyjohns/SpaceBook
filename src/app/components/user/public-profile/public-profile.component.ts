@@ -54,8 +54,6 @@ export class PublicProfileComponent implements OnInit {
         break;
 
     }
-
-
     this.postService.findPostsByUser(this.objId)
       .subscribe((posts) => {
       this.postsInPublicProfile = posts;

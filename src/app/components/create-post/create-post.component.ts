@@ -22,6 +22,7 @@ export class CreatePostComponent implements OnInit {
   width: Number;
   date: Date;
   likes: Number;
+  tag: any;
   tags: any[];
   user: any;
   baseUrl = environment.baseUrl;
@@ -34,12 +35,14 @@ export class CreatePostComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.posterId = params['uid'];
-      // this.postId = params['pid'];
+      // this.postId = params['pid']
     });
     this.userService.findUserById(this.posterId)
       .subscribe((user) => {
       this.user = user;
+      this.usernameOfPoster = user.username;
       });
+    this.tags = [];
     // this.postService.findPostbyId(this.postId)
     //   .subscribe((post) => {
     //     this.post = post;
@@ -65,9 +68,22 @@ export class CreatePostComponent implements OnInit {
     this.text = null;
   }
 
+  addTag() {
+    this.userService.findUserByUsername(this.tag)
+      .subscribe((user) => {
+      if (user) {
+        this.tags.push(this.tag);
+      } else {
+        alert('user does not exist, tag not added');
+      }
+      });
+  }
+
   createThisPost() {
+    console.log(this.usernameOfPoster);
+    this.tags.push(this.usernameOfPoster);
     const newPost = {poster: this.posterId, text: this.text, likes: 0,
-    date: new Date(), images: [this.url]};
+    date: new Date(), images: [this.url],  tags: this.tags};
     // const newPost = {poster: this.user, text: this.text, images: this.images,
     //   date: new Date(), likeAmount: 0, tags: this.tags};
 
@@ -76,7 +92,7 @@ export class CreatePostComponent implements OnInit {
       .subscribe((posts) => {
       // this.posts = posts;
       //   this.router.navigate([this.baseUrl + 'user/', this.posterId]);
-        this.ngOnInit();
+      //   this.ngOnInit();
       });
   }
 
