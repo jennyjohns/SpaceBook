@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {PostService} from '../../services/post.service.client';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserService} from "../../services/user.service.client";
-import {environment} from "../../../environments/environment";
+import {UserService} from '../../services/user.service.client';
+import {environment} from '../../../environments/environment';
+import {SharedService} from '../../services/shared.service.client';
 
 @Component({
   selector: 'app-create-post',
@@ -30,18 +31,23 @@ export class CreatePostComponent implements OnInit {
   constructor(private postService: PostService,
               private userService: UserService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private sharedService: SharedService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.posterId = params['uid'];
       // this.postId = params['pid']
     });
-    this.userService.findUserById(this.posterId)
-      .subscribe((user) => {
-      this.user = user;
-      this.usernameOfPoster = user.username;
-      });
+    this.user = this.sharedService.user;
+    console.log('user', this.user);
+    this.usernameOfPoster = this.user.username;
+    console.log('poster', this.usernameOfPoster);
+    // this.userService.findUserById(this.posterId)
+    //   .subscribe((user) => {
+    //   this.user = user;
+    //   this.usernameOfPoster = user.username;
+    //   });
     this.tags = [];
     // this.postService.findPostbyId(this.postId)
     //   .subscribe((post) => {
@@ -73,6 +79,7 @@ export class CreatePostComponent implements OnInit {
       .subscribe((user) => {
       if (user) {
         this.tags.push(this.tag);
+        this.tag = null;
       } else {
         alert('user does not exist, tag not added');
       }

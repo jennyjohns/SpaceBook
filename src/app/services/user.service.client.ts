@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import {Http, RequestOptions, Response} from '@angular/http';
 import 'rxjs/Rx';
 import {environment} from '../../environments/environment';
+import {SharedService} from './shared.service.client';
+import {Router} from '@angular/router';
 
 
 @Injectable()
 
 export class UserService {
-  constructor(private http: Http) {}
+  options: RequestOptions = new RequestOptions();
+
+  constructor(private http: Http, private router: Router, private sharedService: SharedService) {}
   baseURL = environment.baseUrl;
+
   api = {
     'createUser'   : this.createUser,
     'findUserById' : this.findUserById,
@@ -16,7 +21,69 @@ export class UserService {
     'findUserByCredentials' : this.findUserByCredentials,
     'updateUser' : this.updateUser,
     'deleteUser' : this.deleteUser,
+    'register' : this.register
   };
+
+  logout() {
+    const url = this.baseURL + '/api/logout';
+    this.options.withCredentials = true;
+    return this.http.post(url, '', this.options)
+      .map((status) => {
+        return status;
+      }); }
+
+
+
+  login(username, password) {
+    const url = this.baseURL + '/api/login';
+    const credentials = {
+      username: username,
+      password: password
+    };
+    this.options.withCredentials = true;
+    return this.http.post(url, credentials, this.options)
+      .map((response: Response) => {
+        return response.json();
+      });
+  }
+
+  loggedIn() {
+    this.options.withCredentials = true;
+    return this.http.post(this.baseURL + '/api/loggedIn', '', this.options)
+      .map(
+        (res: Response) => {
+          const user = res.json();
+          if (user !== 0) {
+            this.sharedService.user = user; // setting user so as to share with all components
+            return true;
+          } else {
+            this.router.navigate(['/login']);
+            return false;
+          }
+        } );
+  }
+
+  register(user, password) {
+    const url = this.baseURL + '/api/register';
+    const credentials = {
+      user: user,
+      username: user.username,
+      password: password,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      picture: user.picture,
+      DOB: user.DOB,
+      phone: user.phone,
+      albums: user.albums,
+      follows: user.follows
+    };
+    this.options.withCredentials = true;
+    return this.http.post(url, credentials, this.options)
+      .map((response: Response) =>  {
+        return response.json();
+      });
+  }
 
   addFollower(userId, followedId) {
     const url = this.baseURL + '/api/user/' + userId;

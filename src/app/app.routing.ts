@@ -25,6 +25,7 @@ import {AlbumListComponent} from "./components/album/album-list/album-list.compo
 const APP_ROUTES: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: ':obtype/:uid', component: PublicProfileComponent},
+  // {path: ':obtype', component: PublicProfileComponent},
   {path: ':obtype/:uid/edit', component: ProfileComponent},
   {path: 'searchAsteroids', component: NasaTestComponent},
   {path: '', component: FrontPageComponent},
