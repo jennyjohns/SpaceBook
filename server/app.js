@@ -13,5 +13,8 @@ module.exports = function (app) {
   require("./services/cb.service.server")(app);
   require("./services/picture.service.server")(app);
   require("./services/album.service.server")(app);
+  require("./services/ce.service.server")(app);
+  require("./services/pub.service.server")(app);
+
 };
 

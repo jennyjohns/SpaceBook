@@ -27,16 +27,17 @@ import { CreatePostComponent } from './components/create-post/create-post.compon
 import { SearchComponent } from './components/search/search.component';
 import { SearchProfileComponent } from './components/search/search-profile/search-profile.component';
 import { SearchNasaComponent } from './components/search/search-nasa/search-nasa.component';
-import { CelestialBodyComponent } from './components/celestial-body/celestial-body.component';
 import { SearchCbComponent } from './components/search/search-cb/search-cb.component';
 import { CreateObjectComponent } from './components/create-object/create-object.component';
 import { UserPicturesComponent } from './components/picture/user-pictures/user-pictures.component';
 import { UserAlbumComponent } from './components/album/user-album/user-album.component';
 import { PictureNewComponent } from './components/picture/picture-new/picture-new.component';
 import { AlbumNewComponent } from './components/album/album-new/album-new.component';
-import {PictureServiceClient} from "./services/picture.service.client";
-import {AlbumServiceClient} from "./services/album.service.client";
+import {PictureServiceClient} from './services/picture.service.client';
+import {AlbumServiceClient} from './services/album.service.client';
 import { AlbumListComponent } from './components/album/album-list/album-list.component';
+import {CEService} from './services/ce.service.client';
+import {PubService} from './services/pub.service.client';
 
 @NgModule({
   // Declare components here
@@ -58,7 +59,6 @@ import { AlbumListComponent } from './components/album/album-list/album-list.com
     SearchComponent,
     SearchProfileComponent,
     SearchNasaComponent,
-    CelestialBodyComponent,
     SearchCbComponent,
     UserPicturesComponent,
     UserAlbumComponent,
@@ -75,7 +75,7 @@ import { AlbumListComponent } from './components/album/album-list/album-list.com
     Routing
   ],
   // Client Side services here
-  providers: [NasaServiceClient, UserService, PostService, CBService, PictureServiceClient,
+  providers: [NasaServiceClient, UserService, PostService, CBService, CEService, PubService, PictureServiceClient,
   AlbumServiceClient],
   bootstrap: [AppComponent]
 })

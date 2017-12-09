@@ -29,19 +29,19 @@
         <label>User Type:</label>
 
         <label class="radio-inline">
-          <input type="radio" name="optradio" value='AMATEUR' [(ngModel)]="user.type" >Amateur Astronomer
+          <input type="radio" name="optradio" value='AMATEUR' [(ngModel)]="userType" >Amateur Astronomer
         </label>
 
         <label class="radio-inline">
-          <input type="radio" name="optradio" value='PROFESSIONAL' [(ngModel)]="user.type" >Professional Astronomer
+          <input type="radio" name="optradio" value='PROFESSIONAL' [(ngModel)]="userType" >Professional Astronomer
         </label>
 
         <label class="radio-inline">
-          <input type="radio" name="optradio" value='ORGANIZATION' [(ngModel)]="user.type" >Space Organization
+          <input type="radio" name="optradio" value='ORGANIZATION' [(ngModel)]="userType" >Space Organization
         </label>
 
         <label class="radio-inline">
-          <input type="radio" name="optradio" value='UNIVERSITY' [(ngModel)]="user.type" >University
+          <input type="radio" name="optradio" value='UNIVERSITY' [(ngModel)]="userType" >University
         </label>
 
       </div>
@@ -200,7 +200,80 @@
 
     </div>
     <div *ngSwitchCase="'Ce'">
-      CE WORKS
+      <input name="cename"
+             id="cename"
+             type="text"
+             placeholder="name"
+             class="form-control"
+             ngModel
+             required
+             #cename="ngModel"/>
+
+      <span class="help-block" *ngIf="!cename.valid && cename.touched">
+      Please enter name!
+    </span>
+
+
+      <input name="ceregion"
+             id="ceregion"
+             type="text"
+             placeholder="region"
+             class="form-control"
+             ngModel
+             required
+             #ceregion="ngModel"/>
+
+      <span class="help-block" *ngIf="!ceregion.valid && ceregion.touched">
+      Please enter region!
+    </span>
+      <input name="cetypes"
+             id="cetypes"
+             type="text"
+             placeholder="types"
+             class="form-control"
+             ngModel
+             required
+             #cetypes="ngModel"/>
+
+      <span class="help-block" *ngIf="!cetypes.valid && cetypes.touched">
+      Please enter types, comma seperated!
+    </span>
+      <input name="cewiki"
+             id="cewiki"
+             type="text"
+             placeholder="wiki link"
+             class="form-control"
+             ngModel
+             required
+             #cewiki="ngModel"/>
+
+      <span class="help-block" *ngIf="!cewiki.valid && cewiki.touched">
+      Please enter wiki link!
+    </span>
+      <input name="cepicture"
+             id="cepicture"
+             type="text"
+             placeholder="picture url"
+             class="form-control"
+             ngModel
+             required
+             #cepicture="ngModel"/>
+      <label for="cestart">Starts:</label>
+      <input name="cestart"
+             id="cestart"
+             type="date"
+             class="form-control"
+             ngModel
+             required
+             #cestart="ngModel"/>
+      <label for="ceend">Ends:</label>
+      <input name="ceend"
+             id="ceend"
+             type="date"
+             class="form-control"
+             ngModel
+             required
+             #ceend="ngModel"/>
     </div>
     <div *ngSwitchCase="'Pub'">
       PUB WORKS
