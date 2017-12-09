@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../services/user.service.client';
 import {ActivatedRoute, Router} from '@angular/router';
+import {SharedService} from '../services/shared.service.client';
 
 @Component({
   selector: 'app-space-banner-default',
@@ -10,28 +11,32 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class SpaceBannerDefaultComponent implements OnInit {
   title: String;
   userId: String;
+  user: any;
 
 
   constructor(private userService: UserService,
+              private sharedService: SharedService,
               private route: ActivatedRoute,
               private router: Router) {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.userId = params['uid'];
-    });
+    this.user = this.sharedService.user;
   }
 
   navigateToProfile() {
-    this.router.navigate(['user/', this.userId]);
+    this.router.navigate(['user', this.user._id]);
   }
 
-  /**
-   * This will have to be improved for security.
-   */
-  logOut() {
-    this.router.navigate(['/login']);
+  navigateToSearch() {
+    this.router.navigate(['search']);
+  }
+
+  logout() {
+    this.userService.logout()
+      .subscribe((status) => {
+        this.router.navigate(['login']);
+      });
   }
 
 }

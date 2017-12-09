@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../services/user.service.client';
 import {PostService} from '../../../services/post.service.client';
 import {CBService} from '../../../services/cb.service.client';
+import {SharedService} from '../../../services/shared.service.client';
 
 @Component({
   selector: 'app-public-profile',
@@ -16,8 +17,9 @@ export class PublicProfileComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private userService: UserService,
               private postService: PostService,
-              private cbService: CBService) { }
-  objType: String;
+              private cbService: CBService,
+              private sharedService: SharedService) { }
+  objType: String;it
   objId: String;
   objData = {};
   follows: any[];
@@ -27,10 +29,14 @@ export class PublicProfileComponent implements OnInit {
   birthdayMsg = 'Happy Birthday!';
   postsInPublicProfile: any[];
   dataReady: boolean;
+  user: any;
+  thisProfileUserId: String;
 
 
   ngOnInit() {
     this.dataReady = false;
+    this.user = this.sharedService.user;
+    console.log('PP the user from sharedService is: ', this.user);
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
@@ -54,13 +60,11 @@ export class PublicProfileComponent implements OnInit {
         break;
 
     }
-
-
     this.postService.findPostsByUser(this.objId)
       .subscribe((posts) => {
       this.postsInPublicProfile = posts;
       });
-    console.log(this.follows);
+    // console.log(this.follows);
   }
 
   editProfile() {
@@ -69,6 +73,7 @@ export class PublicProfileComponent implements OnInit {
 
   goToUserProfile(objId) {
     this.router.navigate(['user/' + objId]);
+    this.ngOnInit();
   }
 
   navigateToPost() {
@@ -91,16 +96,20 @@ export class PublicProfileComponent implements OnInit {
   getUserData(objId){
     this.userService.findUserById(this.objId)
       .subscribe( (user: any) => {
+        console.log('was a user found', user);
         var f = [];
         this.objData = user;
         this.DOB = user['DOB'];
-        if((this.DOB[5]+this.DOB[6] === (this.today.getUTCMonth()+1).toString()) && (this.DOB[8]+this.DOB[9] === this.today.getUTCDate().toString())) {
+        /*
+        if((this.DOB[5]+this.DOB[6] === (this.today.getUTCMonth()+1).toString()) &&
+        (this.DOB[8]+this.DOB[9] === this.today.getUTCDate().toString())) {
           this.birthday = true;
         }
+        */
         for (var i = 0; i < user['follows'].length; i++) {
           this.userService.findUserById(user['follows'][i])
-            .subscribe((user: any) => {
-              f.push(user);
+            .subscribe((user1: any) => {
+              f.push(user1);
             });
           this.follows = f;
         }
@@ -133,6 +142,17 @@ export class PublicProfileComponent implements OnInit {
 
   goToAlbums() {
     this.router.navigate(['user/' + this.objId + '/album']);
+  }
+
+  ifIdEqualPosterId() {
+    return (this.user._id === this.thisProfileUserId);
+  }
+
+  logout() {
+    this.userService.logout()
+      .subscribe((status) => {
+        this.router.navigate(['login']);
+      });
   }
 
 }
