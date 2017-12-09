@@ -38,6 +38,7 @@ import {PictureServiceClient} from './services/picture.service.client';
 import {AlbumServiceClient} from './services/album.service.client';
 import { AlbumListComponent } from './components/album/album-list/album-list.component';
 import {SharedService} from './services/shared.service.client';
+import {AuthGuard} from "./services/auth-guard.service.client";
 
 @NgModule({
   // Declare components here
@@ -77,7 +78,7 @@ import {SharedService} from './services/shared.service.client';
   ],
   // Client Side services here
   providers: [NasaServiceClient, UserService, PostService, CBService, PictureServiceClient,
-  AlbumServiceClient, SharedService],
+  AlbumServiceClient, SharedService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
