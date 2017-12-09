@@ -78,7 +78,7 @@ import {AuthGuard} from "./services/auth-guard.service.client";
   ],
   // Client Side services here
   providers: [NasaServiceClient, UserService, PostService, CBService, CEService, PubService, PictureServiceClient,
-  AlbumServiceClient, SharedService],
+  AlbumServiceClient, SharedService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
