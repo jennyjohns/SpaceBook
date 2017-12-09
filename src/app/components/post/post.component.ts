@@ -90,10 +90,14 @@ export class PostComponent implements OnInit {
     }
   }
 
-  removeMyTag() {
-    if (this.postService)
-    this.postService
-  }
+
+  //
+  // removeMyTag() {
+  //   for (let i = 0; i < this.tags.length; i++) {
+  //     if (this.tags[i] = user.username)
+  //   }
+  //
+  // }
 
 
   navigateToTag(name) {
