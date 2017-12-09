@@ -14,29 +14,30 @@ import {PostListComponent} from './components/post-list/post-list.component';
 import {PublicProfileComponent} from './components/user/public-profile/public-profile.component';
 import {CreatePostComponent} from './components/create-post/create-post.component';
 import {SearchComponent} from './components/search/search.component';
-import {CelestialBodyComponent} from "./components/celestial-body/celestial-body.component";
-import {UserAlbumComponent} from "./components/album/user-album/user-album.component";
-import {AlbumNewComponent} from "./components/album/album-new/album-new.component";
-import {PictureNewComponent} from "./components/picture/picture-new/picture-new.component";
-import {UserPicturesComponent} from "./components/picture/user-pictures/user-pictures.component";
-import {AlbumListComponent} from "./components/album/album-list/album-list.component";
+import {UserAlbumComponent} from './components/album/user-album/user-album.component';
+import {AlbumNewComponent} from './components/album/album-new/album-new.component';
+import {PictureNewComponent} from './components/picture/picture-new/picture-new.component';
+import {UserPicturesComponent} from './components/picture/user-pictures/user-pictures.component';
+import {AlbumListComponent} from './components/album/album-list/album-list.component';
+import {CreateObjectComponent} from './components/create-object/create-object.component';
+import {AuthGuard} from "./services/auth-guard.service.client";
 
 
 const APP_ROUTES: Routes = [
   {path: 'register', component: RegisterComponent},
-  {path: ':obtype/:uid', component: PublicProfileComponent},
+  {path: ':obtype/:uid', component: PublicProfileComponent, canActivate: [AuthGuard]},
   {path: ':obtype/:uid/edit', component: ProfileComponent},
   {path: 'searchAsteroids', component: NasaTestComponent},
   {path: '', component: FrontPageComponent},
   {path: 'login', component: FrontPageComponent},
   {path: 'nasa-pic', component: NasaPictureTestComponent},
-  {path: ':obtype/:uid/search', component: SearchComponent},
+  {path: 'search', component: SearchComponent},
   {path: 'APOD', component: ApodComponent},
   {path: 'APOD/Archive', component: ApodarchiveComponent},
   {path: 'nasa-pic/:imgid/details', component: NasaPictureDetailsComponent},
   {path: 'testPostComponent', component: PostComponent}, // these paths are temporary, will likely be renamed
   {path: 'testListComponent', component: PostListComponent}, // these paths are temporary, will likely be renamed.
-  {path: 'cb/:cbid', component: CelestialBodyComponent},
+  {path: 'new', component: CreateObjectComponent},
   {path: 'user/:uid/posts/new', component: CreatePostComponent},
   {path: 'user/:uid/album', component: AlbumListComponent},
   {path: 'user/:uid/album/new', component: AlbumNewComponent},

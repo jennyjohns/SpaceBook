@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {UserService} from '../../../services/user.service.client';
 import {Router} from '@angular/router';
+import {SharedService} from '../../../services/shared.service.client';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,7 @@ export class RegisterComponent implements OnInit {
   picture: 'https://upload.wikimedia.org/wikipedia/commons/4/48/Creative-Tail-astronaut.svg';
   DOB: String;
   phone: String;
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private sharedService: SharedService) {
 
   }
 
@@ -39,9 +40,6 @@ export class RegisterComponent implements OnInit {
     this.errorFlag = false;
   }
   registered(username, password, firstName, lastName, email, DOB, phone) {
-    console.log(DOB);
-    console.log(DOB[5]+DOB[6]);
-    console.log(DOB[8]+DOB[9]);
     const d = new Date();
     console.log(d.getUTCDate());
     console.log(d.getUTCDate().toString() === DOB[8] + DOB[9]);
@@ -53,14 +51,18 @@ export class RegisterComponent implements OnInit {
         }else {
           const user1 = {username: username, password: password, firstName: firstName, lastName: lastName, email: email,
             picture: 'https://upload.wikimedia.org/wikipedia/commons/4/48/Creative-Tail-astronaut.svg', DOB: DOB, phone: phone};
-          this.userService.createUser(user1)
+          this.userService.register(user1, password)
             .subscribe((user2) => {
               this.user = user2;
               this.user_id = user2['_id'];
+              this.sharedService.user = this.user;
+
               this.router.navigate(['user/', this.user_id]);
             });
         }
       });
   }
+
+
 
 }
