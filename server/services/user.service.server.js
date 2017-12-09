@@ -1,5 +1,30 @@
 module.exports = function (app) {
   var userModel = require("../../model/user/user.model.server");
+  var passport  = require('passport');
+  passport.serializeUser(serializeUser);
+  passport.deserializeUser(deserializeUser);
+  var LocalStrategy = require('passport-local').Strategy;
+  var bcrypt = require("bcrypt-nodejs");
+  passport.use(new LocalStrategy(localStrategy));
+
+
+
+  function serializeUser(user, done) {
+    done(null, user);
+  }
+  function deserializeUser(user, done) {
+    userModel
+      .findUserById(user._id)
+      .then(function (user) {
+          "use strict";
+          done(null, user);
+        },
+        function (err) {
+          "use strict";
+          done(err, null);
+        }
+      );
+  }
 
   // var multer = require('multer');
   // var upload = multer({ dest: __dirname + '/../../dist/assets/uploads'});
@@ -9,7 +34,59 @@ module.exports = function (app) {
   app.post("/api/user", createUser);
   app.put("/api/user/:uid", updateUser);
   app.delete("/api/user/:uid", deleteUser);
+  app.post('/api/register', register);
+  app.post('/api/login', passport.authenticate('local'), login);
+  app.post('/api/logout', logout);
+  app.post('/api/loggedIn', loggedIn);
+
   // app.post("/api/upload", upload.single('myFile'), uploadProfilePicture);
+
+
+  function logout(req, res) {
+    req.logOut();
+    res.send(200);
+  }
+
+  function localStrategy(username, password, done) {
+    userModel
+      .findUserByUsername(username)
+      .then(function (user) {
+        if(user && bcrypt.compareSync(password, user.password)) {
+          console.log('here I am');
+          return done(null, user);
+        } else {
+          return done(null, false);
+        }
+      });
+  }
+
+
+  function register(req, res) {
+    "use strict";
+    var newUser = req.body;
+    newUser.password = bcrypt.hashSync(newUser.password);
+    userModel
+      .createUser(newUser)
+      .then(function(user) {
+        req.login(user, function(err) {
+          res.json(user);
+        });
+      });
+  }
+
+  function login(req, res) {
+    res.json(req.user);
+  }
+
+  function loggedIn(req, res) {
+    if (req.isAuthenticated()) {
+      res.json(req.user);
+    } else {
+      res.send('0');
+    }
+  }
+
+
 
   function findUserById(req, res) {
     var userId = req.params["uid"];

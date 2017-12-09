@@ -24,10 +24,14 @@ export class PostListComponent implements OnInit {
   }
 
   ngOnInit() {
-          console.log('Post-list: posts are: ', this.posts);
+          // console.log('Post-list: posts are: ', this.posts);
 
   }
 
+  /**
+   * Right now this deletes post. Will have to refactor this to just simply update the post without one's tag later.
+   * @param ID
+   */
   removeMyTag(ID) {
   this.postService.deletePost(ID)
     .subscribe((post) => {

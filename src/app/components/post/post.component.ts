@@ -56,6 +56,7 @@ export class PostComponent implements OnInit {
           this.images = post.images;
           this.text = post.text;
           this.tags = post.tags;
+          console.log(post.tags);
           this.date = post.date;
           this.likes = post.likes;
         });
@@ -87,7 +88,23 @@ export class PostComponent implements OnInit {
     } else {
       alert('You are not the original poster');
     }
+  }
 
+
+  //
+  // removeMyTag() {
+  //   for (let i = 0; i < this.tags.length; i++) {
+  //     if (this.tags[i] = user.username)
+  //   }
+  //
+  // }
+
+
+  navigateToTag(name) {
+    this.userService.findUserByUsername(name)
+      .subscribe((user) => {
+        this.router.navigate(['user/' + user._id]);
+      });
   }
 
 
