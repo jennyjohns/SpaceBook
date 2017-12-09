@@ -42,10 +42,12 @@ export class PictureNewComponent implements OnInit {
       });
   }
 
-  commit(text: String, title: String, width: String, url: String) {
-    this.pic = {text: text, title: title, width: width, url: url, dateUploaded: this.dateCreated, albumId: this.albumId};
+  commit(text: String, title: String, url: String) {
+    this.pic = {text: text, title: title, url: url, dateUploaded: this.dateCreated, albumId: this.albumId};
     this.pictureService.createPicture(this.albumId, this.pic)
-      .subscribe((album: any) => {
+      .subscribe((pictures: any) => {
+        this.pictures = pictures;
+        console.log('CHECK ALBUM', pictures);
         this.router.navigate(['user/' + this.userId + '/album/' + this.albumId]);
       });
   }

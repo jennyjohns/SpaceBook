@@ -28,7 +28,7 @@
     <!--</span>-->
   </div>
   <div *ngFor="let pic of pictures">
-    <button (click)="goToPicture(pic)">{{pic}}</button>
+    <button (click)="goToPicture(pic)"><img class="jj-content" src="{{pic.url}}"/></button>
     <!--<img class="jj-content" src="{{pic.url}}"/@TODO>-->
   </div>
   <button class="btn btn-block btn-success jj-button-hover" (click)="commit(title, description)">Commit</button>

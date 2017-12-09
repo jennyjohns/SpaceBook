@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AlbumServiceClient} from "../../../services/album.service.client";
 import {ActivatedRoute, Router} from "@angular/router";
+import {PictureServiceClient} from "../../../services/picture.service.client";
 
 @Component({
   selector: 'app-user-album',
@@ -15,7 +16,7 @@ export class UserAlbumComponent implements OnInit {
   title: String;
   description: String;
 
-  constructor(private albumService: AlbumServiceClient, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private pictureService: PictureServiceClient, private albumService: AlbumServiceClient, private router: Router, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -27,10 +28,16 @@ export class UserAlbumComponent implements OnInit {
     this.albumService.findAlbumById(this.albumId)
       .subscribe((album: any) => {
         this.album = album;
-        this.pictures = album['pictures'];
+        // this.pictures = album['pictures'];
         console.log(this.pictures);
         this.title = album['title'];
         this.description = album['description'];
+        for (var i = 0; i < album.pictures.length; i++) {
+          this.pictureService.findPictureById(album.pictures[i])
+            .subscribe((pic: any) => {
+              this.pictures.push(pic);
+            });
+        }
       });
   }
 
