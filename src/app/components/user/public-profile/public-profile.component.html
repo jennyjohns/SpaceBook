@@ -36,7 +36,7 @@
   </div>
   <button class="btn btn-warning btn-block jj-button-hover"
           aria-pressed="true"
-          [routerLink]="['/login']">
+          (click)="logout()">
     Logout
   </button>
   <button class="btn btn-info btn-block jj-button-hover"
@@ -57,5 +57,6 @@
 
 
 <!--<app-post-list [posts] = "postsInPublicProfile" (click)="ngOnInit()"></app-post-list>-->
+<!--<div *ngIf="ifIdEqualPosterId()">-->
 <app-post-list [posts] = "postsInPublicProfile" [IDfromProfile] = "objId"></app-post-list>
-
+<!--</div>-->

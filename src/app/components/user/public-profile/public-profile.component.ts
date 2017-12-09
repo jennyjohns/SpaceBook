@@ -19,7 +19,7 @@ export class PublicProfileComponent implements OnInit {
               private postService: PostService,
               private cbService: CBService,
               private sharedService: SharedService) { }
-  objType: String;
+  objType: String;it
   objId: String;
   objData = {};
   follows: any[];
@@ -30,13 +30,13 @@ export class PublicProfileComponent implements OnInit {
   postsInPublicProfile: any[];
   dataReady: boolean;
   user: any;
+  thisProfileUserId: String;
 
 
   ngOnInit() {
     this.dataReady = false;
     this.user = this.sharedService.user;
-    console.log(this.user);
-    this.objId = this.user._id;
+    console.log('PP the user from sharedService is: ', this.user);
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
@@ -64,7 +64,7 @@ export class PublicProfileComponent implements OnInit {
       .subscribe((posts) => {
       this.postsInPublicProfile = posts;
       });
-    console.log(this.follows);
+    // console.log(this.follows);
   }
 
   editProfile() {
@@ -73,6 +73,7 @@ export class PublicProfileComponent implements OnInit {
 
   goToUserProfile(objId) {
     this.router.navigate(['user/' + objId]);
+    this.ngOnInit();
   }
 
   navigateToPost() {
@@ -107,8 +108,8 @@ export class PublicProfileComponent implements OnInit {
         */
         for (var i = 0; i < user['follows'].length; i++) {
           this.userService.findUserById(user['follows'][i])
-            .subscribe((user: any) => {
-              f.push(user);
+            .subscribe((user1: any) => {
+              f.push(user1);
             });
           this.follows = f;
         }
@@ -141,6 +142,17 @@ export class PublicProfileComponent implements OnInit {
 
   goToAlbums() {
     this.router.navigate(['user/' + this.objId + '/album']);
+  }
+
+  ifIdEqualPosterId() {
+    return (this.user._id === this.thisProfileUserId);
+  }
+
+  logout() {
+    this.userService.logout()
+      .subscribe((status) => {
+        this.router.navigate(['login']);
+      });
   }
 
 }
