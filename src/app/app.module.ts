@@ -36,6 +36,7 @@ import { AlbumNewComponent } from './components/album/album-new/album-new.compon
 import {PictureServiceClient} from './services/picture.service.client';
 import {AlbumServiceClient} from './services/album.service.client';
 import { AlbumListComponent } from './components/album/album-list/album-list.component';
+import {SharedService} from './services/shared.service.client';
 import {CEService} from './services/ce.service.client';
 import {PubService} from './services/pub.service.client';
 
