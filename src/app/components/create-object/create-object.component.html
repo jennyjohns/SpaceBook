@@ -1,14 +1,214 @@
 
 <div class="container-fluid">
-<form>
-  <select ng-model="objType">
-    <option ng-repeat="x in types" value="x">{{x}}</option>
-  </select>
+<form #f="ngForm">
+  Select Object to Create:
+  <div class="form-group form-control">
+    <label>Obj Type:</label>
 
-  <div ngSwitch="objType">
+    <label class="radio-inline">
+      <input type="radio" name="optradio" value='User' [(ngModel)]="objType" >User
+    </label>
+
+    <label class="radio-inline">
+      <input type="radio" name="optradio" value='Cb' [(ngModel)]="objType" >Celestial Body
+    </label>
+
+    <label class="radio-inline">
+      <input type="radio" name="optradio" value='Ce' [(ngModel)]="objType" >Celestial Event
+    </label>
+
+    <label class="radio-inline">
+      <input type="radio" name="optradio" value='Pub' [(ngModel)]="objType" >Publication
+    </label>
+
+  </div>
+
+  <div [ngSwitch]="objType">
     <div *ngSwitchCase="'User'">
-      USER WORKS
+      <div class="form-group form-control">
+        <label>User Type:</label>
+
+        <label class="radio-inline">
+          <input type="radio" name="optradio" value='Amateur' [(ngModel)]="user.type" >Amateur Astronomer
+        </label>
+
+        <label class="radio-inline">
+          <input type="radio" name="optradio" value='Professional' [(ngModel)]="user.type" >Professional Astronomer
+        </label>
+
+        <label class="radio-inline">
+          <input type="radio" name="optradio" value='Organization' [(ngModel)]="user.type" >Space Organization
+        </label>
+
+        <label class="radio-inline">
+          <input type="radio" name="optradio" value='University' [(ngModel)]="user.type" >University
+        </label>
+
+      </div>
+      <input name="username"
+             id="username"
+             type="text"
+             placeholder="username"
+             class="form-control"
+             ngModel
+             required
+             #username="ngModel"/>
+
+      <span class="help-block" *ngIf="!username.valid && username.touched">
+      Please enter username!
+    </span>
+
+      <input name="password"
+             id="password"
+             type="password"
+             placeholder="password"
+             class="form-control"
+             ngModel
+             required
+             #password="ngModel"/>
+
+      <span class="help-block" *ngIf="!password.valid && password.touched">
+      Please enter password!
+    </span>
+      <input name="verify password"
+             id="verify_password"
+             type="password"
+             placeholder="verify password"
+             class="form-control"
+             ngModel
+             required
+             #verify_password="ngModel">
+
+      <span class="help-block" *ngIf="!verify_password.valid && verify_password.touched">
+      Please enter password!
+    </span>
+      <span class="help-block" *ngIf="verify_password.value != password.value">
+      Passwords do not match!
+    </span>
+
+      <input name="email"
+             id="email"
+             type="text"
+             placeholder="email"
+             class="form-control"
+             ngModel
+             required
+             #email="ngModel"/>
+
+      <span class="help-block" *ngIf="!email.valid && email.touched">
+      Please enter email!
+    </span>
+      <input name="firstName"
+             id="firstName"
+             type="text"
+             placeholder="first name"
+             class="form-control"
+             ngModel
+             required
+             #firstName="ngModel"/>
+
+      <span class="help-block" *ngIf="!firstName.valid && firstName.touched">
+      Please enter first name!
+    </span>
+      <input name="lastName"
+             id="lastName"
+             type="text"
+             placeholder="last name"
+             class="form-control"
+             ngModel
+             required
+             #lastName="ngModel"/>
+
+      <span class="help-block" *ngIf="!lastName.valid && lastName.touched">
+      Please enter last name!
+    </span>
+      <input name="DOB"
+             id="DOB"
+             type="date"
+             class="form-control"
+             ngModel
+             required
+             #DOB="ngModel"/>
+      <input name="phone"
+             id="phone"
+             type="tel"
+             placeholder="xxx-xxx-xxxx"
+             class="form-control"
+             ngModel
+             required
+             #phone="ngModel"/>
+    </div>
+    <div *ngSwitchCase="'Cb'">
+      <input name="cbname"
+             id="cbname"
+             type="text"
+             placeholder="name"
+             class="form-control"
+             ngModel
+             required
+             #cbname="ngModel"/>
+
+      <span class="help-block" *ngIf="!cbname.valid && cbname.touched">
+      Please enter name!
+    </span>
+
+
+      <input name="region"
+             id="region"
+             type="text"
+             placeholder="region"
+             class="form-control"
+             ngModel
+             required
+             #region="ngModel"/>
+
+      <span class="help-block" *ngIf="!region.valid && region.touched">
+      Please enter region!
+    </span>
+      <input name="types"
+             id="types"
+             type="text"
+             placeholder="types"
+             class="form-control"
+             ngModel
+             required
+             #types="ngModel"/>
+
+      <span class="help-block" *ngIf="!types.valid && types.touched">
+      Please enter types, comma seperated!
+    </span>
+      <input name="wiki"
+             id="wiki"
+             type="text"
+             placeholder="wiki link"
+             class="form-control"
+             ngModel
+             required
+             #wiki="ngModel"/>
+
+      <span class="help-block" *ngIf="!wiki.valid && wiki.touched">
+      Please enter wiki link!
+    </span>
+      <input name="picture"
+             id="picture"
+             type="text"
+             placeholder="picture url"
+             class="form-control"
+             ngModel
+             required
+             #picture="ngModel"/>
+
+    </div>
+    <div *ngSwitchCase="'Ce'">
+      CE WORKS
+    </div>
+    <div *ngSwitchCase="'Pub'">
+      PUB WORKS
+    </div>
+    <div *ngSwitchDefault="">
+      Select a type of object to create
     </div>
   </div>
+  <button type="submit" class="btn btn-default" (click)="create()">Create</button>
 </form>
 </div>

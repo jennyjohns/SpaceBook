@@ -9,6 +9,7 @@ var UserSchema = mongoose.Schema({
   verified: Boolean,
   DOB: String,
   picture: String,
+  type: String,
   follows: [String]
 }, {collection: 'user'});
 
