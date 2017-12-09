@@ -31,7 +31,7 @@ const APP_ROUTES: Routes = [
   {path: '', component: FrontPageComponent},
   {path: 'login', component: FrontPageComponent},
   {path: 'nasa-pic', component: NasaPictureTestComponent},
-  {path: ':obtype/:uid/search', component: SearchComponent},
+  {path: 'search', component: SearchComponent},
   {path: 'APOD', component: ApodComponent},
   {path: 'APOD/Archive', component: ApodarchiveComponent},
   {path: 'nasa-pic/:imgid/details', component: NasaPictureDetailsComponent},

@@ -4,7 +4,8 @@ import {UserService} from '../../services/user.service.client';
 import {PostService} from '../../services/post.service.client';
 import {NasaServiceClient} from '../../services/nasa.service.client';
 import {CBService} from '../../services/cb.service.client';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
+import {SharedService} from '../../services/shared.service.client';
 
 @Component({
   selector: 'app-search',
@@ -25,18 +26,16 @@ export class SearchComponent implements OnInit {
   postReady = false;
   cbReady = false;
   userId: String;
+  user: any;
 
   constructor(private cbService: CBService, private postService: PostService,
               private nasaService: NasaServiceClient, private userService: UserService, private router: Router,
-              private activateRoute: ActivatedRoute) { }
+              private activateRoute: ActivatedRoute,
+              private sharedService: SharedService) { }
 
   ngOnInit() {
-    this.activateRoute.params
-      .subscribe(
-        (params: any) => {
-          this.userId = params['uid'];
-        }
-      );
+    this.user = this.sharedService.user;
+    this.userId = this.user._id;
     /*
     const pluto = {name: 'Pluto', region: 'Sol System', type: 'Celestial Dwarf',
       picture: 'http://pluto.jhuapl.edu/Multimedia/Science-Photos/pics/P_COLOR2_enhanced_release.jpg'};
