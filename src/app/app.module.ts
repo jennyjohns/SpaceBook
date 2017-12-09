@@ -77,7 +77,7 @@ import {PubService} from './services/pub.service.client';
   ],
   // Client Side services here
   providers: [NasaServiceClient, UserService, PostService, CBService, CEService, PubService, PictureServiceClient,
-  AlbumServiceClient],
+  AlbumServiceClient, SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

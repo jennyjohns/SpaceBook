@@ -38,7 +38,7 @@ export class SearchComponent implements OnInit {
               private postService: PostService, private pubService: PubService,
               private nasaService: NasaServiceClient, private userService: UserService,
               private router: Router,
-              private activateRoute: ActivatedRoute) { }
+              private activateRoute: ActivatedRoute, private sharedService: SharedService) { }
 
   ngOnInit() {
     this.user = this.sharedService.user;
