@@ -276,7 +276,76 @@
              #ceend="ngModel"/>
     </div>
     <div *ngSwitchCase="'Pub'">
-      PUB WORKS
+      <input name="pubname"
+             id="pubname"
+             type="text"
+             placeholder="name"
+             class="form-control"
+             ngModel
+             required
+             #pubname="ngModel"/>
+
+      <span class="help-block" *ngIf="!pubname.valid && pubname.touched">
+      Please enter name!
+    </span>
+
+
+      <input name="pubauthors"
+             id="pubauthors"
+             type="text"
+             placeholder="authors"
+             class="form-control"
+             ngModel
+             required
+             #pubauthors="ngModel"/>
+
+      <span class="help-block" *ngIf="!pubauthors.valid && pubauthors.touched">
+      Please enter authors, comma seperated!
+    </span>
+      <input name="pubtags"
+             id="pubtags"
+             type="text"
+             placeholder="tags"
+             class="form-control"
+             ngModel
+             required
+             #pubtags="ngModel"/>
+
+      <span class="help-block" *ngIf="!pubtags.valid && pubtags.touched">
+      Please enter tags, comma seperated!
+    </span>
+      <input name="publink"
+             id="publink"
+             type="text"
+             placeholder="link"
+             class="form-control"
+             ngModel
+             required
+             #publink="ngModel"/>
+
+      <span class="help-block" *ngIf="!publink.valid && publink.touched">
+      Please enter link!
+    </span>
+      <input name="pubabstract"
+             id="pubabstract"
+             type="text"
+             placeholder="link"
+             class="form-control"
+             ngModel
+             required
+             #pubabstract="ngModel"/>
+
+      <span class="help-block" *ngIf="!pubabstract.valid && pubabstract.touched">
+      Please enter abstract!
+    </span>
+      <label for="pubdate">Publish Date:</label>
+      <input name="pubdate"
+             id="pubdate"
+             type="date"
+             class="form-control"
+             ngModel
+             required
+             #pubdate="ngModel"/>
     </div>
     <div *ngSwitchDefault="">
       Select a type of object to create
