@@ -14,13 +14,13 @@ import {PostListComponent} from './components/post-list/post-list.component';
 import {PublicProfileComponent} from './components/user/public-profile/public-profile.component';
 import {CreatePostComponent} from './components/create-post/create-post.component';
 import {SearchComponent} from './components/search/search.component';
-import {CelestialBodyComponent} from "./components/celestial-body/celestial-body.component";
-import {UserAlbumComponent} from "./components/album/user-album/user-album.component";
-import {AlbumNewComponent} from "./components/album/album-new/album-new.component";
-import {PictureNewComponent} from "./components/picture/picture-new/picture-new.component";
-import {UserPicturesComponent} from "./components/picture/user-pictures/user-pictures.component";
-import {AlbumListComponent} from "./components/album/album-list/album-list.component";
-import {CreateObjectComponent} from "./components/create-object/create-object.component";
+import {CelestialBodyComponent} from './components/celestial-body/celestial-body.component';
+import {UserAlbumComponent} from './components/album/user-album/user-album.component';
+import {AlbumNewComponent} from './components/album/album-new/album-new.component';
+import {PictureNewComponent} from './components/picture/picture-new/picture-new.component';
+import {UserPicturesComponent} from './components/picture/user-pictures/user-pictures.component';
+import {AlbumListComponent} from './components/album/album-list/album-list.component';
+import {CreateObjectComponent} from './components/create-object/create-object.component';
 
 
 const APP_ROUTES: Routes = [
@@ -38,7 +38,7 @@ const APP_ROUTES: Routes = [
   {path: 'testPostComponent', component: PostComponent}, // these paths are temporary, will likely be renamed
   {path: 'testListComponent', component: PostListComponent}, // these paths are temporary, will likely be renamed.
   {path: 'cb/:cbid', component: CelestialBodyComponent},
-  {path: 'new', component: CreateObjectComponent}
+  {path: 'new', component: CreateObjectComponent},
   {path: 'user/:uid/posts/new', component: CreatePostComponent},
   {path: 'user/:uid/album', component: AlbumListComponent},
   {path: 'user/:uid/album/new', component: AlbumNewComponent},

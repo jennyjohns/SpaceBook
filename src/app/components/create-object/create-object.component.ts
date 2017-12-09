@@ -13,7 +13,8 @@ export class CreateObjectComponent implements OnInit {
   @ViewChild('f') createForm: NgForm;
   objType: string;
   types = ['User', 'Celestial Body', 'Celestial Event', 'Publication'];
-  user = {username: '', password: '', email: '', firstName: '', lastName: '', DOB: '', phone: '', picture: '', type: ''};
+  user = {username: '', password: '', email: '', firstName: '',
+    lastName: '', DOB: '', phone: '', picture: '', userType: ''};
   cb = {name: '', region: '', types: '', wiki: '', picture: ''};
   ce = {name: '', region: '', types: '', wiki: '', picture: '', start: '', end: ''};
   pub = {name: '', authors: '', link: '', abstract: '', tags: [], date: ''};
@@ -33,7 +34,7 @@ export class CreateObjectComponent implements OnInit {
       this.user.DOB = this.createForm.value.DOB;
       this.user.phone = this.createForm.value.phone;
       this.user.picture = 'https://upload.wikimedia.org/wikipedia/commons/4/48/Creative-Tail-astronaut.svg';
-      this.user.type = this.createForm.value.user.type;
+      this.user.userType = this.createForm.value.user.type;
 
       this.userService.createUser(this.user).subscribe((user: any) => {
         console.log('User Created!');
