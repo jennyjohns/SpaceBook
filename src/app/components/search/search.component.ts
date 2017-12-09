@@ -4,8 +4,10 @@ import {UserService} from '../../services/user.service.client';
 import {PostService} from '../../services/post.service.client';
 import {NasaServiceClient} from '../../services/nasa.service.client';
 import {CBService} from '../../services/cb.service.client';
-import {ActivatedRoute, Router} from '@angular/router';
 import {SharedService} from '../../services/shared.service.client';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CEService} from '../../services/ce.service.client';
+import {PubService} from '../../services/pub.service.client';
 
 @Component({
   selector: 'app-search',
@@ -18,6 +20,8 @@ export class SearchComponent implements OnInit {
   searchResult: any;
   userResult = [];
   cbResult = [];
+  ceResult = [];
+  pubResult = [];
   postResult = [];
   nasaResult = [];
   searchResultString = '';
@@ -25,13 +29,16 @@ export class SearchComponent implements OnInit {
   nasaReady = false;
   postReady = false;
   cbReady = false;
+  ceReady = false;
+  pubReady = false;
   userId: String;
   user: any;
 
-  constructor(private cbService: CBService, private postService: PostService,
-              private nasaService: NasaServiceClient, private userService: UserService, private router: Router,
-              private activateRoute: ActivatedRoute,
-              private sharedService: SharedService) { }
+  constructor(private ceService: CEService, private cbService: CBService,
+              private postService: PostService, private pubService: PubService,
+              private nasaService: NasaServiceClient, private userService: UserService,
+              private router: Router,
+              private activateRoute: ActivatedRoute, private sharedService: SharedService) { }
 
   ngOnInit() {
     this.user = this.sharedService.user;
@@ -54,7 +61,7 @@ export class SearchComponent implements OnInit {
     this.searchparam = param;
     this.userService.findUserByUsername(param).subscribe((response: any) => {
       if (response != null) {
-      this.userResult.push(response);
+      this.userResult = response;
       this.peopleReady = true;
       }
     });
@@ -69,7 +76,22 @@ export class SearchComponent implements OnInit {
       if (response != null) {
         this.cbResult = response;
         this.cbReady = true;
-        console.log(this.cbResult);
+      }
+    });
+    this.ceService.findCEbyText(param).subscribe((response: any) => {
+      if (response != null) {
+        this.ceResult = response;
+        this.ceReady = true;
+        const temp = response.length;
+        console.log('Found this many CE:' +  temp.toString());
+      }
+    });
+    this.pubService.findPubbyText(param).subscribe((response: any) => {
+      if (response != null ) {
+        this.pubResult = response;
+        this.pubReady = true;
+        const temp = response.length;
+        console.log('Found this many Pub:' +  temp.toString());
       }
     });
 
