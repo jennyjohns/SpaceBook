@@ -19,7 +19,7 @@ export class PublicProfileComponent implements OnInit {
               private postService: PostService,
               private cbService: CBService,
               private sharedService: SharedService) { }
-  objType: String;it
+  objType: String;
   objId: String;
   objData = {};
   follows: any[];
@@ -30,12 +30,13 @@ export class PublicProfileComponent implements OnInit {
   postsInPublicProfile: any[];
   dataReady: boolean;
   user: any;
-  thisProfileUserId: String;
+  sharedServiceUserId: String;
 
 
   ngOnInit() {
     this.dataReady = false;
     this.user = this.sharedService.user;
+    this.sharedServiceUserId = this.user._id;
     console.log('PP the user from sharedService is: ', this.user);
     this.activatedRoute.params
       .subscribe(
@@ -45,7 +46,6 @@ export class PublicProfileComponent implements OnInit {
         }
       );
     this.birthday = false;
-
     switch (this.objType) {
 
       case 'cb':
@@ -58,12 +58,21 @@ export class PublicProfileComponent implements OnInit {
         break;
       case 'org':
         break;
-
     }
-    this.postService.findPostsByUser(this.objId)
-      .subscribe((posts) => {
-      this.postsInPublicProfile = posts;
-      });
+    // if (this.objType === 'user') {
+    //   console.log('username is this', this.objData['username']);
+    //   this.postService.findPostsbyTag(this.objData['username'])
+    //     .subscribe((posts) => {
+    //     console.log('hello are we here?');
+    //       this.postsInPublicProfile = posts;
+    //       console.log('these are the posts', this.postsInPublicProfile);
+    //     });
+    // } else {
+    //   this.postService.findPostsbyTag(this.objData['name'])
+    //     .subscribe((posts) => {
+    //       this.postsInPublicProfile = posts;
+    //     });
+    // }
     // console.log(this.follows);
   }
 
@@ -85,12 +94,23 @@ export class PublicProfileComponent implements OnInit {
     this.router.navigate(['user/' + this.objId + '/search']);
   }
 
-  getCBData(objId){
+  getCBData(objId) {
     this.cbService.findCBbyId(this.objId).subscribe((cb:any) => {
         this.objData = cb;
         this.follows = [];
+        this.findPostsForNonUserDataByTag();
         this.dataReady = true;
     });
+  }
+
+  /**
+   * Helper function for non-user object's post retrieval by tag.
+   */
+  findPostsForNonUserDataByTag() {
+    this.postService.findPostsbyTag(this.objData['name'])
+      .subscribe((posts) => {
+        this.postsInPublicProfile = posts;
+      });
   }
 
   getUserData(objId){
@@ -113,7 +133,21 @@ export class PublicProfileComponent implements OnInit {
             });
           this.follows = f;
         }
+        this.findPostsByTagForUser();
         this.dataReady = true;
+      });
+
+  }
+
+  /**
+   * Helper function for getUserData()
+   */
+  findPostsByTagForUser() {
+    this.postService.findPostsbyTag(this.objData['username'])
+      .subscribe((posts) => {
+        console.log('hello are we here?');
+        this.postsInPublicProfile = posts;
+        console.log('these are the posts', this.postsInPublicProfile);
       });
   }
 
@@ -145,7 +179,7 @@ export class PublicProfileComponent implements OnInit {
   }
 
   ifIdEqualPosterId() {
-    return (this.user._id === this.thisProfileUserId);
+    return (this.objId === this.sharedServiceUserId);
   }
 
   logout() {

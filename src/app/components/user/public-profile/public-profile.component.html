@@ -50,13 +50,12 @@
     Albums
   </button>
   <div class = "container-fluid">
-  <app-create-post></app-create-post>
-
+    <div *ngIf="ifIdEqualPosterId()">
+    <app-create-post></app-create-post>
+    </div>
   </div>
 </div>
 
 
 <!--<app-post-list [posts] = "postsInPublicProfile" (click)="ngOnInit()"></app-post-list>-->
-<!--<div *ngIf="ifIdEqualPosterId()">-->
 <app-post-list [posts] = "postsInPublicProfile" [IDfromProfile] = "objId"></app-post-list>
-<!--</div>-->
