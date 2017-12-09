@@ -37,12 +37,11 @@ export class FrontPageComponent implements OnInit {
   // }
 
   login(username: String, password: String) {
-    console.log('logging in here');
+    console.log('entering here');
     this.userService
       .login(username, password)
       .subscribe((user) => {
         this.sharedService.user = user;
-        console.log('Login Component: sharedService user is: ', user);
         this.router.navigate(['/user', user._id]);
       });
   }

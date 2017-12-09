@@ -32,11 +32,11 @@ export class SpaceBannerDefaultComponent implements OnInit {
     this.router.navigate(['search']);
   }
 
-  logout() {
-    this.userService.logout()
-      .subscribe((status) => {
-        this.router.navigate(['login']);
-      });
+  /**
+   * This will have to be improved for security.
+   */
+  logOut() {
+    this.router.navigate(['/login']);
   }
 
 }

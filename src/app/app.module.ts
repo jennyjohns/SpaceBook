@@ -39,7 +39,6 @@ import { AlbumListComponent } from './components/album/album-list/album-list.com
 import {SharedService} from './services/shared.service.client';
 import {CEService} from './services/ce.service.client';
 import {PubService} from './services/pub.service.client';
-import {AuthGuard} from "./services/auth-guard.service.client";
 
 @NgModule({
   // Declare components here

@@ -20,12 +20,12 @@ import {PictureNewComponent} from './components/picture/picture-new/picture-new.
 import {UserPicturesComponent} from './components/picture/user-pictures/user-pictures.component';
 import {AlbumListComponent} from './components/album/album-list/album-list.component';
 import {CreateObjectComponent} from './components/create-object/create-object.component';
-import {AuthGuard} from "./services/auth-guard.service.client";
 
 
 const APP_ROUTES: Routes = [
   {path: 'register', component: RegisterComponent},
-  {path: ':obtype/:uid', component: PublicProfileComponent, canActivate: [AuthGuard]},
+  {path: ':obtype/:uid', component: PublicProfileComponent},
+  // {path: ':obtype', component: PublicProfileComponent},
   {path: ':obtype/:uid/edit', component: ProfileComponent},
   {path: 'searchAsteroids', component: NasaTestComponent},
   {path: '', component: FrontPageComponent},
