@@ -43,25 +43,17 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
     this.user = this.sharedService.user;
     this.userId = this.user._id;
-    /*
-    const pluto = {name: 'Pluto', region: 'Sol System', type: 'Celestial Dwarf',
-      picture: 'http://pluto.jhuapl.edu/Multimedia/Science-Photos/pics/P_COLOR2_enhanced_release.jpg'};
-    this.cbService.createCB(pluto).subscribe((res: any) => {
-      console.log(res);
-      console.log('Pluto made!');
-
-    });
-    */
 
   }
 
   search(param: string) {
     this.searchResultString = '' ;
+    this.userResult = [];
     console.log('searching for', param) ;
     this.searchparam = param;
     this.userService.findUserByUsername(param).subscribe((response: any) => {
       if (response != null) {
-      this.userResult = response;
+      this.userResult.push(response);
       this.peopleReady = true;
       }
     });
