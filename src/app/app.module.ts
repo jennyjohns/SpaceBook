@@ -30,6 +30,13 @@ import { SearchNasaComponent } from './components/search/search-nasa/search-nasa
 import { CelestialBodyComponent } from './components/celestial-body/celestial-body.component';
 import { SearchCbComponent } from './components/search/search-cb/search-cb.component';
 import { CreateObjectComponent } from './components/create-object/create-object.component';
+import { UserPicturesComponent } from './components/picture/user-pictures/user-pictures.component';
+import { UserAlbumComponent } from './components/album/user-album/user-album.component';
+import { PictureNewComponent } from './components/picture/picture-new/picture-new.component';
+import { AlbumNewComponent } from './components/album/album-new/album-new.component';
+import {PictureServiceClient} from "./services/picture.service.client";
+import {AlbumServiceClient} from "./services/album.service.client";
+import { AlbumListComponent } from './components/album/album-list/album-list.component';
 
 @NgModule({
   // Declare components here
@@ -53,6 +60,11 @@ import { CreateObjectComponent } from './components/create-object/create-object.
     SearchNasaComponent,
     CelestialBodyComponent,
     SearchCbComponent,
+    UserPicturesComponent,
+    UserAlbumComponent,
+    PictureNewComponent,
+    AlbumNewComponent,
+    AlbumListComponent,
     CreateObjectComponent,
 
   ],
@@ -63,7 +75,8 @@ import { CreateObjectComponent } from './components/create-object/create-object.
     Routing
   ],
   // Client Side services here
-  providers: [NasaServiceClient, UserService, PostService, CBService],
+  providers: [NasaServiceClient, UserService, PostService, CBService, PictureServiceClient,
+  AlbumServiceClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

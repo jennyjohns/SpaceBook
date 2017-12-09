@@ -9,8 +9,9 @@ var UserSchema = mongoose.Schema({
   verified: Boolean,
   DOB: String,
   picture: String,
-  type: String,
-  follows: [String]
+  follows: [String],
+  userType: [{type: String, enum: ['PROFESSIONAL', 'AMATEUR', 'ADMIN', 'ORGANIZATION', 'UNIVERSITY']}],
+  albums: [{type: mongoose.Schema.Types.ObjectId, ref: 'AlbumModel'}]
 }, {collection: 'user'});
 
 module.exports = UserSchema;
