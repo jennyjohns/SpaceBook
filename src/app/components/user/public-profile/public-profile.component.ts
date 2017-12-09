@@ -99,9 +99,12 @@ export class PublicProfileComponent implements OnInit {
         var f = [];
         this.objData = user;
         this.DOB = user['DOB'];
-        if((this.DOB[5]+this.DOB[6] === (this.today.getUTCMonth()+1).toString()) && (this.DOB[8]+this.DOB[9] === this.today.getUTCDate().toString())) {
+        /*
+        if((this.DOB[5]+this.DOB[6] === (this.today.getUTCMonth()+1).toString()) &&
+        (this.DOB[8]+this.DOB[9] === this.today.getUTCDate().toString())) {
           this.birthday = true;
         }
+        */
         for (var i = 0; i < user['follows'].length; i++) {
           this.userService.findUserById(user['follows'][i])
             .subscribe((user: any) => {
