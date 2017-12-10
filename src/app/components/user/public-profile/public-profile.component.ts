@@ -4,6 +4,8 @@ import {UserService} from '../../../services/user.service.client';
 import {PostService} from '../../../services/post.service.client';
 import {CBService} from '../../../services/cb.service.client';
 import {SharedService} from '../../../services/shared.service.client';
+import {environment} from "../../../../environments/environment";
+import {isUndefined} from "util";
 
 @Component({
   selector: 'app-public-profile',
@@ -31,38 +33,80 @@ export class PublicProfileComponent implements OnInit {
   dataReady: boolean;
   user: any;
   sharedServiceUserId: String;
+  baseURL = environment.baseUrl;
+  currentURL: String;
+  flipper: boolean;
 
 
   ngOnInit() {
     this.dataReady = false;
+    this.flipper = true;
+    console.log('set to true');
     this.user = this.sharedService.user;
     this.sharedServiceUserId = this.user._id;
     console.log('PPasdfa the user from sharedService is: ', this.user);
-    this.activatedRoute.params
-      .subscribe(
-        (params: any) => {
-          this.objId = params['uid'];
-          console.log(this.objId);
-          this.objType = params['obtype'];
-          if (params['api']) {
-            console.log('api is here!');
-            this.router.navigate(['user', this.user._id]);
-          }
+    this.currentURL = window.location.href;
+    if (this.currentURL.includes('api/login')) {
+      this.flipper = false;
+      console.log('set to false');
+    }
+//   console.log('contains API/LOGIN');
+    console.log('whats the username', this.user.username);
+    if (this.user.username === undefined) {
+      console.log('was undefined');
+      this.router.navigate([this.baseURL, 'user', this.user._id, 'edit']);
+    } else {
+      if (this.flipper) {
+        this.activatedRoute.params
+          .subscribe(
+            (params: any) => {
+              console.log('entering activated route');
+              this.objId = params['uid'];
+              console.log(this.objId);
+              this.objType = params['obtype'];
+            }
+          );
+        this.birthday = false;
+        switch (this.objType) {
+          case 'cb':
+            this.getCBData(this.objId);
+            break;
+          case 'ce':
+            break;
+          case 'user':
+            this.getUserData(this.objId);
+            break;
+          case 'org':
+            break;
         }
-      );
-    this.birthday = false;
-    switch (this.objType) {
-
-      case 'cb':
-        this.getCBData(this.objId);
-        break;
-      case 'ce':
-        break;
-      case 'user':
+      } else {
+        this.objId = this.user._id;
+        this.objType = 'user';
         this.getUserData(this.objId);
-        break;
-      case 'org':
-        break;
+        this.router.navigate([this.baseURL, 'user', this.user._id]);
+      }
+      // this.activatedRoute.params
+      //   .subscribe(
+      //     (params: any) => {
+      //       console.log('entering activated route');
+      //       this.objId = params['uid'];
+      //       console.log(this.objId);
+      //       this.objType = params['obtype'];
+      //     }
+      //   );
+      // this.birthday = false;
+      // switch (this.objType) {
+      //   case 'cb':
+      //     this.getCBData(this.objId);
+      //     break;
+      //   case 'ce':
+      //     break;
+      //   case 'user':
+      //     this.getUserData(this.objId);
+      //     break;
+      //   case 'org':
+      //     break;
+      // }
     }
     // if (this.objType === 'user') {
     //   console.log('username is this', this.objData['username']);
@@ -169,7 +213,7 @@ export class PublicProfileComponent implements OnInit {
         console.log('PREVIOUS USER.FOLLOWS ', user.follows);
         user.follows = [];
         for(var i = 0; i < this.follows.length; i++) {
-          user.follows.push(this.follows[i]._id)
+          user.follows.push(this.follows[i]._id);
         }
         console.log('UPDATED USER.FOLLOWS ', user.follows);
         this.userService.updateUser(this.objId, user)
@@ -195,3 +239,48 @@ export class PublicProfileComponent implements OnInit {
   }
 
 }
+
+//
+//
+// if (this.currentURL.includes('api/login')) {
+//   console.log('contains API/LOGIN');
+//   this.objId = this.user._id;
+//   this.objType = 'user';
+//   this.birthday = false;
+//   switch (this.objType) {
+//     case 'cb':
+//       this.getCBData(this.objId);
+//       break;
+//     case 'ce':
+//       break;
+//     case 'user':
+//       this.getUserData(this.objId);
+//       break;
+//     case 'org':
+//       break;
+//   }
+// } else {
+//   this.activatedRoute.params
+//     .subscribe(
+//       (params: any) => {
+//         console.log('entering activated route');
+//         this.objId = params['uid'];
+//         console.log(this.objId);
+//         this.objType = params['obtype'];
+//         this.birthday = false;
+//         switch (this.objType) {
+//           case 'cb':
+//             this.getCBData(this.objId);
+//             break;
+//           case 'ce':
+//             break;
+//           case 'user':
+//             this.getUserData(this.objId);
+//             break;
+//           case 'org':
+//             break;
+//         }
+//       }
+//     );
+// }
+// }
