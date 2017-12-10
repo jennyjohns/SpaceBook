@@ -68,7 +68,7 @@ app.get('*', function (req, res) {
 });
 
 
-server.listen( port , () => console.log('Running'));
+server.listen( port, '0.0.0.0', () => console.log('Running'));
 
 
 
