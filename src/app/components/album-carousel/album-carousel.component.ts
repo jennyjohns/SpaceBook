@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { ICarouselConfig, AnimationConfig } from 'angular4-carousel';
 import {AlbumServiceClient} from '../../services/album.service.client';
-import {PictureServiceClient} from "../../services/picture.service.client";
+import {PictureServiceClient} from '../../services/picture.service.client';
 
 @Component({
   selector: 'app-album-carousel',
@@ -27,9 +27,7 @@ export class AlbumCarouselComponent implements OnInit {
   constructor(private pictureService: PictureServiceClient, private albumService: AlbumServiceClient) { }
 
   ngOnInit() {
-
     this.pictureService.findPicturesByAlbum(this.albumid).subscribe((pictures: any) => {
-
       for (let i = 0; i < pictures.length; i++) {
         this.imageSources.push(pictures[i].url);
       }
