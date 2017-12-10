@@ -25,7 +25,9 @@ export class PictureNewComponent implements OnInit {
   title: String;
 
   constructor(private pictureService: PictureServiceClient, private router: Router,
-              private activatedRoute: ActivatedRoute){}
+              private activatedRoute: ActivatedRoute) {
+
+  }
 
   ngOnInit() {
     this.activatedRoute.params
@@ -33,6 +35,7 @@ export class PictureNewComponent implements OnInit {
         (params: any) => {
           this.userId = params['uid'];
           this.albumId = params['aid'];
+          console.log('albumId is', this.albumId);
           this.dateCreated = new Date;
         }
       );
@@ -42,12 +45,14 @@ export class PictureNewComponent implements OnInit {
       });
   }
 
-  commit(text: String, title: String, url: String) {
-    this.pic = {text: text, title: title, url: url, dateUploaded: this.dateCreated, albumId: this.albumId};
+  commit(text: String, title: String, width: String, url: String) {
+    this.pic = {text: text, title: title, width: width, url: url, dateUploaded: this.dateCreated, albumId: this.albumId};
+    console.log(this.pic);
     this.pictureService.createPicture(this.albumId, this.pic)
-      .subscribe((pictures: any) => {
-        this.pictures = pictures;
-        console.log('CHECK ALBUM', pictures);
+      .subscribe((album) => {
+      console.log('why am I subsccribing to an album?');
+      // this.pic = pic;
+      console.log('album is this', album);
         this.router.navigate(['user/' + this.userId + '/album/' + this.albumId]);
       });
   }

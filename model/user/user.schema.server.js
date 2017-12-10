@@ -10,6 +10,10 @@ var UserSchema = mongoose.Schema({
   DOB: String,
   picture: String,
   follows: [String],
+  facebook: {
+    id:    String,
+    token: String
+  },
   userType: [{type: String, enum: ['PROFESSIONAL', 'AMATEUR', 'ADMIN', 'ORGANIZATION', 'UNIVERSITY']}],
   albums: [{type: mongoose.Schema.Types.ObjectId, ref: 'AlbumModel'}]
 }, {collection: 'user'});
