@@ -1,8 +1,8 @@
-import {Injectable} from "@angular/core";
-import {Router} from "@angular/router";
-import {Http, Response} from "@angular/http";
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {Http, Response} from '@angular/http';
 import 'rxjs/Rx';
-import {environment} from "../../environments/environment";
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class AlbumServiceClient {
@@ -20,7 +20,7 @@ export class AlbumServiceClient {
     'deleteAlbum': this.deleteAlbum
   };
 
-  createAlbum(userId: String, album: any){
+  createAlbum(userId: String, album: any) {
     const url = this.baseURL + '/api/user/' + userId + '/album';
     return this.http.post(url, album)
       .map((res: Response) => {

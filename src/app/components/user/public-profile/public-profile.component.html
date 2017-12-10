@@ -5,6 +5,7 @@
          class="alert alert-danger">
       {{birthdayMsg}}
     </div>
+    <div class="col-sm-3">
     <button class="jj-button-profile jj-card" (click)="editProfile()">
       <img class="jj-img-padding mb-img-max" src="{{objData.picture}}">
       <div class="jj-container">
@@ -27,35 +28,46 @@
       </div>
     </div>
   </div>
+    <div class="col-sm-9">
+      <div *ngIf="albumReady">
+        <app-album-carousel [albumid]="albumid"></app-album-carousel>
+      </div>
+    </div>
+  </div>
   <div class="container-fluid">
     <h2>FOLLOWS</h2>
     <div *ngFor="let user of follows">
-      <button (click)="goToUserProfile(user._id)">{{user.firstName}} {{user.lastName}}</button>
-      <button (click)="deleteFollow(user._id)"><span class="glyphicon glyphicon-remove"></span></button>
+      <button class="jj-button-profile" (click)="goToUserProfile(user._id)"><img class="jj-follows"
+                                                                                 src="{{user.picture}}"/>
+        <p>{{user.firstName}} {{user.lastName}}</p>
+      </button>
+      <button class="jj-button-profile" (click)="deleteFollow(user._id)"><span
+        class="glyphicon glyphicon-remove"></span></button>
     </div>
   </div>
-  <button class="btn btn-warning btn-block jj-button-hover"
-          aria-pressed="true"
-          (click)="logout()">
-    Logout
-  </button>
-  <button class="btn btn-info btn-block jj-button-hover"
-          aria-pressed="true"
-          (click)="search()">
-    Search
-  </button>
-  <button class="btn btn-primary btn-block jj-button-hover"
+  <!--<button class="btn btn-warning btn-block jj-button-hover"-->
+  <!--aria-pressed="true"-->
+  <!--(click)="logout()">-->
+  <!--Logout-->
+  <!--</button>-->
+  <!--<button class="btn btn-info btn-block jj-button-hover"-->
+  <!--aria-pressed="true"-->
+  <!--(click)="search()">-->
+  <!--Search-->
+  <!--</button>-->
+  <button class=" jj-button-profile"
           aria-pressed="true"
           (click)="goToAlbums()">
-    Albums
+    <p>{{user.firstName}}'s Photos</p>
+      <span class="glyphicon glyphicon-picture"></span>
   </button>
-  <div class = "container-fluid">
+  <div class="container-fluid">
     <div *ngIf="ifIdEqualPosterId()">
-    <app-create-post></app-create-post>
+      <app-create-post></app-create-post>
     </div>
   </div>
 </div>
 
 
 <!--<app-post-list [posts] = "postsInPublicProfile" (click)="ngOnInit()"></app-post-list>-->
-<app-post-list [posts] = "postsInPublicProfile" [IDfromProfile] = "objId"></app-post-list>
+<app-post-list [posts]="postsInPublicProfile" [IDfromProfile]="objId"></app-post-list>

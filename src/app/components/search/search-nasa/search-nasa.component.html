@@ -9,6 +9,11 @@
       <h2 class="jj-font">{{title}}</h2>
       <p>{{description}}</p>
       <p>{{date}}</p>
+      <button (click)="showDetails()">More Details</button>
+      <div *ngIf="details">
+        <app-search-nasa-detail [obj]="nasaObject"></app-search-nasa-detail>
+
+      </div>
     </div>
   </div>
 
