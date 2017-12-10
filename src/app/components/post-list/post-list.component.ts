@@ -16,7 +16,6 @@ export class PostListComponent implements OnInit {
   @Input()
   posts: any[];
 
-
   constructor(private postService: PostService,
               private userService: UserService,
               private route: ActivatedRoute,
