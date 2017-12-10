@@ -41,6 +41,7 @@ import {CEService} from './services/ce.service.client';
 import {PubService} from './services/pub.service.client';
 import {AuthGuard} from "./services/auth-guard.service.client";
 import { SearchCeComponent } from './components/search/search-ce/search-ce.component';
+import { HomepageComponent } from './components/homepage/homepage.component';
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import { SearchCeComponent } from './components/search/search-ce/search-ce.compo
     AlbumListComponent,
     CreateObjectComponent,
     SearchCeComponent,
+    HomepageComponent,
 
   ],
   imports: [
@@ -81,7 +83,7 @@ import { SearchCeComponent } from './components/search/search-ce/search-ce.compo
   ],
   // Client Side services here
   providers: [NasaServiceClient, UserService, PostService, CBService, CEService, PubService, PictureServiceClient,
-  AlbumServiceClient, SharedService, AuthGuard],
+  AlbumServiceClient, SharedService, AuthGuard, HomepageComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

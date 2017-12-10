@@ -1,0 +1,64 @@
+body {
+  background: url('../../../assets/vendors/image/homepageBackground.jpg');
+  padding-top: 9em;
+  height: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.jj-typewriter h1 {
+  color: whitesmoke;
+  font-family: final_frontier_old_styleRg;
+  font-size: 7vw;
+  text-shadow: black 2px 2px 4px;
+  overflow: hidden;
+  border-right: .20em blue;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: .15em;
+  animation:
+  typing 3.5s steps(30, end),
+  blink-caret .5s step-end infinite;
+}
+
+@keyframes typing {
+  from {width : 0}
+  to {width : 100%}
+}
+
+@keyframes blink-caret {
+  from, to {border-color: transparent}
+  50% {border-color: blue}
+}
+
+.dot-red {
+  height: 10px;
+  width: 10px;
+  background-color: red;
+  box-shadow: black 2px 2px 4px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot-green {
+  height: 10px;
+  width: 10px;
+  background-color: green;
+  box-shadow: black 2px 2px 4px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.jj-text-left {
+  text-align: left;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.jj-text-right {
+  text-align: right;
+  position: absolute;
+  top: 0;
+  right: 0;
+}

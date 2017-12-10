@@ -1,0 +1,20 @@
+<!--Home page - this will be the landing page of your project. It should look spectacular. -->
+<!--I should be proud to share the URL with colleagues. The purpose of the Website should be clear-->
+<body>
+  <div class="jj-text-left">
+    logged in
+    <div *ngIf="loggedIn; then LoggedIn; else notLoggedIn">
+    </div>
+    <ng-template #LoggedIn>
+      <span class="dot-green"></span>
+    </ng-template>
+    <ng-template #notLoggedIn>
+      <span class="dot-red"></span>
+    </ng-template>
+  </div>
+<div class="jj-typewriter">
+  <h1>Welcome To SpaceBook!</h1>
+</div>
+<button class="jj-button jj-text-right" (click)="continueToSpaceBook()">Continue To SpaceBook</button>
+</body>
+

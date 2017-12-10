@@ -57,7 +57,7 @@ export class UserService {
             this.sharedService.user = user; // setting user so as to share with all components
             return true;
           } else {
-            this.router.navigate(['/login']);
+            // this.router.navigate(['/login']);
             return false;
           }
         } );
