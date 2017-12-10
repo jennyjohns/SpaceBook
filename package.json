@@ -12,6 +12,8 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/cli": "^1.6.0",
+    "@angular/compiler-cli": "^4.4.6",
     "@angular-devkit/schematics": "0.0.40",
     "@angular/animations": "^4.4.6",
     "@angular/common": "^4.4.6",
@@ -38,13 +40,12 @@
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
+    "typescript": "^2.0.2",
     "rxjs": "^5.5.5",
     "zone.js": "^0.8.18",
     "node-sass": "^4.5.2"
   },
   "devDependencies": {
-    "@angular/cli": "^1.6.0",
-    "@angular/compiler-cli": "^4.4.6",
     "@angular/language-service": "^4.4.6",
     "@types/jasmine": "^2.8.2",
     "@types/jasminewd2": "^2.0.3",
