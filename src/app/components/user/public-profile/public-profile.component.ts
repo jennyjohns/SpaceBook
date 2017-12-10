@@ -171,29 +171,20 @@ export class PublicProfileComponent implements OnInit {
       });
   }
 
-  getUserData(objId) {
-    this.userService.findUserById(this.objId)
-      .subscribe((user: any) => {
-        console.log('was a user found', user);
-        var f = [];
-        this.objData = user;
-        this.DOB = user['DOB'];
-        /*
-        if((this.DOB[5]+this.DOB[6] === (this.today.getUTCMonth()+1).toString()) &&
-        (this.DOB[8]+this.DOB[9] === this.today.getUTCDate().toString())) {
-          this.birthday = true;
-        }
-        */
-        for (var i = 0; i < user['follows'].length; i++) {
-          this.userService.findUserById(user['follows'][i])
-            .subscribe((user1: any) => {
-              f.push(user1);
-            });
-          this.follows = f;
-        }
-        this.findPostsByTagForUser();
-        this.dataReady = true;
-      });
+
+  getUserData(objId){
+    this.objData = this.sharedService.user;
+
+    var f = [];
+    for (var i = 0; i < this.objData['follows'].length; i++) {
+            this.userService.findUserById(this.objData['follows'][i])
+              .subscribe((user1: any) => {
+                f.push(user1);
+              });
+            this.follows = f;
+          }
+    this.findPostsByTagForUser();
+    this.dataReady = true;
 
   }
 
@@ -216,20 +207,13 @@ export class PublicProfileComponent implements OnInit {
         this.follows.splice(i, 1);
       }
     }
-    console.log('SAVED ONES ', this.follows);
-    this.userService.findUserById(this.objId)
-      .subscribe((user: any) => {
-        console.log('PREVIOUS USER.FOLLOWS ', user.follows);
-        user.follows = [];
-        for (var i = 0; i < this.follows.length; i++) {
-          user.follows.push(this.follows[i]._id);
-        }
-        console.log('UPDATED USER.FOLLOWS ', user.follows);
-        this.userService.updateUser(this.objId, user)
-          .subscribe((usr: any) => {
-          });
+    this.sharedService.user['follows'] = [];
+    for(var i = 0; i < this.follows.length; i++) {
+      this.sharedService.user['follows'].push(this.follows[i]._id);
+    }
+    this.userService.updateUser(this.objId, this.sharedService.user)
+      .subscribe( (usr: any) => {
       });
-    console.log(this.follows);
   }
 
   goToAlbums() {
