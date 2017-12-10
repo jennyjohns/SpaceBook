@@ -28,3 +28,12 @@
   border: transparent;
   background-color: transparent;
 }
+
+.jj-follows {
+  height: 35px;
+  width: 30px;
+}
+
+.glyphicon.glyphicon-picture {
+  font-size: 75px;
+}
