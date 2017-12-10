@@ -19,6 +19,10 @@
   max-width: 200px;
 }
 
+.mh-paddingAwayFromNavBar {
+  padding-top: 1%;
+}
+
 .jj-img-padding {
   padding-top: 25px;
   width: 100%;
