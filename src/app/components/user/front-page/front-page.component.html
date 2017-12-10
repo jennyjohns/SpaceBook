@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<body xmlns="http://www.w3.org/1999/html">
+<body>
 <div class="jj-bg">
   <div class="jj-font">
     <h1 class="jj-h1">
@@ -35,6 +35,10 @@
         [disabled]="!f.valid">
         Login
         </button>
+        <a href="{{baseUrl}}/api/facebook/login" class="btn btn-primary btn-block">
+          <span class="fa fa-facebook"></span>
+          Login via Facebook
+        </a>
         <button class="btn btn-success btn-block jj-button-hover"
                 aria-pressed="true"
                 [routerLink]="['/register']">

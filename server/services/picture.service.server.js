@@ -13,8 +13,10 @@ module.exports = function (app) {
   var pictureModel = require('../../model/picture/picture.model.server');
 
   function createPicture(req, res) {
+    console.log('entering create Picture');
     var albumId = req.params['aid'];
     var pic = req.body;
+    console.log('the pic body', pic);
     pic.albumId = albumId;
     pictureModel
       .createPicture(pic)
@@ -65,35 +67,47 @@ module.exports = function (app) {
   }
 
   function uploadImage(req, res) {
+    console.log('entering uploadImage');
     var pictureId = req.body.pictureId;
-    var width = req.body.width;
+    console.log('pictureId', pictureId);
+    var width1 = req.body.width1;
+    console.log('width', width1);
     var myFile = req.file;
+    console.log('myFile', myFile);
     var userId = req.body.userId;
+    console.log('userId', userId);
     var albumId = req.body.albumId;
+    console.log('albumId', albumId);
 
     var originalName = myFile.originalname;
+    console.log('orginalName', originalName);
     var fileName = myFile.filename;
+    console.log('fileName', fileName);
     var path = myFile.path;
+    console.log('path', path);
     var destination = myFile.destination;
+    console.log('destination', destination);
     var size = myFile.size;
+    console.log('size', size);
     var mimetype = myFile.mimetype;
+    console.log('mimetype', mimetype);
 
-    var pic1 = null;
-    pictureModel
-      .findPictureById(pictureId)
-      .then(function (pic) {
-        pic1 = pic;
-        pic1['url'] = '/assets/uploads' + fileName;
-        pic1['width'] = width;
-        pic1['size'] = size;
-        pic1.save();
-        console.log('PICTURE', pic1);
-        pictureModel
-          .updatePicture(pictureId, pic1)
+    var pic1 = {};
+    pic1.title =fileName;
+    pic1.text=fileName;
+    pic1.url = '/assets/uploads/' + fileName;
+    pic1.width = width1;
+    pic1.albumId = albumId;
+        console.log('pic1 is', pic1);
+        // pic1.save();
+        // console.log('PICTURE', pic1);
+        return pictureModel
+          .createPicture(pic1)
           .then(function (pic) {
+            pic.save();
             var callbackUrl = '/user/' + userId + '/album/' + albumId;
             res.redirect(callbackUrl);
           });
-      });
-  }
+    };
+
 };

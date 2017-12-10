@@ -6,8 +6,22 @@ module.exports = function (app) {
   var LocalStrategy = require('passport-local').Strategy;
   var bcrypt = require("bcrypt-nodejs");
   passport.use(new LocalStrategy(localStrategy));
+  var FacebookStrategy = require('passport-facebook').Strategy;
+  var IDTempFromFacebook;
 
+  // var facebookConfig = {
+  //   clientID     : process.env.FACEBOOK_CLIENT_ID,
+  //   clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
+  //   callbackURL  : process.env.FACEBOOK_CALLBACK_URL
+  // };
 
+  var facebookConfig = {
+    clientID     : '386216858483994',
+    clientSecret : '51788016e1118b1991b19b8a0c923180',
+    callbackURL  : 'http://localhost:3100/api/facebook/oauth2callback'
+  };
+
+  passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
 
   function serializeUser(user, done) {
     done(null, user);
@@ -38,6 +52,11 @@ module.exports = function (app) {
   app.post('/api/login', passport.authenticate('local'), login);
   app.post('/api/logout', logout);
   app.post('/api/loggedIn', loggedIn);
+  app.get ('/api/facebook/login', passport.authenticate('facebook', { scope : 'email' }));
+  app.get ('/api/facebook/oauth2callback', passport.authenticate('facebook', {
+    successRedirect: '../../api/login',
+    failureRedirect: '../../login'
+  }));
 
   // app.post("/api/upload", upload.single('myFile'), uploadProfilePicture);
 
@@ -58,6 +77,37 @@ module.exports = function (app) {
           return done(null, false);
         }
       });
+  }
+
+  function facebookStrategy(token, refreshToken,
+                            profile, done) {
+    console.log('entering facebook strategy');
+    userModel
+      .findUserByFacebookId(profile.id)
+      .then(function(user) {
+        if(user) {
+          console.log('facebook ID is: ', user._id);
+          IDTempFromFacebook = user._id;
+          return done(null, user);
+        } else { // if not, insert into db using profile info
+          var names = profile.displayName.split(" ");
+          var newFacebookUser = {
+            lastName:  names[1],
+            firstName: names[0],
+            email:     profile.emails ? profile.emails[0].value:"",
+            facebook: { id:    profile.id, token: token }
+
+          };
+          return userModel.createUser(newFacebookUser);
+        }
+      })
+      .then(
+        function(user){
+          console.log('2 facebook ID is: ', user._id);
+          IDTempFromFacebook = user._id;
+          return done(null, user);
+        }
+      );
   }
 
 
@@ -138,12 +188,11 @@ module.exports = function (app) {
 
   function deleteUser(req, res) {
     var userId = req.params['uid'];
-    var user = users.find(function (user) {
-      return userId === user._id
-    });
-    var i = users.indexOf(user);
-    users.splice(i, 1);
-    res.json(users);
+    userModel
+      .deleteUser(userId)
+      .then(function (status) {
+        res.json(status);
+      });
   }
 
   // function uploadProfilePicture(req, res) {

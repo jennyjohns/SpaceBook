@@ -1,4 +1,7 @@
-<div>
+<div class = "mb-search-result-box">
+<h6 class="mh-h1">Add New Picture</h6>
+
+<div class="jj-form">
   <form>
     <div class="form-group">
       <label for="title">
@@ -27,38 +30,43 @@
         class="form-control"
         required></textarea>
       <!--<span class="help-block" *ngIf="text.touched && !text.valid"@TODO>-->
-        <!--Please enter a description for this picture!-->
+      <!--Please enter a description for this picture!-->
       <!--</span>-->
-      <!--<label for="url">-->
-        <!--URL-->
-      <!--</label>-->
-      <!--<input [(ngModel)]="url"-->
-      <!--type="url"-->
-      <!--placeholder="URL"-->
-      <!--name="url"-->
-      <!--id="url"-->
-      <!--class="form-control"/>-->
-      <!--<label for="width">-->
-        <!--Width-->
-      <!--</label>-->
-      <!--<input-->
-        <!--[(ngModel)]="width"-->
-        <!--name="width"-->
-        <!--id="width"-->
-        <!--class="form-control"-->
-        <!--type="text"-->
-      <!--/>-->
+      <label for="url">
+      URL
+      </label>
+      <input [(ngModel)]="url"
+      type="url"
+      placeholder="URL"
+      name="url"
+      id="url"
+      class="form-control"/>
+      <label for="width">
+      Width
+      </label>
+      <input
+      [(ngModel)]="width"
+      name="width"
+      id="width"
+      class="form-control"
+      type="text"
+      placeholder="0-100%"
+      />
       <form ngNoForm action="{{baseURL}}/api/upload" method="post" enctype="multipart/form-data">
         <input name="myFile" type="file" class="form-control"/>
-        <input name="pictureId" value="{{picId}}" style="display: none"/>
-        <input name="albumId" value="{{albumId}}" style="display: none"/>
-        <input name="userId" value="{{userId}}" style="display: none"/>
-        <button (click)="commit(text, title, width, url)" type="submit" class="btn btn-block btn-primary jj-button-hover"
-                aria-pressed="true">Upload Image</button>
+        <input name="originalname" type="text" value="{{text}}" style="display: none"/>
+        <input name="pictureId" type="text" value="{{picId}}" style="display: none"/>
+        <input name="albumId" type="text" value="{{albumId}}" style="display: none"/>
+        <input name="userId" type="text" value = "{{userId}}" style="display: none"/>
+        <input name="width1" type="any" value="{{width}}" style="display: none"/>
+        <button type="submit" class="btn btn-block btn-primary jj-button-hover"
+                aria-pressed="true">Upload Image (Only for uploads)</button>
         <br/>
       </form>
+      <button class = "btn btn-block btn-success jj-button-hover"(click)="commit(text, title, width, url)">SubmitTraditionally</button>
       <button (click)="cancel()" class="btn btn-danger btn-block jj-button-hover"
               aria-pressed="true">Cancel</button>
     </div>
   </form>
+</div>
 </div>

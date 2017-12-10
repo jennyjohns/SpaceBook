@@ -32,6 +32,10 @@ export class SpaceBannerDefaultComponent implements OnInit {
     this.router.navigate(['search']);
   }
 
+  navigateToHomePage() {
+    this.router.navigate(['']);
+  }
+
   logout() {
     this.userService.logout()
       .subscribe((status) => {

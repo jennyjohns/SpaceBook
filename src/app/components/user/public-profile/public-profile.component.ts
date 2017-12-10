@@ -4,6 +4,8 @@ import {UserService} from '../../../services/user.service.client';
 import {PostService} from '../../../services/post.service.client';
 import {CBService} from '../../../services/cb.service.client';
 import {SharedService} from '../../../services/shared.service.client';
+import {environment} from "../../../../environments/environment";
+import {isUndefined} from "util";
 
 @Component({
   selector: 'app-public-profile',
@@ -19,7 +21,7 @@ export class PublicProfileComponent implements OnInit {
               private postService: PostService,
               private cbService: CBService,
               private sharedService: SharedService) { }
-  objType: String;it
+  objType: String;
   objId: String;
   objData = {};
   follows: any[];
@@ -30,40 +32,96 @@ export class PublicProfileComponent implements OnInit {
   postsInPublicProfile: any[];
   dataReady: boolean;
   user: any;
-  thisProfileUserId: String;
+  sharedServiceUserId: String;
+  baseURL = environment.baseUrl;
+  currentURL: String;
+  flipper: boolean;
 
 
   ngOnInit() {
     this.dataReady = false;
+    this.flipper = true;
+    console.log('set to true');
     this.user = this.sharedService.user;
-    console.log('PP the user from sharedService is: ', this.user);
-    this.activatedRoute.params
-      .subscribe(
-        (params: any) => {
-          this.objId = params['uid'];
-          this.objType = params['obtype'];
-        }
-      );
-    this.birthday = false;
-
-    switch (this.objType) {
-
-      case 'cb':
-        this.getCBData(this.objId);
-        break;
-      case 'ce':
-        break;
-      case 'user':
-        this.getUserData(this.objId);
-        break;
-      case 'org':
-        break;
-
+    this.sharedServiceUserId = this.user._id;
+    console.log('PPasdfa the user from sharedService is: ', this.user);
+    this.currentURL = window.location.href;
+    if (this.currentURL.includes('api/login')) {
+      this.flipper = false;
+      console.log('set to false');
     }
-    this.postService.findPostsByUser(this.objId)
-      .subscribe((posts) => {
-      this.postsInPublicProfile = posts;
-      });
+//   console.log('contains API/LOGIN');
+    console.log('whats the username', this.user.username);
+    if (this.user.username === undefined) {
+      console.log('was undefined');
+      this.router.navigate([this.baseURL, 'user', this.user._id, 'edit']);
+    } else {
+      if (this.flipper) {
+        this.activatedRoute.params
+          .subscribe(
+            (params: any) => {
+              console.log('entering activated route');
+              this.objId = params['uid'];
+              console.log(this.objId);
+              this.objType = params['obtype'];
+            }
+          );
+        this.birthday = false;
+        switch (this.objType) {
+          case 'cb':
+            this.getCBData(this.objId);
+            break;
+          case 'ce':
+            break;
+          case 'user':
+            this.getUserData(this.objId);
+            break;
+          case 'org':
+            break;
+        }
+      } else {
+        this.objId = this.user._id;
+        this.objType = 'user';
+        this.getUserData(this.objId);
+        this.router.navigate([this.baseURL, 'user', this.user._id]);
+      }
+      // this.activatedRoute.params
+      //   .subscribe(
+      //     (params: any) => {
+      //       console.log('entering activated route');
+      //       this.objId = params['uid'];
+      //       console.log(this.objId);
+      //       this.objType = params['obtype'];
+      //     }
+      //   );
+      // this.birthday = false;
+      // switch (this.objType) {
+      //   case 'cb':
+      //     this.getCBData(this.objId);
+      //     break;
+      //   case 'ce':
+      //     break;
+      //   case 'user':
+      //     this.getUserData(this.objId);
+      //     break;
+      //   case 'org':
+      //     break;
+      // }
+    }
+    // if (this.objType === 'user') {
+    //   console.log('username is this', this.objData['username']);
+    //   this.postService.findPostsbyTag(this.objData['username'])
+    //     .subscribe((posts) => {
+    //     console.log('hello are we here?');
+    //       this.postsInPublicProfile = posts;
+    //       console.log('these are the posts', this.postsInPublicProfile);
+    //     });
+    // } else {
+    //   this.postService.findPostsbyTag(this.objData['name'])
+    //     .subscribe((posts) => {
+    //       this.postsInPublicProfile = posts;
+    //     });
+    // }
     // console.log(this.follows);
   }
 
@@ -85,12 +143,23 @@ export class PublicProfileComponent implements OnInit {
     this.router.navigate(['user/' + this.objId + '/search']);
   }
 
-  getCBData(objId){
+  getCBData(objId) {
     this.cbService.findCBbyId(this.objId).subscribe((cb:any) => {
         this.objData = cb;
         this.follows = [];
+        this.findPostsForNonUserDataByTag();
         this.dataReady = true;
     });
+  }
+
+  /**
+   * Helper function for non-user object's post retrieval by tag.
+   */
+  findPostsForNonUserDataByTag() {
+    this.postService.findPostsbyTag(this.objData['name'])
+      .subscribe((posts) => {
+        this.postsInPublicProfile = posts;
+      });
   }
 
   getUserData(objId){
@@ -113,7 +182,21 @@ export class PublicProfileComponent implements OnInit {
             });
           this.follows = f;
         }
+        this.findPostsByTagForUser();
         this.dataReady = true;
+      });
+
+  }
+
+  /**
+   * Helper function for getUserData()
+   */
+  findPostsByTagForUser() {
+    this.postService.findPostsbyTag(this.objData['username'])
+      .subscribe((posts) => {
+        console.log('hello are we here?');
+        this.postsInPublicProfile = posts;
+        console.log('these are the posts', this.postsInPublicProfile);
       });
   }
 
@@ -130,7 +213,7 @@ export class PublicProfileComponent implements OnInit {
         console.log('PREVIOUS USER.FOLLOWS ', user.follows);
         user.follows = [];
         for(var i = 0; i < this.follows.length; i++) {
-          user.follows.push(this.follows[i]._id)
+          user.follows.push(this.follows[i]._id);
         }
         console.log('UPDATED USER.FOLLOWS ', user.follows);
         this.userService.updateUser(this.objId, user)
@@ -145,7 +228,7 @@ export class PublicProfileComponent implements OnInit {
   }
 
   ifIdEqualPosterId() {
-    return (this.user._id === this.thisProfileUserId);
+    return (this.objId === this.sharedServiceUserId);
   }
 
   logout() {
@@ -156,3 +239,48 @@ export class PublicProfileComponent implements OnInit {
   }
 
 }
+
+//
+//
+// if (this.currentURL.includes('api/login')) {
+//   console.log('contains API/LOGIN');
+//   this.objId = this.user._id;
+//   this.objType = 'user';
+//   this.birthday = false;
+//   switch (this.objType) {
+//     case 'cb':
+//       this.getCBData(this.objId);
+//       break;
+//     case 'ce':
+//       break;
+//     case 'user':
+//       this.getUserData(this.objId);
+//       break;
+//     case 'org':
+//       break;
+//   }
+// } else {
+//   this.activatedRoute.params
+//     .subscribe(
+//       (params: any) => {
+//         console.log('entering activated route');
+//         this.objId = params['uid'];
+//         console.log(this.objId);
+//         this.objType = params['obtype'];
+//         this.birthday = false;
+//         switch (this.objType) {
+//           case 'cb':
+//             this.getCBData(this.objId);
+//             break;
+//           case 'ce':
+//             break;
+//           case 'user':
+//             this.getUserData(this.objId);
+//             break;
+//           case 'org':
+//             break;
+//         }
+//       }
+//     );
+// }
+// }

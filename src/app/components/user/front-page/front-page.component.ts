@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {UserService} from '../../../services/user.service.client';
 import {SharedService} from '../../../services/shared.service.client';
+import {environment} from '../../../../environments/environment';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class FrontPageComponent implements OnInit {
   password: String;
   errorFlag: Boolean;
   errorMsg = 'Invalid username or password!';
+  baseUrl = environment.baseUrl;
 
   constructor(private userService: UserService, private router: Router,
               private sharedService: SharedService) { }
@@ -23,18 +25,6 @@ export class FrontPageComponent implements OnInit {
   ngOnInit() {
     this.errorFlag = false;
   }
-  // login(username: String, password: String) {
-  //   this.username = username;
-  //   this.password = password;
-  //   this.userService.findUserByCredentials(this.username, this.password)
-  //     .subscribe( (user: any) => {
-  //       if (user) {
-  //         this.router.navigate(['user/', user._id]);
-  //       } else {
-  //         this.errorFlag = true;
-  //       }
-  //   });
-  // }
 
   login(username: String, password: String) {
     console.log('logging in here');

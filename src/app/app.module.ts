@@ -41,8 +41,10 @@ import {CEService} from './services/ce.service.client';
 import {PubService} from './services/pub.service.client';
 import {AuthGuard} from "./services/auth-guard.service.client";
 import { SearchCeComponent } from './components/search/search-ce/search-ce.component';
+import { HomepageComponent } from './components/homepage/homepage.component';
 import { SearchPubComponent } from './components/search/search-pub/search-pub.component';
 import { SearchNasaDetailComponent } from './components/search/search-nasa/search-nasa-detail/search-nasa-detail.component';
+
 
 @NgModule({
   // Declare components here
@@ -72,6 +74,7 @@ import { SearchNasaDetailComponent } from './components/search/search-nasa/searc
     AlbumListComponent,
     CreateObjectComponent,
     SearchCeComponent,
+    HomepageComponent,
     SearchPubComponent,
     SearchNasaDetailComponent,
 
@@ -84,7 +87,7 @@ import { SearchNasaDetailComponent } from './components/search/search-nasa/searc
   ],
   // Client Side services here
   providers: [NasaServiceClient, UserService, PostService, CBService, CEService, PubService, PictureServiceClient,
-  AlbumServiceClient, SharedService, AuthGuard],
+  AlbumServiceClient, SharedService, AuthGuard, HomepageComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

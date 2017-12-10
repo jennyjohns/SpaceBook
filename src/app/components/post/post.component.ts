@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {PostService} from '../../services/post.service.client';
 import {UserService} from '../../services/user.service.client';
 import {ActivatedRoute, Router} from '@angular/router';
+import {SharedService} from '../../services/shared.service.client';
 
 @Component({
   selector: 'app-post',
@@ -21,33 +22,21 @@ export class PostComponent implements OnInit {
   date: Date;
   likes: Number;
   userId: String;
-  testPost: any;
-  image1: any; // here for testing
-  image2: any; // here for testing
-  tag1: any; // here for testing
-  tag2: any; // here for testing
+  user: any;
 
-  constructor(private postService: PostService, private userService: UserService,
+
+  constructor(private postService: PostService,
+              private sharedService: SharedService,
+              private userService: UserService,
               private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit() {
+    this.user = this.sharedService.user;
     this.route.params.subscribe(params => {
       this.userId = params['uid'];
+      console.log('userId from Post is:', this.userId);
     });
-    if (this.ID === undefined) {
-      this.poster = {name: 'Alice'};
-      this.image1 = {name: 'Image 1', url: 'https://res.cloudinary.com/demo/image/upload/sample.jpg'};
-      this.image2 = {name: 'Image 2', url: 'https://i.ytimg.com/vi/lt0WQ8JzLz4/maxresdefault.jpg'};
-      this.tag1 = {name: 'SpaceX'};
-      this.tag2 = {name: 'NASA'};
-      this.ID = '0';
-      this.text = 'This is a sample post, where you can see that this functionality works';
-      this.images = [this.image1, this.image2];
-      this.likes = 3;
-      this.date = new Date;
-      this.tags = [this.tag1, this.tag2, {name: 'Alice'}, {name: 'Frankenstein'}];
-    } else {
       this.postService.findPostbyId(this.ID)
         .subscribe((post) => {
           console.log('post from component', post);
@@ -61,7 +50,6 @@ export class PostComponent implements OnInit {
           this.likes = post.likes;
         });
       // }
-    }
   }
 
   likeThisPost() {
@@ -107,6 +95,26 @@ export class PostComponent implements OnInit {
       });
   }
 
+  ifIdEqualPosterId() {
+    return (this.userId === this.user._id);
+  }
+
+  removeMyTag() {
+    const postition = this.post.tags.indexOf(this.user.username);
+    this.tags.splice(postition, 1);
+    this.post.tags = this.tags;
+    if (this.tags.length === 0) {
+      this.postService.deletePost(this.ID)
+        .subscribe((posts) => {
+        });
+    } else {
+      this.postService.updatePost(this.ID, this.post)
+        .subscribe((post1) => {
+          this.post = post1;
+          this.ngOnInit();
+        });
+    }
+  }
 
   //
   // findPostsByTag(ID) {
