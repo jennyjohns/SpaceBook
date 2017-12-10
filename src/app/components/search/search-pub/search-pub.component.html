@@ -11,14 +11,16 @@
     </div>
     <div class="col-sm-3">
       <h2 class="jj-font">{{name}}</h2>
-      <a routerLink="/ce/{{ceId}}">Check Me Out!</a>
-    <br>
-      <b>Starts:</b> {{ce.start}}
+      <a href="{{pub.link}}">Read Me!</a>
       <br>
-      <b>Ends:</b> {{ce.end}}
+      <b>Authors:</b> {{pub.authors}}
+      <br>
+      <b>Published:</b> {{pub.pubDate}}
+      <br>
+      {{pub.abstract}}
     </div>
     <div class="col-sm-9">
-      <button (click)="addToFollow(ceId)" class="jj-button pull-right"><span class="glyphicon glyphicon-plus-sign"></span></button>
+      <button (click)="addToFollow(pubId)" class="jj-button pull-right"><span class="glyphicon glyphicon-plus-sign"></span></button>
     </div>
   </div>
 

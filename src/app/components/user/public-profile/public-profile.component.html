@@ -5,6 +5,7 @@
          class="alert alert-danger">
       {{birthdayMsg}}
     </div>
+    <div class="col-sm-3">
     <button class="jj-button-profile jj-card" (click)="editProfile()">
       <img class="jj-img-padding mb-img-max" src="{{objData.picture}}">
       <div class="jj-container">
@@ -24,6 +25,12 @@
       </div>
       <div *ngSwitchCase="'cb'">
         {{objData.wiki}}
+      </div>
+    </div>
+  </div>
+    <div class="col-sm-9">
+      <div *ngIf="albumReady">
+        <app-album-carousel [albumid]="albumid"></app-album-carousel>
       </div>
     </div>
   </div>

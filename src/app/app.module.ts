@@ -39,10 +39,13 @@ import { AlbumListComponent } from './components/album/album-list/album-list.com
 import {SharedService} from './services/shared.service.client';
 import {CEService} from './services/ce.service.client';
 import {PubService} from './services/pub.service.client';
-import {AuthGuard} from "./services/auth-guard.service.client";
+import {AuthGuard} from './services/auth-guard.service.client';
 import { SearchCeComponent } from './components/search/search-ce/search-ce.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
-
+import { SearchPubComponent } from './components/search/search-pub/search-pub.component';
+import { SearchNasaDetailComponent } from './components/search/search-nasa/search-nasa-detail/search-nasa-detail.component';
+import { AlbumCarouselComponent } from './components/album-carousel/album-carousel.component';
+import { CarouselModule } from 'angular4-carousel';
 
 @NgModule({
   // Declare components here
@@ -73,13 +76,17 @@ import { HomepageComponent } from './components/homepage/homepage.component';
     CreateObjectComponent,
     SearchCeComponent,
     HomepageComponent,
+    SearchPubComponent,
+    SearchNasaDetailComponent,
+    AlbumCarouselComponent,
 
   ],
   imports: [
     BrowserModule,
     HttpModule,
     FormsModule,
-    Routing
+    Routing,
+    CarouselModule
   ],
   // Client Side services here
   providers: [NasaServiceClient, UserService, PostService, CBService, CEService, PubService, PictureServiceClient,
