@@ -26,9 +26,9 @@
         id="text"
         class="form-control"
         required></textarea>
-      <span class="help-block" *ngIf="text.touched && !text.valid"@TODO>
-      Please enter a description for this picture!
-      </span>
+      <!--<span class="help-block" *ngIf="text.touched && !text.valid"@TODO>-->
+      <!--Please enter a description for this picture!-->
+      <!--</span>-->
       <label for="url">
       URL
       </label>
@@ -48,15 +48,18 @@
       class="form-control"
       type="text"
       />
-      <!--<form ngNoForm action="{{baseURL}}/api/upload" method="post" enctype="multipart/form-data">-->
-        <!--<input name="myFile" type="file" class="form-control"/>-->
-        <!--<input name="pictureId" value="{{picId}}" style="display: none"/>-->
-        <!--<input name="albumId" value="{{albumId}}" style="display: none"/>-->
-        <!--<input name="userId" value="{{userId}}" style="display: none"/>-->
-        <button (click)="commit(text, title, width, url)" type="submit" class="btn btn-block btn-primary jj-button-hover"
+      <form ngNoForm action="{{baseURL}}/api/upload" method="post" enctype="multipart/form-data">
+        <input name="myFile" type="file" class="form-control"/>
+        <input name="originalname" type="text" value="{{text}}" style="display: none"/>
+        <input name="pictureId" type="text" value="{{picId}}" style="display: none"/>
+        <input name="albumId" type="text" value="{{albumId}}" style="display: none"/>
+        <input name="userId" type="text" value = "{{userId}}" style="display: none"/>
+        <input name="width1" type="any" value="{{width}}" style="display: none"/>
+        <button type="submit" class="btn btn-block btn-primary jj-button-hover"
                 aria-pressed="true">Upload Image</button>
         <br/>
-      <!--</form>-->
+      </form>
+      <button (click)="commit(text, title, width, url)">SubmitTraditionally</button>
       <button (click)="cancel()" class="btn btn-danger btn-block jj-button-hover"
               aria-pressed="true">Cancel</button>
     </div>
