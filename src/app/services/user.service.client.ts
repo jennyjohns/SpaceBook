@@ -55,6 +55,8 @@ export class UserService {
           const user = res.json();
           if (user !== 0) {
             this.sharedService.user = user; // setting user so as to share with all components
+            console.log('hello from LoggedIn');
+            // this.router.navigate(['user', user._id])
             return true;
           } else {
             this.router.navigate(['/login']);

@@ -37,12 +37,17 @@ export class PublicProfileComponent implements OnInit {
     this.dataReady = false;
     this.user = this.sharedService.user;
     this.sharedServiceUserId = this.user._id;
-    console.log('PP the user from sharedService is: ', this.user);
+    console.log('PPasdfa the user from sharedService is: ', this.user);
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
           this.objId = params['uid'];
+          console.log(this.objId);
           this.objType = params['obtype'];
+          if (params['api']) {
+            console.log('api is here!');
+            this.router.navigate(['user', this.user._id]);
+          }
         }
       );
     this.birthday = false;
