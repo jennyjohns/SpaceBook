@@ -6,8 +6,8 @@ var CESchema = mongoose.Schema({
   wiki: String,
   verified: Boolean,
   picture: String,
-  start: Date,
-  end: Date
+  start: String,
+  end: String
 }, {collection: 'ce'});
 
 module.exports = CESchema;

@@ -25,6 +25,8 @@ import {HomepageComponent} from './components/homepage/homepage.component';
 import {EditObjectComponent} from "./components/edit-object/edit-object.component";
 import {EditUserObjectComponent} from "./components/edit-object/edit-user-object/edit-user-object.component";
 import {EditCelestialEventObjectComponent} from "./components/edit-object/edit-celestial-event-object/edit-celestial-event-object.component";
+import {EditCelestialBodyObjectComponent} from "./components/edit-object/edit-celestial-body-object/edit-celestial-body-object.component";
+import {EditPublicationObjectComponent} from "./components/edit-object/edit-publication-object/edit-publication-object.component";
 
 
 const APP_ROUTES: Routes = [
@@ -34,8 +36,7 @@ const APP_ROUTES: Routes = [
   {path: ':obtype/:uid', component: PublicProfileComponent, canActivate: [AuthGuard]},
   {path: ':obtype/:uid/edit', component: ProfileComponent},
   {path: 'edit/:objId', component: EditObjectComponent},
-  {path: 'edit', component: EditUserObjectComponent},
-  {path: 'edit/ce', component: EditCelestialEventObjectComponent},
+  {path: 'edit', component: EditPublicationObjectComponent},
   {path: 'searchAsteroids', component: NasaTestComponent},
   {path: 'login', component: FrontPageComponent},
   {path: 'nasa-pic', component: NasaPictureTestComponent},

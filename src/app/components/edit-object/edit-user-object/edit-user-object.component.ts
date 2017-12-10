@@ -33,8 +33,7 @@ export class EditUserObjectComponent implements OnInit {
     console.log('IN EDIT USER');
     this.activateRoute.params
       .subscribe((params: any) => {
-        // this.userId = params['objId'];
-        this.userId = "5a2cbff5e2d9b740241635e9";
+        this.userId = params['objId'];
       });
     this.userService.findUserById(this.userId)
       .subscribe((user: any) => {
@@ -75,15 +74,12 @@ export class EditUserObjectComponent implements OnInit {
     console.log('REMOVE', this.remove);
     this.userType.splice(this.userType.indexOf(this.remove), 1);
 
-
-    console.log('USERTYPE', this.userType);
-
     const user = {username: username, email: email, firstName: firstName, lastName: lastName,
       phone: phone, DOB: DOB, userType: this.userType};
     this.userService.updateUser(this.userId, user)
       .subscribe((status: any) => {
-        console.log('STATUS', status);
-        this.router.navigate(['/edit']);
+        const u = this.sharedService.user;
+        this.router.navigate(['user/' + u['_id']]);
       });
   }
 

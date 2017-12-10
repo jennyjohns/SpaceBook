@@ -1,3 +1,64 @@
-<p>
-  edit-celestial-body-object works!
-</p>
+<div class="container-fluid jj-body">
+  <form>
+    <div>
+      <input name="cbName"
+             id="cbName"
+             type="text"
+             placeholder="name"
+             class="form-control"
+             [(ngModel)]="cbName"/>
+
+      <!--<span class="help-block" *ngIf="!cbname.valid && cbname.touched">-->
+      <!--Please enter name!-->
+      <!--</span>-->
+
+
+      <input name="region"
+             id="cbRegion"
+             type="text"
+             placeholder="cbRegion"
+             class="form-control"
+             [(ngModel)]="cbRegion"/>
+
+      <!--<span class="help-block" *ngIf="!region.valid && region.touched">-->
+      <!--Please enter region!-->
+      <!--</span>-->
+      <input name="cbTypes"
+             id="cbTypes"
+             type="text"
+             placeholder="types"
+             class="form-control"
+             [(ngModel)]="cbTypes"/>
+
+      <!--<span class="help-block" *ngIf="!types.valid && types.touched">-->
+      <!--Please enter types, comma seperated!-->
+      <!--</span>-->
+      <input name="cbWikiLink"
+             id="cbWikiLink"
+             type="text"
+             placeholder="wiki link"
+             class="form-control"
+             [(ngModel)]="cbWikiLink"/>
+
+      <!--<span class="help-block" *ngIf="!wiki.valid && wiki.touched">-->
+      <!--Please enter wiki link!-->
+      <!--</span>-->
+      <input name="cbPictureURL"
+             id="cbPictureURL"
+             type="text"
+             placeholder="picture url"
+             class="form-control"
+             [(ngModel)]="cbPictureURL"/>
+      <button class="btn btn-success btn-block jj-button-hover"
+              aria-pressed="true"
+              (click)="commit(cbName, cbRegion, cbTypes, cbWikiLink, cbPictureURL)">
+        Submit Changes
+      </button>
+      <button class="btn btn-danger btn-block jj-button-hover"
+              aria-pressed="true"
+              (click)="deletecb()">
+        Delete Account
+      </button>
+    </div>
+  </form>
+</div>
