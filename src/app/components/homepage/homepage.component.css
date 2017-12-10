@@ -1,15 +1,19 @@
-body {
+.jj-pic-body {
   background: url('../../../assets/vendors/image/homepageBackground.jpg');
   padding-top: 9em;
-  height: 50%;
+  height: 45%;
   width: 100%;
   display: flex;
   justify-content: center;
+  /*position: absolute;*/
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .jj-typewriter h1 {
   color: whitesmoke;
-  font-family: final_frontier_old_styleRg;
+  font-family: "final_frontier_old_styleRg";
   font-size: 7vw;
   text-shadow: black 2px 2px 4px;
   overflow: hidden;
@@ -61,4 +65,8 @@ body {
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.jj-black-text p{
+  color: black;
 }
