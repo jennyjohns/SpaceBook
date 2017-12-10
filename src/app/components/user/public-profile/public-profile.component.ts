@@ -239,6 +239,19 @@ export class PublicProfileComponent implements OnInit {
         this.albumReady = true;
       }
   }
+  authorized() {
+    if (this.sharedService.user['_id'] === this.objId) {
+      return true;
+    } else if ((this.objType === 'user') && (this.sharedService.isType('ADMIN'))) {
+      return true;
+    } else if ((this.objType === 'ce') && (this.sharedService.isType('PROFESSIONAL'))) {
+      return true;
+    } else if ((this.objType === 'cb') && (this.sharedService.isType('ORGANIZATION'))) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 }
 

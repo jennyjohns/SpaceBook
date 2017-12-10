@@ -16,17 +16,27 @@
           <div *ngSwitchCase="'cb'">
             <h4><b>{{objData.name}} {{objData.region}}</b></h4>
           </div>
+          <div *ngSwitchCase="'ce'">
+            <h4><b>{{objData.name}} {{objData.region}}</b></h4>
+          </div>
         </div>
       </div>
     </button>
     <div [ngSwitch]="objType">
       <div *ngSwitchCase="'user'">
-        Data Go Here
+        {{objData.DOB}}
       </div>
       <div *ngSwitchCase="'cb'">
         {{objData.wiki}}
       </div>
+      <div *ngSwitchCase="'ce'">
+        {{objData.wiki}}
+      </div>
     </div>
+      <button routerLink="/new" class="btn btn-success">+</button>
+      <div *ngIf="authorized()">
+      <button routerLink="/edit/{{this.objId}}" class="btn btn-warning">Edit</button>
+      </div>
   </div>
     <div class="col-sm-9">
       <div *ngIf="albumReady">
