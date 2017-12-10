@@ -1,4 +1,7 @@
-<div>
+<div class = "mb-search-result-box">
+<h6 class="mh-h1">Add New Picture</h6>
+
+<div class="jj-form">
   <form>
     <div class="form-group">
       <label for="title">
@@ -47,6 +50,7 @@
       id="width"
       class="form-control"
       type="text"
+      placeholder="0-100%"
       />
       <form ngNoForm action="{{baseURL}}/api/upload" method="post" enctype="multipart/form-data">
         <input name="myFile" type="file" class="form-control"/>
@@ -56,12 +60,13 @@
         <input name="userId" type="text" value = "{{userId}}" style="display: none"/>
         <input name="width1" type="any" value="{{width}}" style="display: none"/>
         <button type="submit" class="btn btn-block btn-primary jj-button-hover"
-                aria-pressed="true">Upload Image</button>
+                aria-pressed="true">Upload Image (Only for uploads)</button>
         <br/>
       </form>
-      <button (click)="commit(text, title, width, url)">SubmitTraditionally</button>
+      <button class = "btn btn-block btn-success jj-button-hover"(click)="commit(text, title, width, url)">SubmitTraditionally</button>
       <button (click)="cancel()" class="btn btn-danger btn-block jj-button-hover"
               aria-pressed="true">Cancel</button>
     </div>
   </form>
+</div>
 </div>
