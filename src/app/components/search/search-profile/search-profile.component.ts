@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../services/user.service.client";
 import {SharedService} from "../../../services/shared.service.client";
@@ -30,7 +31,7 @@ export class SearchProfileComponent implements OnInit {
     this.username = this.user.username;
     this.userId = this.user._id;
     this.errorFlag = false;
-    console.log(this.sharedService.user);
+    //console.log(this.errorMessage);
   }
 
   addToFollow(userId) {

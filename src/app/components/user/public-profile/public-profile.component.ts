@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../services/user.service.client';
 import {PostService} from '../../../services/post.service.client';
 import {CBService} from '../../../services/cb.service.client';
 import {SharedService} from '../../../services/shared.service.client';
+import {environment} from '../../../../environments/environment';
+import {isUndefined} from 'util';
+import {AlbumServiceClient} from '../../../services/album.service.client';
 
 @Component({
   selector: 'app-public-profile',
@@ -18,7 +21,10 @@ export class PublicProfileComponent implements OnInit {
               private userService: UserService,
               private postService: PostService,
               private cbService: CBService,
-              private sharedService: SharedService) { }
+              private sharedService: SharedService,
+              private albumService: AlbumServiceClient) {
+  }
+
   objType: String;
   objId: String;
   objData = {};
@@ -31,38 +37,85 @@ export class PublicProfileComponent implements OnInit {
   dataReady: boolean;
   user: any;
   sharedServiceUserId: String;
+  baseURL = environment.baseUrl;
+  currentURL: String;
+  flipper: boolean;
+  albumid: string;
+  albumReady = true;
 
 
   ngOnInit() {
+
     this.dataReady = false;
+    this.flipper = true;
+
+    console.log('set to true');
     this.user = this.sharedService.user;
     this.sharedServiceUserId = this.user._id;
     console.log('PPasdfa the user from sharedService is: ', this.user);
-    this.activatedRoute.params
-      .subscribe(
-        (params: any) => {
-          this.objId = params['uid'];
-          console.log(this.objId);
-          this.objType = params['obtype'];
-          if (params['api']) {
-            console.log('api is here!');
-            this.router.navigate(['user', this.user._id]);
-          }
+    this.prepAlbum();
+    this.currentURL = window.location.href;
+    if (this.currentURL.includes('api/login')) {
+      this.flipper = false;
+      console.log('set to false');
+    }
+//   console.log('contains API/LOGIN');
+    console.log('whats the username', this.user.username);
+    if (this.user.username === undefined) {
+      console.log('was undefined');
+      this.router.navigate([this.baseURL, 'user', this.user._id, 'edit']);
+    } else {
+      if (this.flipper) {
+        this.activatedRoute.params
+          .subscribe(
+            (params: any) => {
+              console.log('entering activated route');
+              this.objId = params['uid'];
+              console.log(this.objId);
+              this.objType = params['obtype'];
+            }
+          );
+        this.birthday = false;
+        switch (this.objType) {
+          case 'cb':
+            this.getCBData(this.objId);
+            break;
+          case 'ce':
+            break;
+          case 'user':
+            this.getUserData(this.objId);
+            break;
+          case 'org':
+            break;
         }
-      );
-    this.birthday = false;
-    switch (this.objType) {
-
-      case 'cb':
-        this.getCBData(this.objId);
-        break;
-      case 'ce':
-        break;
-      case 'user':
+      } else {
+        this.objId = this.user._id;
+        this.objType = 'user';
         this.getUserData(this.objId);
-        break;
-      case 'org':
-        break;
+        this.router.navigate([this.baseURL, 'user', this.user._id]);
+      }
+      // this.activatedRoute.params
+      //   .subscribe(
+      //     (params: any) => {
+      //       console.log('entering activated route');
+      //       this.objId = params['uid'];
+      //       console.log(this.objId);
+      //       this.objType = params['obtype'];
+      //     }
+      //   );
+      // this.birthday = false;
+      // switch (this.objType) {
+      //   case 'cb':
+      //     this.getCBData(this.objId);
+      //     break;
+      //   case 'ce':
+      //     break;
+      //   case 'user':
+      //     this.getUserData(this.objId);
+      //     break;
+      //   case 'org':
+      //     break;
+      // }
     }
     // if (this.objType === 'user') {
     //   console.log('username is this', this.objData['username']);
@@ -100,11 +153,11 @@ export class PublicProfileComponent implements OnInit {
   }
 
   getCBData(objId) {
-    this.cbService.findCBbyId(this.objId).subscribe((cb:any) => {
-        this.objData = cb;
-        this.follows = [];
-        this.findPostsForNonUserDataByTag();
-        this.dataReady = true;
+    this.cbService.findCBbyId(this.objId).subscribe((cb: any) => {
+      this.objData = cb;
+      this.follows = [];
+      this.findPostsForNonUserDataByTag();
+      this.dataReady = true;
     });
   }
 
@@ -117,6 +170,7 @@ export class PublicProfileComponent implements OnInit {
         this.postsInPublicProfile = posts;
       });
   }
+
 
   getUserData(objId){
     this.objData = this.sharedService.user;
@@ -148,7 +202,7 @@ export class PublicProfileComponent implements OnInit {
 
   deleteFollow(objId) {
     console.log(objId);
-    for(var i = 0; i < this.follows.length; i++) {
+    for (var i = 0; i < this.follows.length; i++) {
       if (this.follows[i]._id === objId) {
         this.follows.splice(i, 1);
       }
@@ -159,7 +213,6 @@ export class PublicProfileComponent implements OnInit {
     }
     this.userService.updateUser(this.objId, this.sharedService.user)
       .subscribe( (usr: any) => {
-
       });
   }
 
@@ -178,4 +231,58 @@ export class PublicProfileComponent implements OnInit {
       });
   }
 
+  prepAlbum() {
+
+      if (this.user.albums.length > 0) {
+        this.albumid = this.user.albums[0];
+        console.log(this.albumid);
+        this.albumReady = true;
+      }
+  }
+
 }
+
+//
+//
+// if (this.currentURL.includes('api/login')) {
+//   console.log('contains API/LOGIN');
+//   this.objId = this.user._id;
+//   this.objType = 'user';
+//   this.birthday = false;
+//   switch (this.objType) {
+//     case 'cb':
+//       this.getCBData(this.objId);
+//       break;
+//     case 'ce':
+//       break;
+//     case 'user':
+//       this.getUserData(this.objId);
+//       break;
+//     case 'org':
+//       break;
+//   }
+// } else {
+//   this.activatedRoute.params
+//     .subscribe(
+//       (params: any) => {
+//         console.log('entering activated route');
+//         this.objId = params['uid'];
+//         console.log(this.objId);
+//         this.objType = params['obtype'];
+//         this.birthday = false;
+//         switch (this.objType) {
+//           case 'cb':
+//             this.getCBData(this.objId);
+//             break;
+//           case 'ce':
+//             break;
+//           case 'user':
+//             this.getUserData(this.objId);
+//             break;
+//           case 'org':
+//             break;
+//         }
+//       }
+//     );
+// }
+// }
