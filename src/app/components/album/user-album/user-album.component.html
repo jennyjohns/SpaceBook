@@ -21,13 +21,13 @@
            id="description"
            name="description"
            placeholder="..."
-           class="form-control"
+           class="form-control"s
            required/>
     <!--<span class="help-block" *ngIf="description.touched && !description.valid" @TODO>-->
       <!--Please enter an album description!-->
     <!--</span>-->
   </div>
-  <div *ngFor="let pic of pictures">
+  <div *ngFor="let pic of picturesForDisplay">
     <img (click)="goToPicture(pic._id)"   class="jj-content" src="{{pic.url}}" [style.width]="pic.width">
   </div>
   <button class="btn btn-block btn-success jj-button-hover" (click)="commit(title, description)">Commit</button>
