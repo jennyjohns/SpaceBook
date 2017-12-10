@@ -45,6 +45,12 @@ body .jj-body {
   width:100%;
 }
 
+.jj-h1 {
+  margin-top: 0px;
+  font-size: 150px;
+  text-align: center;
+}
+
 .jj-widget-chooser-padding {
   padding-left: 0px;
 }

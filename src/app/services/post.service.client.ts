@@ -47,7 +47,7 @@ export class PostService {
   }
 
   findAllPosts() {
-    const url = this.baseURL + '/api/post'
+    const url = this.baseURL + '/api/post';
     return this.http.get(url)
       .map((response: Response) => {
         return response.json();

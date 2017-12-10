@@ -20,15 +20,17 @@ import {PictureNewComponent} from './components/picture/picture-new/picture-new.
 import {UserPicturesComponent} from './components/picture/user-pictures/user-pictures.component';
 import {AlbumListComponent} from './components/album/album-list/album-list.component';
 import {CreateObjectComponent} from './components/create-object/create-object.component';
-import {AuthGuard} from "./services/auth-guard.service.client";
+import {AuthGuard} from './services/auth-guard.service.client';
+import {HomepageComponent} from './components/homepage/homepage.component';
 
 
 const APP_ROUTES: Routes = [
+  {path: '', component: HomepageComponent},
+  {path: 'default', component: HomepageComponent},
   {path: 'register', component: RegisterComponent},
   {path: ':obtype/:uid', component: PublicProfileComponent, canActivate: [AuthGuard]},
   {path: ':obtype/:uid/edit', component: ProfileComponent},
   {path: 'searchAsteroids', component: NasaTestComponent},
-  {path: '', component: FrontPageComponent},
   {path: 'login', component: FrontPageComponent},
   {path: 'nasa-pic', component: NasaPictureTestComponent},
   {path: 'search', component: SearchComponent},

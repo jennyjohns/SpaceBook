@@ -1,0 +1,37 @@
+<!--Home page - this will be the landing page of your project. It should look spectacular. -->
+<!--I should be proud to share the URL with colleagues. The purpose of the Website should be clear-->
+<body>
+<div class="jj-pic-body">
+  <div class="jj-text-left jj-font">
+    logged in
+    <div *ngIf="loggedIn; then LoggedIn; else notLoggedIn">
+    </div>
+    <ng-template #LoggedIn>
+      <span class="dot-green"></span>
+    </ng-template>
+    <ng-template #notLoggedIn>
+      <span class="dot-red"></span>
+    </ng-template>
+  </div>
+  <div class="jj-typewriter">
+    <h1>Welcome To SpaceBook!</h1>
+  </div>
+  <button class="jj-button jj-text-right jj-font" (click)="continueToSpaceBook()">Continue To SpaceBook</button>
+</div>
+
+<h1> Welcome to SpaceBook, the first social networking site dedicated to the confluence of space enthusiasts.</h1>
+
+<p>
+Providing
+  an easy way for collaborations between professional researchers and organizations, SpaceBook is changing the game. It's
+ also allowing space enthusiasts to share their awesome research amongst their peers.
+</p>
+
+<h4>New to the wonders of space?</h4>
+<p>
+Feel free to join us and share any cool thoughts, even pictures of celestial events that you take! You can even follow
+the professionals that use SpaceBook...connect with your heroes!
+</p>
+
+</body>
+

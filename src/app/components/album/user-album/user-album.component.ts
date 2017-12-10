@@ -39,6 +39,12 @@ export class UserAlbumComponent implements OnInit {
         });
         this.title = album['title'];
         this.description = album['description'];
+        for (var i = 0; i < album.pictures.length; i++) {
+          this.pictureService.findPictureById(album.pictures[i])
+            .subscribe((pic: any) => {
+              this.pictures.push(pic);
+            });
+        }
       });
   }
 

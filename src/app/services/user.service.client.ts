@@ -59,7 +59,7 @@ export class UserService {
             // this.router.navigate(['user', user._id])
             return true;
           } else {
-            this.router.navigate(['/login']);
+            // this.router.navigate(['/login']);
             return false;
           }
         } );
