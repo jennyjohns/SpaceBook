@@ -1,16 +1,17 @@
 <app-space-banner-default></app-space-banner-default>
-<div class="col-sm-3 container-fluid">
+<div class="container-fluid mh-backgroundColor">
+<div class="col-sm-3 container-fluid mh-paddingAwayFromNavBarTriple" align="center">
 <div *ngIf="dataReady">
-  <div class="container-fluid row">
+  <!--<div class="container-fluid row">-->
     <div *ngIf="birthday"
          class="alert alert-danger">
       {{birthdayMsg}}
     </div>
-    <div class="col-sm-3">
-    <button class="jj-button-profile jj-card" (click)="editProfile()">
-      <img class="jj-img-padding mb-img-max" src="{{objData.picture}}">
+    <!--<div class="col-sm-3">-->
+    <button align ="center" class="jj-button-profile jj-card" (click)="editProfile()">
+      <img src="{{objData.picture}}">
       <div class="jj-container">
-        <div [ngSwitch]="objType">
+        <div [ngSwitch]="objType" class="whiteText">
           <div *ngSwitchCase="'user'">
             <h4><b>{{objData.firstName}} {{objData.lastName}}</b></h4>
           </div>
@@ -34,21 +35,27 @@
         {{objData.wiki}}
       </div>
     </div>
-      <button routerLink="/new" class="btn btn-success">+</button>
+      <button routerLink="/new" class="btn btn-success">Contribute Content</button>
       <div *ngIf="authorized()">
-      <button routerLink="/edit/{{this.objId}}" class="btn btn-warning">Edit</button>
+      <button routerLink="/edit/{{this.objId}}" class="btn btn-warning">Edit Current Page</button>
       </div>
-  </div>
-  </div>
+  <!--</div>-->
+  <!--</div>-->
+  <button class=" jj-button-profile"
+          aria-pressed="true"
+          (click)="goToAlbums()">
+    <h3>{{user.firstName}}'s Photos</h3>
+    <span class="glyphicon glyphicon-picture"></span>
+  </button>
+
   <div class="container-fluid">
-    <h2>FOLLOWS</h2>
-    <div *ngFor="let user of follows">
-      <button class="jj-button-profile" (click)="goToUserProfile(user._id)"><img class="jj-follows"
-                                                                                 src="{{user.picture}}"/>
+    <h3>Follows</h3>
+    <div *ngFor="let user of follows" class="mh-roundedCornersForSmallButtons">
+      <button class="jj-button-profile" (click)="goToUserProfile(user._id)"><img class="jj-follows" src="{{user.picture}}"/>
         <p>{{user.firstName}} {{user.lastName}}</p>
       </button>
-      <button class="jj-button-profile" (click)="deleteFollow(user._id)"><span
-        class="glyphicon glyphicon-remove"></span></button>
+      <button class="jj-button-profile whiteText" (click)="deleteFollow(user._id)"><span
+        class="glyphicon glyphicon-remove whiteText"></span></button>
     </div>
   </div>
 
@@ -62,21 +69,15 @@
   <!--(click)="search()">-->
   <!--Search-->
   <!--</button>-->
-  <button class=" jj-button-profile"
-          aria-pressed="true"
-          (click)="goToAlbums()">
-    <p>{{user.firstName}}'s Photos</p>
-      <span class="glyphicon glyphicon-picture"></span>
-  </button>
 </div>
 </div>
 
 
 <div class = "col-sm-9 mh-paddingAwayFromNavBar">
-  <div *ngIf="albumReady" align="center">
+  <div *ngIf="albumReady" align="center" class ="hidden-xs mh-roundedCorners">
     <app-album-carousel [albumid]="albumid"></app-album-carousel>
   </div>
-  <div class="container-fluid">
+  <div class="container-fluid mh-roundedCornersV2">
     <div *ngIf="ifIdEqualPosterId()">
       <app-create-post></app-create-post>
     </div>
@@ -84,3 +85,4 @@
   <app-post-list [posts]="postsInPublicProfile" [IDfromProfile]="objId"></app-post-list>
 </div>
 
+</div>
