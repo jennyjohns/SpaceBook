@@ -13,8 +13,10 @@ module.exports = function (app) {
   var pictureModel = require('../../model/picture/picture.model.server');
 
   function createPicture(req, res) {
+    console.log('entering create Picture');
     var albumId = req.params['aid'];
     var pic = req.body;
+    console.log('the pic body', pic);
     pic.albumId = albumId;
     pictureModel
       .createPicture(pic)
@@ -65,11 +67,17 @@ module.exports = function (app) {
   }
 
   function uploadImage(req, res) {
+    console.log('entring uploadImage');
     var pictureId = req.body.pictureId;
+    console.log('pictureId', pictureId);
     var width = req.body.width;
+    console.log('width', width);
     var myFile = req.file;
+    console.log('myFile', myFile);
     var userId = req.body.userId;
+    console.log('userId', userId);
     var albumId = req.body.albumId;
+    console.log('albumId', albumId);
 
     var originalName = myFile.originalname;
     var fileName = myFile.filename;
