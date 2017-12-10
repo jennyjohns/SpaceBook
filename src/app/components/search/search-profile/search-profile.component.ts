@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../services/user.service.client";
+import {SharedService} from "../../../services/shared.service.client";
 
 @Component({
   selector: 'app-search-profile',
@@ -17,19 +18,19 @@ export class SearchProfileComponent implements OnInit {
   errorFlag: Boolean;
   errorMessage: String;
 
-  constructor(private activatedRoute: ActivatedRoute, private userService: UserService, private router: Router) {
+  constructor(private sharedService: SharedService, private activatedRoute: ActivatedRoute, private userService: UserService, private router: Router) {
   }
 
   ngOnInit() {
     this.activatedRoute.params
       .subscribe((params: any) => {
-        this.originalUserId = params['uid'];
+        this.originalUserId = this.sharedService.user['_id'];
       });
     this.profilePic = this.user.picture;
     this.username = this.user.username;
     this.userId = this.user._id;
     this.errorFlag = false;
-    console.log(this.errorMessage);
+    console.log(this.sharedService.user);
   }
 
   addToFollow(userId) {
@@ -38,20 +39,17 @@ export class SearchProfileComponent implements OnInit {
       this.errorFlag = true;
       this.errorMessage = 'You cannot follow yourself!';
     } else {
-      this.userService.findUserById(this.originalUserId)
-        .subscribe((user: any) => {
-          if (user.follows.includes(userId)) {
-            this.errorFlag = true;
-            this.errorMessage = 'You already follow this user.';
-          } else {
-            user.follows.push(userId);
-            this.userService.updateUser(this.originalUserId, user)
-              .subscribe((usr: any) => {
-                this.router.navigate(['/user/' + this.originalUserId]);
-              });
-          }
-        });
-
+        if(this.sharedService.user['follows'].includes(userId)) {
+          this.errorFlag = true;
+          this.errorMessage = 'You already follow this user.';
+        }else {
+          this.sharedService.user['follows'].push(userId);
+          this.userService.updateUser(this.originalUserId, this.sharedService.user)
+            .subscribe((usr: any) => {
+              this.sharedService.user = usr;
+              this.router.navigate(['user/' + this.originalUserId]);
+            })
+        }
     }
   }
 }
