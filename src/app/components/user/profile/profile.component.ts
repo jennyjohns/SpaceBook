@@ -65,6 +65,7 @@ export class ProfileComponent implements OnInit {
       });
   }
 
+
   // commit(pic) {
   //   const user = {_id: this.userId, password: this.password, username: this.username, firstName: this.firstName,
   //     lastName: this.lastName, email: this.email, picture: pic};

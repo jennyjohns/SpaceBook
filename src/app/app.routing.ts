@@ -22,6 +22,9 @@ import {AlbumListComponent} from './components/album/album-list/album-list.compo
 import {CreateObjectComponent} from './components/create-object/create-object.component';
 import {AuthGuard} from './services/auth-guard.service.client';
 import {HomepageComponent} from './components/homepage/homepage.component';
+import {EditObjectComponent} from "./components/edit-object/edit-object.component";
+import {EditUserObjectComponent} from "./components/edit-object/edit-user-object/edit-user-object.component";
+import {EditCelestialEventObjectComponent} from "./components/edit-object/edit-celestial-event-object/edit-celestial-event-object.component";
 
 
 const APP_ROUTES: Routes = [
@@ -30,6 +33,9 @@ const APP_ROUTES: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: ':obtype/:uid', component: PublicProfileComponent, canActivate: [AuthGuard]},
   {path: ':obtype/:uid/edit', component: ProfileComponent},
+  {path: 'edit/:objId', component: EditObjectComponent},
+  {path: 'edit', component: EditUserObjectComponent},
+  {path: 'edit/ce', component: EditCelestialEventObjectComponent},
   {path: 'searchAsteroids', component: NasaTestComponent},
   {path: 'login', component: FrontPageComponent},
   {path: 'nasa-pic', component: NasaPictureTestComponent},
