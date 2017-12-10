@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from "../../../services/user.service.client";
+import {ActivatedRoute, Router} from '@angular/router';
+import {UserService} from '../../../services/user.service.client';
 
 @Component({
   selector: 'app-search-profile',
@@ -29,7 +29,7 @@ export class SearchProfileComponent implements OnInit {
     this.username = this.user.username;
     this.userId = this.user._id;
     this.errorFlag = false;
-    console.log(this.errorMessage);
+    //console.log(this.errorMessage);
   }
 
   addToFollow(userId) {

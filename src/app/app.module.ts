@@ -41,6 +41,8 @@ import {CEService} from './services/ce.service.client';
 import {PubService} from './services/pub.service.client';
 import {AuthGuard} from "./services/auth-guard.service.client";
 import { SearchCeComponent } from './components/search/search-ce/search-ce.component';
+import { SearchPubComponent } from './components/search/search-pub/search-pub.component';
+import { SearchNasaDetailComponent } from './components/search/search-nasa/search-nasa-detail/search-nasa-detail.component';
 
 @NgModule({
   // Declare components here
@@ -70,6 +72,8 @@ import { SearchCeComponent } from './components/search/search-ce/search-ce.compo
     AlbumListComponent,
     CreateObjectComponent,
     SearchCeComponent,
+    SearchPubComponent,
+    SearchNasaDetailComponent,
 
   ],
   imports: [
