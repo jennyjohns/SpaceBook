@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../services/user.service.client';
 import {PostService} from '../../../services/post.service.client';
 import {CBService} from '../../../services/cb.service.client';
 import {SharedService} from '../../../services/shared.service.client';
-import {environment} from "../../../../environments/environment";
-import {isUndefined} from "util";
+import {environment} from '../../../../environments/environment';
+import {isUndefined} from 'util';
+import {AlbumServiceClient} from '../../../services/album.service.client';
 
 @Component({
   selector: 'app-public-profile',
@@ -20,7 +21,10 @@ export class PublicProfileComponent implements OnInit {
               private userService: UserService,
               private postService: PostService,
               private cbService: CBService,
-              private sharedService: SharedService) { }
+              private sharedService: SharedService,
+              private albumService: AlbumServiceClient) {
+  }
+
   objType: String;
   objId: String;
   objData = {};
@@ -36,15 +40,20 @@ export class PublicProfileComponent implements OnInit {
   baseURL = environment.baseUrl;
   currentURL: String;
   flipper: boolean;
+  albumid: string;
+  albumReady = true;
 
 
   ngOnInit() {
+
     this.dataReady = false;
     this.flipper = true;
+
     console.log('set to true');
     this.user = this.sharedService.user;
     this.sharedServiceUserId = this.user._id;
     console.log('PPasdfa the user from sharedService is: ', this.user);
+    this.prepAlbum();
     this.currentURL = window.location.href;
     if (this.currentURL.includes('api/login')) {
       this.flipper = false;
@@ -144,11 +153,11 @@ export class PublicProfileComponent implements OnInit {
   }
 
   getCBData(objId) {
-    this.cbService.findCBbyId(this.objId).subscribe((cb:any) => {
-        this.objData = cb;
-        this.follows = [];
-        this.findPostsForNonUserDataByTag();
-        this.dataReady = true;
+    this.cbService.findCBbyId(this.objId).subscribe((cb: any) => {
+      this.objData = cb;
+      this.follows = [];
+      this.findPostsForNonUserDataByTag();
+      this.dataReady = true;
     });
   }
 
@@ -162,9 +171,9 @@ export class PublicProfileComponent implements OnInit {
       });
   }
 
-  getUserData(objId){
+  getUserData(objId) {
     this.userService.findUserById(this.objId)
-      .subscribe( (user: any) => {
+      .subscribe((user: any) => {
         console.log('was a user found', user);
         var f = [];
         this.objData = user;
@@ -202,7 +211,7 @@ export class PublicProfileComponent implements OnInit {
 
   deleteFollow(objId) {
     console.log(objId);
-    for(var i = 0; i < this.follows.length; i++) {
+    for (var i = 0; i < this.follows.length; i++) {
       if (this.follows[i]._id === objId) {
         this.follows.splice(i, 1);
       }
@@ -212,7 +221,7 @@ export class PublicProfileComponent implements OnInit {
       .subscribe((user: any) => {
         console.log('PREVIOUS USER.FOLLOWS ', user.follows);
         user.follows = [];
-        for(var i = 0; i < this.follows.length; i++) {
+        for (var i = 0; i < this.follows.length; i++) {
           user.follows.push(this.follows[i]._id);
         }
         console.log('UPDATED USER.FOLLOWS ', user.follows);
@@ -236,6 +245,15 @@ export class PublicProfileComponent implements OnInit {
       .subscribe((status) => {
         this.router.navigate(['login']);
       });
+  }
+
+  prepAlbum() {
+
+      if (this.user.albums.length > 0) {
+        this.albumid = this.user.albums[0];
+        console.log(this.albumid);
+        this.albumReady = true;
+      }
   }
 
 }
