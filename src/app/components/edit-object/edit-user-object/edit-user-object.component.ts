@@ -22,8 +22,7 @@ export class EditUserObjectComponent implements OnInit {
   lastName: String;
   DOB: String;
   phone: String;
-  remove: String;
-  userType = [];
+  userType: String;
 
 
   constructor(private userService: UserService, private router: Router, private activateRoute: ActivatedRoute,
@@ -47,11 +46,7 @@ export class EditUserObjectComponent implements OnInit {
         this.lastName = user['lastName'];
         this.DOB = user['DOB'];
         this.phone = user['phone'];
-        if(user['userType'].length === 1 && user['userType'].includes(null)) {
-          this.userType = [];
-        }else {
-          this.userType = user['userType'];
-        }
+        this.userType = user['userType'];
       });
 
   }
@@ -63,19 +58,9 @@ export class EditUserObjectComponent implements OnInit {
       });
   }
 
-  commit(username, email, firstName, lastName, phone, DOB, type, remove) {
-    if(!this.userType.includes(this.type)) {
-      this.userType.push(this.type);
-    }
-    console.log('UT', this.userType);
-    this.type = type;
-    console.log('TYPE', this.type);
-    this.remove = remove;
-    console.log('REMOVE', this.remove);
-    this.userType.splice(this.userType.indexOf(this.remove), 1);
-
+  commit(username, email, firstName, lastName, phone, DOB, type) {
     const user = {username: username, email: email, firstName: firstName, lastName: lastName,
-      phone: phone, DOB: DOB, userType: this.userType};
+      phone: phone, DOB: DOB, userType: type};
     this.userService.updateUser(this.userId, user)
       .subscribe((status: any) => {
         const u = this.sharedService.user;
