@@ -17,8 +17,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // DON'T FORGET TO CHANGE THIS LATER!
-// app.use(session({ secret: process.env.SESSION_SECRET }));
-app.use(session({ secret: "stringSecret124" }));
+app.use(session({ secret: process.env.SESSION_SECRET }));
+// app.use(session({ secret: "stringSecret124" }));
 
 var passport = require('passport');
 
