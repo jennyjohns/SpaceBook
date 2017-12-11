@@ -14,7 +14,7 @@ var UserSchema = mongoose.Schema({
     id:    String,
     token: String
   },
-  userType: [{type: String, enum: ['PROFESSIONAL', 'AMATEUR', 'ADMIN', 'ORGANIZATION', 'UNIVERSITY']}],
+  userType: {type: String, enum: ['PROFESSIONAL', 'AMATEUR', 'ADMIN', 'ORGANIZATION', 'UNIVERSITY']},
   albums: [{type: mongoose.Schema.Types.ObjectId, ref: 'AlbumModel'}]
 }, {collection: 'user'});
 

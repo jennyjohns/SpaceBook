@@ -1,4 +1,8 @@
-
+<app-space-banner-default></app-space-banner-default>
+<div *ngIf="errorFlag"
+     class="alert alert-danger">
+  {{errorMessage}}
+</div>
 <div class="container-fluid">
 <form #f="ngForm">
   Select Object to Create:

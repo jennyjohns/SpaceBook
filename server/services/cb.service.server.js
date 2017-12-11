@@ -18,6 +18,7 @@ module.exports = function (app) {
   function findCBsByText(req, res) {
     var text = req.query['text'];
     cbModel.findCBsByText(text).then(function (cbs) {
+      console.log(cbs);
       res.json(cbs);
     });
   }
