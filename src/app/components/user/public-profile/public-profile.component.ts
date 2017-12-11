@@ -7,6 +7,7 @@ import {SharedService} from '../../../services/shared.service.client';
 import {environment} from '../../../../environments/environment';
 import {isUndefined} from 'util';
 import {AlbumServiceClient} from '../../../services/album.service.client';
+import {CEService} from "../../../services/ce.service.client";
 
 @Component({
   selector: 'app-public-profile',
@@ -22,7 +23,8 @@ export class PublicProfileComponent implements OnInit {
               private postService: PostService,
               private cbService: CBService,
               private sharedService: SharedService,
-              private albumService: AlbumServiceClient) {
+              private albumService: AlbumServiceClient,
+              private ceService: CEService) {
   }
 
   objType: String;
@@ -73,6 +75,7 @@ export class PublicProfileComponent implements OnInit {
                       this.getCBData(this.objId);
                       break;
                     case 'ce':
+                      this.getCEData(this.objId);
                       break;
                     case 'user':
                       this.getUserData(this.objId);
@@ -115,6 +118,15 @@ export class PublicProfileComponent implements OnInit {
     this.cbService.findCBbyId(this.objId).subscribe((cb: any) => {
       this.objData = cb;
       console.log(this.objData['picture']);
+      this.follows = [];
+      this.findPostsForNonUserDataByTag();
+      this.dataReady = true;
+    });
+  }
+
+  getCEData(objId) {
+    this.ceService.findCEbyId(this.objId).subscribe((ce: any) => {
+      this.objData = ce;
       this.follows = [];
       this.findPostsForNonUserDataByTag();
       this.dataReady = true;
