@@ -19,7 +19,8 @@ export class SearchProfileComponent implements OnInit {
   errorFlag: Boolean;
   errorMessage: String;
 
-  constructor(private sharedService: SharedService, private activatedRoute: ActivatedRoute, private userService: UserService, private router: Router) {
+  constructor(private sharedService: SharedService, private activatedRoute: ActivatedRoute,
+              private userService: UserService, private router: Router) {
   }
 
   ngOnInit() {
@@ -31,7 +32,7 @@ export class SearchProfileComponent implements OnInit {
     this.username = this.user.username;
     this.userId = this.user._id;
     this.errorFlag = false;
-    //console.log(this.errorMessage);
+    this.user = this.sharedService.user;
   }
 
   addToFollow(userId) {
@@ -49,8 +50,21 @@ export class SearchProfileComponent implements OnInit {
             .subscribe((usr: any) => {
               this.sharedService.user = usr;
               this.router.navigate(['user/' + this.originalUserId]);
-            })
+            });
         }
+    }
+  }
+
+  sayHi() {
+    if (this.user.username) {
+      console.log('attempting to route');
+      this.router.navigate(['user/', this.userId]);
+    } else {
+      console.log('attempting to else');
+      const wishToLogin = window.confirm('You must sign in to view this page! Would you like to sign in?');
+      if (wishToLogin === true) {
+        this.router.navigate(['login']);
+      }
     }
   }
 }
