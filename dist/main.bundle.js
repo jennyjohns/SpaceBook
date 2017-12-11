@@ -656,7 +656,7 @@ var AlbumNewComponent = (function () {
         this.album = { uploaderId: this.userId, title: title, description: description, dateCreated: this.dateCreated };
         this.albumService.createAlbum(this.userId, this.album)
             .subscribe(function (album) {
-            _this.router.navigate(['user/' + _this.userId + '/album']); //@TODO possibly change this to route to a list of albums??
+            _this.router.navigate(['user/' + _this.userId + '/album']);
         });
     };
     AlbumNewComponent.prototype.cancel = function () {
@@ -862,7 +862,6 @@ var ApodComponent = (function () {
             _this.result = result;
             _this.gotResult = true;
             _this.url = result.hdurl;
-            console.log(result);
         });
     };
     ApodComponent.prototype.goTofindAsteroid = function () {
@@ -947,7 +946,6 @@ var ApodarchiveComponent = (function () {
             _this.result = result;
             _this.gotResult = true;
             _this.url = result.hdurl;
-            console.log(result);
         });
     };
     ApodarchiveComponent.prototype.goTofindAsteroid = function () {
@@ -1090,7 +1088,7 @@ var CreateObjectComponent = (function () {
                 }
                 else {
                     _this.cbService.createCB(_this.cb).subscribe(function (cb) {
-                        alert('CB created!');
+                        alert('Celestial Body created!');
                     });
                 }
             });
@@ -1111,7 +1109,7 @@ var CreateObjectComponent = (function () {
                 }
                 else {
                     _this.ceService.createCE(_this.ce).subscribe(function (ce) {
-                        alert('CE created!');
+                        alert('Celestial Event created!');
                     });
                 }
             });
@@ -1124,11 +1122,10 @@ var CreateObjectComponent = (function () {
             this.pub.link = this.createForm.value.publink;
             this.pub.pubDate = this.createForm.value.pubdate;
             this.pubService.createPub(this.pub).subscribe(function (pub) {
-                alert('Pub created!');
+                alert('Publication created!');
             });
         }
         else {
-            console.log('cant make one of those yet');
         }
     };
     return CreateObjectComponent;
@@ -1238,10 +1235,7 @@ var CreatePostComponent = (function () {
         var _this = this;
         this.userService.findUserByUsername(this.tag)
             .subscribe(function (user) {
-            console.log('user', user);
             if (user) {
-                console.log('user', user);
-                console.log('this is a user');
                 _this.tags.push(_this.tag);
                 _this.tag = null;
             }
@@ -1249,8 +1243,6 @@ var CreatePostComponent = (function () {
                 _this.cbService.findCBbyText(_this.tag)
                     .subscribe(function (cb) {
                     if (cb.length > 0) {
-                        console.log('cb', cb);
-                        console.log('this is a cb');
                         _this.tags.push(_this.tag);
                         _this.tag = null;
                     }
@@ -1258,7 +1250,6 @@ var CreatePostComponent = (function () {
                         _this.ceService.findCEbyText(_this.tag)
                             .subscribe(function (ce) {
                             if (ce.length > 0) {
-                                console.log('this is a ce');
                                 _this.tags.push(_this.tag);
                                 _this.tag = null;
                             }
@@ -1278,9 +1269,6 @@ var CreatePostComponent = (function () {
             date: new Date(), images: [this.url], tags: this.tags };
         this.postService.createPost(newPost)
             .subscribe(function (posts) {
-            // this.posts = posts;
-            //   this.router.navigate([this.baseUrl + 'user/', this.posterId]);
-            //   this.ngOnInit();
         });
     };
     return CreatePostComponent;
@@ -1295,42 +1283,6 @@ CreatePostComponent = __decorate([
 ], CreatePostComponent);
 
 var _a, _b, _c, _d, _e, _f, _g;
-// addTag() {
-//   const startLength = this.tags.length;
-//   var userServiceFinished = false;
-//   var ceServiceFinished = false;
-//   var cbServiceFinished = false;
-//   this.userService.findUserByUsername(this.tag)
-//     .subscribe((user) => {
-//       console.log('user', user);
-//       if (user) {
-//         console.log('user', user);
-//         console.log('this is a user');
-//         this.tags.push(this.tag);
-//         this.tag = null;
-//       }
-//       userServiceFinished = true;
-//     });
-//   this.cbService.findCBbyText(this.tag)
-//     .subscribe((cb) => {
-//       if (cb) {
-//         console.log('cb', cb);
-//         console.log('this is a cb');
-//         this.tags.push(this.tag);
-//         this.tag = null;
-//       }
-//       cbServiceFinished = true;
-//     });
-//   this.ceService.findCEbyText(this.tag)
-//     .subscribe((ce) => {
-//       if (ce) {
-//         console.log('this is a ce');
-//         this.tags.push(this.tag);
-//         this.tag = null;
-//       }
-//       ceServiceFinished = true;
-//     });
-// }
 //# sourceMappingURL=create-post.component.js.map
 
 /***/ }),
@@ -1391,22 +1343,14 @@ var EditCelestialBodyObjectComponent = (function () {
         this.cb = {};
         this.cbTypes = [];
     }
-    // name: String,
-    // region: String,
-    // types: [String],
-    // wiki: String,
-    // verified: Boolean,
-    // picture: String
     EditCelestialBodyObjectComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.activatedRoute.params
             .subscribe(function (params) {
-            // this.cbId = params['objId'];
-            _this.cbId = "5a2daeefc3dba628bc2a5414";
+            _this.cbId = params['objId'];
         });
         this.cbService.findCBbyId(this.cbId)
             .subscribe(function (cb) {
-            console.log(cb);
             _this.cb = cb;
             _this.cbName = cb['name'];
             _this.cbRegion = cb['region'];
@@ -1425,10 +1369,8 @@ var EditCelestialBodyObjectComponent = (function () {
     EditCelestialBodyObjectComponent.prototype.commit = function (name, region, types, wiki, picture) {
         var _this = this;
         var cb = { name: name, region: region, types: types, wiki: wiki, picture: picture };
-        console.log('UPDATED', cb);
         this.cbService.updateCB(this.cbId, cb)
             .subscribe(function (status) {
-            console.log(status);
             _this.router.navigate(['cb/' + _this.cbId]);
         });
     };
@@ -1496,14 +1438,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var EditCelestialEventObjectComponent = (function () {
-    // name: String,
-    // region: String,
-    // types: [String],
-    // wiki: String,
-    // verified: Boolean,
-    // picture: String,
-    // start: Date,
-    // end: Date
     function EditCelestialEventObjectComponent(ceService, router, activatedRoute, sharedService) {
         this.ceService = ceService;
         this.router = router;
@@ -1516,7 +1450,6 @@ var EditCelestialEventObjectComponent = (function () {
         var _this = this;
         this.activatedRoute.params
             .subscribe(function (params) {
-            // this.ceId = "5a2dc1d485be02065cc2f846";
             _this.ceId = params['objId'];
         });
         this.ceService.findCEbyId(this.ceId)
@@ -1530,7 +1463,6 @@ var EditCelestialEventObjectComponent = (function () {
             _this.start = ce['start'];
             _this.end = ce['end'];
         });
-        console.log(this.sharedService.user);
     };
     EditCelestialEventObjectComponent.prototype.deletecb = function () {
         var _this = this;
@@ -1542,10 +1474,8 @@ var EditCelestialEventObjectComponent = (function () {
     EditCelestialEventObjectComponent.prototype.commit = function (name, region, types, wiki, picture, start, end) {
         var _this = this;
         var ce = { name: name, region: region, types: types, wiki: wiki, picture: picture, start: start, end: end };
-        console.log('UPDATED', ce);
         this.ceService.updateCE(this.ceId, ce)
             .subscribe(function (status) {
-            console.log(status);
             _this.router.navigate(['ce/' + _this.ceId]);
         });
     };
@@ -1627,7 +1557,6 @@ var EditObjectComponent = (function () {
     }
     EditObjectComponent.prototype.ngOnInit = function () {
         var _this = this;
-        console.log('IN EDIT');
         this.activatedRoute.params
             .subscribe(function (params) {
             _this.objectId = params['objId'];
@@ -1722,8 +1651,7 @@ var EditPublicationObjectComponent = (function () {
         var _this = this;
         this.activatedRoute.params
             .subscribe(function (params) {
-            _this.pubId = "5a2dcace3d8f9437a00a96c2";
-            // this.pubId = params['objId'];
+            _this.pubId = params['objId'];
         });
         this.pubService.findPubbyId(this.pubId)
             .subscribe(function (pub) {
@@ -1738,13 +1666,9 @@ var EditPublicationObjectComponent = (function () {
     };
     EditPublicationObjectComponent.prototype.commit = function (name, authors, tags, link, abstract, pubDate) {
         var _this = this;
-        console.log('PUB', this.pub);
-        console.log(this.pubId);
         var pub = { name: name, authors: [authors], tags: [tags], link: link, abstract: abstract, pubDate: pubDate };
-        console.log('UPDATED PUB', pub);
         this.pubService.updatePub(this.pubId, pub)
             .subscribe(function (status) {
-            console.log('UPDATE STATUS', status);
             _this.router.navigate(['user/' + _this.sharedService.user['_id']]);
         });
     };
@@ -1834,7 +1758,6 @@ var EditUserObjectComponent = (function () {
     }
     EditUserObjectComponent.prototype.ngOnInit = function () {
         var _this = this;
-        console.log('IN EDIT USER');
         this.activateRoute.params
             .subscribe(function (params) {
             _this.userId = params['objId'];
@@ -1842,9 +1765,6 @@ var EditUserObjectComponent = (function () {
         this.userService.findUserById(this.userId)
             .subscribe(function (user) {
             _this.user = user;
-            // this.userType = user['userType'];
-            console.log(user['userType']);
-            // console.log(this.userType.includes(null));
             _this.username = user['username'];
             _this.email = user['email'];
             _this.firstName = user['firstName'];
@@ -1954,7 +1874,6 @@ var HomepageComponent = (function () {
                 _this.loggedIn = bool;
             });
         });
-        console.log('IN HOMEPAGE', this.sharedService.user);
     };
     HomepageComponent.prototype.continueToSpaceBook = function () {
         if (this.loggedIn) {
@@ -2108,7 +2027,6 @@ var NasaPictureTestComponent = (function () {
             .subscribe(function (result) {
             _this.result = result;
             _this.gotResult = true;
-            // console.log(result);
         });
     };
     NasaPictureTestComponent.prototype.ngOnInit = function () {
@@ -2279,7 +2197,6 @@ var PictureNewComponent = (function () {
             .subscribe(function (params) {
             _this.userId = params['uid'];
             _this.albumId = params['aid'];
-            console.log('albumId is', _this.albumId);
             _this.dateCreated = new Date;
         });
         this.pictureService.findPicturesByAlbum(this.albumId)
@@ -2290,12 +2207,8 @@ var PictureNewComponent = (function () {
     PictureNewComponent.prototype.commit = function (text, title, width, url) {
         var _this = this;
         this.pic = { text: text, title: title, width: width, url: url, dateUploaded: this.dateCreated, albumId: this.albumId };
-        console.log(this.pic);
         this.pictureService.createPicture(this.albumId, this.pic)
             .subscribe(function (album) {
-            console.log('why am I subsccribing to an album?');
-            // this.pic = pic;
-            console.log('album is this', album);
             _this.router.navigate(['user/' + _this.userId + '/album/' + _this.albumId]);
         });
     };
@@ -2490,7 +2403,6 @@ var PostListComponent = (function () {
         this.router = router;
     }
     PostListComponent.prototype.ngOnInit = function () {
-        // console.log('Post-list: posts are: ', this.posts);
     };
     /**
      * Right now this deletes post. Will have to refactor this to just simply update the post without one's tag later.
@@ -2526,30 +2438,6 @@ PostListComponent = __decorate([
 ], PostListComponent);
 
 var _a, _b, _c, _d;
-// this.route.params.subscribe(params => {
-//   this.userId = params['uid'];
-//   console.log('Post-list: userId is: ', this.userId);
-// });
-//   this.postService.findPostsByUser(this.IDfromProfile)
-//     .subscribe((posts) => {
-//       this.posts = posts;
-//       console.log('Post-list: posts are: ', posts);
-//     });
-// }}
-//
-// findPostsByTag(ID) {
-//   this.postService.findPostsbyTag(this.ID)
-//     .subscribe((posts) => {
-//       this.posts = posts;
-//     });
-// }
-//
-// findPostsByTags(any) {
-//   this.postService.findPostsbyTags(any)
-//     .subscribe((posts) => {
-//       this.posts = posts;
-//     });
-// }
 //# sourceMappingURL=post-list.component.js.map
 
 /***/ }),
@@ -2633,7 +2521,6 @@ var PostComponent = (function () {
             _this.date = post.date;
             _this.likes = post.likes;
         });
-        // }
     };
     PostComponent.prototype.likeThisPost = function () {
         var _this = this;
@@ -2641,8 +2528,6 @@ var PostComponent = (function () {
         this.postService.updatePost(this.ID, this.post)
             .subscribe(function (post) {
             _this.ngOnInit();
-            // this.router.navigate(['user/' + this.userId]);
-            // this.post = post;
         });
     };
     PostComponent.prototype.deletePost = function (user) {
@@ -2659,35 +2544,23 @@ var PostComponent = (function () {
             alert('You are not the original poster');
         }
     };
-    //
-    // removeMyTag() {
-    //   for (let i = 0; i < this.tags.length; i++) {
-    //     if (this.tags[i] = user.username)
-    //   }
-    //
-    // }
     PostComponent.prototype.navigateToTag = function (name) {
         var _this = this;
         this.userService.findUserByUsername(name)
             .subscribe(function (user) {
             if (user) {
-                console.log('user', user);
                 _this.router.navigate(['user/' + user._id]);
             }
             else {
                 _this.ceService.findCEbyText(name)
                     .subscribe(function (ce) {
                     if (ce.length > 0) {
-                        console.log('ce', ce);
-                        console.log('id', ce[0]._id);
                         _this.router.navigate(['ce/', ce[0]._id]);
                     }
                     else {
                         _this.cBService.findCBbyText(name)
                             .subscribe(function (cb) {
                             if (cb.length > 0) {
-                                console.log('cb', cb[0]._id);
-                                console.log('id', cb[0]._id);
                                 _this.router.navigate(['cb/', cb[0]._id]);
                             }
                         });
@@ -2802,15 +2675,12 @@ var SearchCbComponent = (function () {
         this.name = this.cb.name;
         this.cbId = this.cb._id;
         this.errorFlag = false;
-        console.log(this.picture);
     };
     SearchCbComponent.prototype.sayHi = function () {
         if (this.user.username) {
-            console.log('attempting to route');
             this.router.navigate(['cb/', this.cbId]);
         }
         else {
-            console.log('attempting to else');
             var wishToLogin = window.confirm('You must sign in to view this page! Would you like to sign in?');
             if (wishToLogin === true) {
                 this.router.navigate(['login']);
@@ -2905,11 +2775,9 @@ var SearchCeComponent = (function () {
     };
     SearchCeComponent.prototype.sayHi = function () {
         if (this.user.username) {
-            console.log('attempting to route');
             this.router.navigate(['ce/', this.ceId]);
         }
         else {
-            console.log('attempting to else');
             var wishToLogin = window.confirm('You must sign in to view this page! Would you like to sign in?');
             if (wishToLogin === true) {
                 this.router.navigate(['login']);
@@ -3153,7 +3021,6 @@ var SearchProfileComponent = (function () {
     };
     SearchProfileComponent.prototype.addToFollow = function (userId) {
         var _this = this;
-        console.log(userId);
         if (userId === this.originalUserId) {
             this.errorFlag = true;
             this.errorMessage = 'You cannot follow yourself!';
@@ -3175,11 +3042,9 @@ var SearchProfileComponent = (function () {
     };
     SearchProfileComponent.prototype.sayHi = function () {
         if (this.user.username) {
-            console.log('attempting to route');
             this.router.navigate(['user/', this.userId]);
         }
         else {
-            console.log('attempting to else');
             var wishToLogin = window.confirm('You must sign in to view this page! Would you like to sign in?');
             if (wishToLogin === true) {
                 this.router.navigate(['login']);
@@ -3265,7 +3130,6 @@ var SearchPubComponent = (function () {
         this.name = this.pub.name;
         this.pubId = this.pub._id;
         this.errorFlag = false;
-        // console.log(this.picture);
     };
     SearchPubComponent.prototype.addToFollow = function (cbId) {
     };
@@ -3381,7 +3245,6 @@ var SearchComponent = (function () {
         var _this = this;
         this.searchResultString = '';
         this.userResult = [];
-        console.log('searching for', param);
         this.searchparam = param;
         this.userService.findUserByUsername(param).subscribe(function (response) {
             if (response != null) {
@@ -3407,7 +3270,6 @@ var SearchComponent = (function () {
                 _this.ceResult = response;
                 _this.ceReady = true;
                 var temp = response.length;
-                console.log('Found this many CE:' + temp.toString());
             }
         });
         this.pubService.findPubbyText(param).subscribe(function (response) {
@@ -3415,7 +3277,6 @@ var SearchComponent = (function () {
                 _this.pubResult = response;
                 _this.pubReady = true;
                 var temp = response.length;
-                console.log('Found this many Pub:' + temp.toString());
             }
         });
     };
@@ -3506,12 +3367,10 @@ var FrontPageComponent = (function () {
     };
     FrontPageComponent.prototype.login = function (username, password) {
         var _this = this;
-        console.log('logging in here');
         this.userService
             .login(username, password)
             .subscribe(function (user) {
             _this.sharedService.user = user;
-            console.log('Login Component: sharedService user is: ', user);
             _this.router.navigate(['/user', user._id]);
         });
     };
@@ -3740,7 +3599,6 @@ var PublicProfileComponent = (function () {
         this.sharedServiceUserId = this.user._id;
         this.currentURL = window.location.href;
         if (this.currentURL.includes('api/login')) {
-            console.log('entered the flipper trigger');
             this.flipper = false;
         }
         if (this.user.username === undefined) {
@@ -3802,10 +3660,8 @@ var PublicProfileComponent = (function () {
     };
     PublicProfileComponent.prototype.getCBData = function (objId) {
         var _this = this;
-        console.log('HELLO CB');
         this.cbService.findCBbyId(this.objId).subscribe(function (cb) {
             _this.objData = cb;
-            console.log(_this.objData['picture']);
             _this.follows = [];
             _this.findPostsForNonUserDataByTag();
             _this.dataReady = true;
@@ -3887,10 +3743,7 @@ var PublicProfileComponent = (function () {
      * user has multiple albums and then deletes the first one, otherwise appears to function.
      */
     PublicProfileComponent.prototype.prepAlbum = function () {
-        console.log('prepping album', this.albumid);
         if (this.user.albums.length > 0) {
-            console.log('there is an album');
-            console.log('album', this.user.albums[0]);
             this.albumid = this.user.albums[0];
             this.albumReady = true;
         }
@@ -4095,7 +3948,6 @@ var AdminServiceClient = (function () {
         this.options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* RequestOptions */]();
     }
     AdminServiceClient.prototype.canActivate = function () {
-        console.log('HELLO', this.userService.isAdmin());
         return this.userService.isAdmin();
     };
     return AdminServiceClient;
@@ -4577,14 +4429,12 @@ var PostService = (function () {
     }
     PostService.prototype.createPost = function (post) {
         var url = this.baseURL + '/api/post';
-        console.log('create post from client', post);
         return this.http.post(url, post)
             .map(function (response) {
             return response.json();
         });
     };
     PostService.prototype.findPostsByUser = function (userId) {
-        console.log('userId from post client: ', userId);
         var url = this.baseURL + '/api/post/user/' + userId;
         return this.http.get(url)
             .map(function (response) {
@@ -4606,7 +4456,6 @@ var PostService = (function () {
         });
     };
     PostService.prototype.findPostsbyTags = function (tags) {
-        console.log(tags);
         var url = this.baseURL + '/api/post?tags=' + tags;
         return this.http.get(url)
             .map(function (response) {
@@ -4699,7 +4548,6 @@ var PubService = (function () {
         });
     };
     PubService.prototype.updatePub = function (pubId, pub) {
-        console.log('IN SERVICE', pubId);
         var url = this.baseURL + '/api/pub/' + pubId;
         return this.http.put(url, pub)
             .map(function (response) {

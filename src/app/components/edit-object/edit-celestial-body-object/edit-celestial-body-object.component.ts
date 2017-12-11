@@ -19,22 +19,15 @@ export class EditCelestialBodyObjectComponent implements OnInit {
   cbTypes = [];
   cbWikiLink: String;
   cbPictureURL: String;
-  // name: String,
-  // region: String,
-  // types: [String],
-  // wiki: String,
-  // verified: Boolean,
-  // picture: String
+
 
   ngOnInit() {
     this.activatedRoute.params
       .subscribe((params: any) => {
-        // this.cbId = params['objId'];
-        this.cbId = "5a2daeefc3dba628bc2a5414";
+        this.cbId = params['objId'];
       });
     this.cbService.findCBbyId(this.cbId)
       .subscribe((cb: any) => {
-      console.log(cb);
         this.cb = cb;
         this.cbName = cb['name'];
         this.cbRegion = cb['region'];
@@ -53,10 +46,8 @@ export class EditCelestialBodyObjectComponent implements OnInit {
 
   commit(name, region, types, wiki, picture) {
     const cb = {name: name, region: region, types: types, wiki: wiki, picture: picture};
-    console.log('UPDATED', cb);
     this.cbService.updateCB(this.cbId, cb)
       .subscribe((status: any) => {
-        console.log(status);
         this.router.navigate(['cb/' + this.cbId]);
       });
   }

@@ -19,22 +19,12 @@ export class EditCelestialEventObjectComponent implements OnInit {
   end: String;
   ce = {};
 
-  // name: String,
-  // region: String,
-  // types: [String],
-  // wiki: String,
-  // verified: Boolean,
-  // picture: String,
-  // start: Date,
-  // end: Date
-
   constructor(private ceService: CEService, private router: Router, private activatedRoute: ActivatedRoute,
               private sharedService: SharedService) { }
 
   ngOnInit() {
     this.activatedRoute.params
       .subscribe((params: any) => {
-        // this.ceId = "5a2dc1d485be02065cc2f846";
         this.ceId = params['objId'];
       });
     this.ceService.findCEbyId(this.ceId)
@@ -48,7 +38,6 @@ export class EditCelestialEventObjectComponent implements OnInit {
         this.start = ce['start'];
         this.end = ce['end'];
       });
-    console.log(this.sharedService.user);
   }
 
   deletecb() {
@@ -60,10 +49,8 @@ export class EditCelestialEventObjectComponent implements OnInit {
 
   commit(name, region, types, wiki, picture, start, end) {
     const ce = {name: name, region: region, types: types, wiki: wiki, picture: picture, start: start, end: end};
-    console.log('UPDATED', ce);
     this.ceService.updateCE(this.ceId, ce)
       .subscribe((status: any) => {
-        console.log(status);
         this.router.navigate(['ce/' + this.ceId]);
       });
   }

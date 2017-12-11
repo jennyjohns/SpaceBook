@@ -32,7 +32,6 @@ export class SearchPubComponent implements OnInit {
     this.name = this.pub.name;
     this.pubId = this.pub._id;
     this.errorFlag = false;
-    // console.log(this.picture);
   }
 
   addToFollow(cbId) {

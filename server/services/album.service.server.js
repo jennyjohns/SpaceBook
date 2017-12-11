@@ -53,12 +53,6 @@ module.exports = function (app) {
 
   function deleteAlbum(req, res) {
     var albumId = req.params['aid'];
-    // var pictures = null;
-    // pictureModel
-    //   .findPicturesByAlbum(albumId)
-    //   .then(function (pics) {
-    //     pictures = pics;
-    //   });
     albumModel
       .findAlbumById(albumId)
       .then(function (album) {

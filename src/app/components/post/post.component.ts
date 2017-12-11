@@ -50,7 +50,6 @@ export class PostComponent implements OnInit {
           this.date = post.date;
           this.likes = post.likes;
         });
-      // }
   }
 
   likeThisPost() {
@@ -58,8 +57,6 @@ export class PostComponent implements OnInit {
     this.postService.updatePost(this.ID, this.post)
       .subscribe((post) => {
       this.ngOnInit();
-      // this.router.navigate(['user/' + this.userId]);
-        // this.post = post;
       });
   }
 
@@ -76,34 +73,20 @@ export class PostComponent implements OnInit {
     }
   }
 
-
-  //
-  // removeMyTag() {
-  //   for (let i = 0; i < this.tags.length; i++) {
-  //     if (this.tags[i] = user.username)
-  //   }
-  //
-  // }
-
   navigateToTag(name) {
     this.userService.findUserByUsername(name)
       .subscribe((user) => {
         if (user) {
-          console.log('user', user);
           this.router.navigate(['user/' + user._id]);
         } else {
           this.ceService.findCEbyText(name)
             .subscribe((ce) => {
               if (ce.length > 0) {
-                console.log('ce', ce);
-                console.log('id', ce[0]._id)
                 this.router.navigate(['ce/', ce[0]._id]);
               } else {
                 this.cBService.findCBbyText(name)
                   .subscribe((cb) => {
                     if (cb.length > 0) {
-                      console.log('cb', cb[0]._id);
-                      console.log('id', cb[0]._id)
                       this.router.navigate(['cb/', cb[0]._id]);
                     }
                   });
@@ -134,19 +117,5 @@ export class PostComponent implements OnInit {
     }
   }
 
-  //
-  // findPostsByTag(ID) {
-  //   this.postService.findPostsbyTag(this.ID)
-  //     .subscribe((posts) => {
-  //       this.post = posts;
-  //     });
-  // }
-  //
-  // findPostsByTags(any) {
-  //   this.postService.findPostsbyTags(any)
-  //     .subscribe((post) => {
-  //       this.post = post;
-  //     });
-  // }
 
 }

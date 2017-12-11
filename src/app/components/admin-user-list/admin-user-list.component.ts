@@ -16,7 +16,7 @@ export class AdminUserListComponent implements OnInit {
     this.userService.findAllUsers()
       .subscribe((users: any) => {
         this.users = users;
-      })
+      });
   }
 
   goToUserPage(userId) {

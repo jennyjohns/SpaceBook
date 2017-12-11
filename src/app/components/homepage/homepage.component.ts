@@ -26,7 +26,6 @@ export class HomepageComponent implements OnInit {
               this.loggedIn = bool;
             });
         });
-    console.log('IN HOMEPAGE', this.sharedService.user);
   }
 
   continueToSpaceBook() {

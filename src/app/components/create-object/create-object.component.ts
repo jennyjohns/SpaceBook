@@ -75,7 +75,7 @@ export class CreateObjectComponent implements OnInit {
             this.errorMessage = 'Celestial body already exists!';
           } else {
             this.cbService.createCB(this.cb).subscribe((cb: any) => {
-              alert('CB created!');
+              alert('Celestial Body created!');
             });
           }
         });
@@ -94,7 +94,7 @@ export class CreateObjectComponent implements OnInit {
             this.errorMessage = 'Celestial Event Already Exists!';
           } else {
             this.ceService.createCE(this.ce).subscribe((ce: any) => {
-              alert('CE created!');
+              alert('Celestial Event created!');
             });
           }
         });
@@ -108,10 +108,9 @@ export class CreateObjectComponent implements OnInit {
 
 
       this.pubService.createPub(this.pub).subscribe((pub: any) => {
-        alert('Pub created!');
+        alert('Publication created!');
       });
     } else {
-      console.log('cant make one of those yet');
     }
   }
 

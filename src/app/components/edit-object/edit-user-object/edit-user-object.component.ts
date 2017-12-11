@@ -29,7 +29,6 @@ export class EditUserObjectComponent implements OnInit {
               private sharedService: SharedService) { }
 
   ngOnInit() {
-    console.log('IN EDIT USER');
     this.activateRoute.params
       .subscribe((params: any) => {
         this.userId = params['objId'];
@@ -37,9 +36,6 @@ export class EditUserObjectComponent implements OnInit {
     this.userService.findUserById(this.userId)
       .subscribe((user: any) => {
         this.user = user;
-        // this.userType = user['userType'];
-        console.log(user['userType']);
-        // console.log(this.userType.includes(null));
         this.username = user['username'];
         this.email = user['email'];
         this.firstName = user['firstName'];
