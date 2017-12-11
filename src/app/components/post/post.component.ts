@@ -3,6 +3,8 @@ import {PostService} from '../../services/post.service.client';
 import {UserService} from '../../services/user.service.client';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SharedService} from '../../services/shared.service.client';
+import {CEService} from "../../services/ce.service.client";
+import {CBService} from "../../services/cb.service.client";
 
 @Component({
   selector: 'app-post',
@@ -29,7 +31,9 @@ export class PostComponent implements OnInit {
               private sharedService: SharedService,
               private userService: UserService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private ceService: CEService,
+              private cBService: CBService) { }
 
   ngOnInit() {
     this.user = this.sharedService.user;
@@ -81,11 +85,31 @@ export class PostComponent implements OnInit {
   //
   // }
 
-
   navigateToTag(name) {
     this.userService.findUserByUsername(name)
       .subscribe((user) => {
-        this.router.navigate(['user/' + user._id]);
+        if (user) {
+          console.log('user', user);
+          this.router.navigate(['user/' + user._id]);
+        } else {
+          this.ceService.findCEbyText(name)
+            .subscribe((ce) => {
+              if (ce.length > 0) {
+                console.log('ce', ce);
+                console.log('id', ce[0]._id)
+                this.router.navigate(['ce/', ce[0]._id]);
+              } else {
+                this.cBService.findCBbyText(name)
+                  .subscribe((cb) => {
+                    if (cb.length > 0) {
+                      console.log('cb', cb[0]._id);
+                      console.log('id', cb[0]._id)
+                      this.router.navigate(['cb/', cb[0]._id]);
+                    }
+                  });
+              }
+            });
+        }
       });
   }
 
