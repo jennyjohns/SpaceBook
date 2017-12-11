@@ -1,3 +1,19 @@
-<p>
-  edit-object works!
-</p>
+<div [ngSwitch]="objectType">
+
+  <div *ngSwitchCase="'User'">
+    <app-edit-user-object></app-edit-user-object>
+  </div>
+
+  <div *ngSwitchCase="'Celestial Body'">
+    <app-edit-celestial-body-object></app-edit-celestial-body-object>
+  </div>
+
+  <div *ngSwitchCase="'Celestial Event'">
+    <app-edit-celestial-event-object></app-edit-celestial-event-object>
+  </div>
+
+  <div *ngSwitchCase="'Publication'">
+    <app-edit-publication-object></app-edit-publication-object>
+  </div>
+
+</div>
