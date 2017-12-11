@@ -45,13 +45,11 @@ export class PublicProfileComponent implements OnInit {
 
 
   ngOnInit() {
-
+    this.albumReady = false;
     this.dataReady = false;
     this.flipper = true;
-
     this.user = this.sharedService.user;
     this.sharedServiceUserId = this.user._id;
-    this.prepAlbum();
     this.currentURL = window.location.href;
     if (this.currentURL.includes('api/login')) {
       this.flipper = false;
@@ -65,22 +63,27 @@ export class PublicProfileComponent implements OnInit {
             (params: any) => {
               this.objId = params['uid'];
               this.objType = params['obtype'];
-            }
-          );
-        this.birthday = false;
-        switch (this.objType) {
-          case 'cb':
-            this.getCBData(this.objId);
-            break;
-          case 'ce':
-            break;
-          case 'user':
-            this.getUserData(this.objId);
-            break;
-          case 'org':
-            break;
-        }
+              this.userService.findUserById(this.objId)
+                .subscribe((user) => {
+                  this.objData = user;
+                  this.user = user;
+                  this.birthday = false;
+                  switch (this.objType) {
+                    case 'cb':
+                      this.getCBData(this.objId);
+                      break;
+                    case 'ce':
+                      break;
+                    case 'user':
+                      this.getUserData(this.objId);
+                      break;
+                    case 'org':
+                      break;
+                  }
+                });
+            });
       } else {
+        this.flipper = true;
         this.objId = this.user._id;
         this.objType = 'user';
         this.getUserData(this.objId);
@@ -95,7 +98,7 @@ export class PublicProfileComponent implements OnInit {
 
   goToUserProfile(objId) {
     this.router.navigate(['user/' + objId]);
-    this.ngOnInit();
+    // this.ngOnInit();
   }
 
   navigateToPost() {
@@ -127,20 +130,18 @@ export class PublicProfileComponent implements OnInit {
   }
 
 
-  getUserData(objId){
-    this.objData = this.sharedService.user;
-
-    var f = [];
-    for (var i = 0; i < this.objData['follows'].length; i++) {
-            this.userService.findUserById(this.objData['follows'][i])
-              .subscribe((user1: any) => {
-                f.push(user1);
-              });
-            this.follows = f;
-          }
+  getUserData(objId) {
+    const f = [];
+    for (let i = 0; i < this.objData['follows'].length; i++) {
+      this.userService.findUserById(this.objData['follows'][i])
+        .subscribe((user1: any) => {
+          f.push(user1);
+        });
+      this.follows = f;
+    }
     this.findPostsByTagForUser();
+    this.prepAlbum();
     this.dataReady = true;
-
   }
 
   /**
@@ -154,13 +155,13 @@ export class PublicProfileComponent implements OnInit {
   }
 
   deleteFollow(objId) {
-    for (var i = 0; i < this.follows.length; i++) {
+    for (let i = 0; i < this.follows.length; i++) {
       if (this.follows[i]._id === objId) {
         this.follows.splice(i, 1);
       }
     }
     this.sharedService.user['follows'] = [];
-    for(var i = 0; i < this.follows.length; i++) {
+    for(let i = 0; i < this.follows.length; i++) {
       this.sharedService.user['follows'].push(this.follows[i]._id);
     }
     this.userService.updateUser(this.objId, this.sharedService.user)
@@ -183,13 +184,20 @@ export class PublicProfileComponent implements OnInit {
       });
   }
 
+  /**
+   * Still is not able to deal with the bug that if a
+   * user has multiple albums and then deletes the first one, otherwise appears to function.
+   */
   prepAlbum() {
-
-      if (this.user.albums.length > 0) {
-        this.albumid = this.user.albums[0];
-        this.albumReady = true;
-      }
+    console.log('prepping album', this.albumid);
+    if (this.user.albums.length > 0) {
+      console.log('there is an album');
+      console.log('album', this.user.albums[0]);
+      this.albumid = this.user.albums[0];
+      this.albumReady = true;
+    }
   }
+
   authorized() {
     if (this.sharedService.user['_id'] === this.objId) {
       return true;

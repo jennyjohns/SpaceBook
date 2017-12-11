@@ -67,6 +67,10 @@ p {
   color: white;
 }
 
+.glyphicon.glyphicon-remove {
+  color: white;
+}
+
 
 .mh-roundedCorners {
   border-radius: 25px;
@@ -96,3 +100,12 @@ p {
   padding: 50px;
 }
 
+.moh-max-height {
+  height: 100%;
+}
+
+.moh-btnWidthPlusMargin {
+  margin: 6px;
+  min-width: 152px;
+  max-width: 168px;
+}

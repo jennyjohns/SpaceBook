@@ -35,17 +35,14 @@ export class PostComponent implements OnInit {
     this.user = this.sharedService.user;
     this.route.params.subscribe(params => {
       this.userId = params['uid'];
-      console.log('userId from Post is:', this.userId);
     });
       this.postService.findPostbyId(this.ID)
         .subscribe((post) => {
-          console.log('post from component', post);
           this.post = post;
           this.poster = post.username;
           this.images = post.images;
           this.text = post.text;
           this.tags = post.tags;
-          console.log(post.tags);
           this.date = post.date;
           this.likes = post.likes;
         });
@@ -53,10 +50,7 @@ export class PostComponent implements OnInit {
   }
 
   likeThisPost() {
-    console.log(this.post.likes);
     this.post.likes++;
-    console.log(this.post.likes)
-    console.log('this is the POST', this.post);
     this.postService.updatePost(this.ID, this.post)
       .subscribe((post) => {
       this.ngOnInit();

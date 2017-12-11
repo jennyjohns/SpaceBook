@@ -1,7 +1,8 @@
 <app-space-banner-default></app-space-banner-default>
 <div class="container-fluid mh-backgroundColor">
-<div class="col-sm-3 container-fluid mh-paddingAwayFromNavBarTriple" align="center">
-<div *ngIf="dataReady">
+  <div class="col-sm-3 container-fluid mh-paddingAwayFromNavBarTriple" align="center">
+
+    <div *ngIf="dataReady">
   <!--<div class="container-fluid row">-->
     <div *ngIf="birthday"
          class="alert alert-danger">
@@ -35,16 +36,16 @@
         {{objData.wiki}}
       </div>
     </div>
-      <button routerLink="/new" class="btn btn-success">Contribute Content</button>
+      <button routerLink="/new" class="btn btn-success form-control moh-btnWidthPlusMargin">Contribute Content</button>
       <div *ngIf="authorized()">
-      <button routerLink="/edit/{{this.objId}}" class="btn btn-warning">Edit Current Page</button>
+      <button routerLink="/edit/{{this.objId}}" class="btn btn-warning form-control moh-btnWidthPlusMargin">Edit Current Page</button>
       </div>
   <!--</div>-->
   <!--</div>-->
   <button class=" jj-button-profile"
           aria-pressed="true"
           (click)="goToAlbums()">
-    <h3>{{user.firstName}}'s Photos</h3>
+    <h3>{{this.objData['firstName']}}'s Photos</h3>
     <span class="glyphicon glyphicon-picture"></span>
   </button>
 
@@ -55,7 +56,7 @@
         <p>{{user.firstName}} {{user.lastName}}</p>
       </button>
       <button class="jj-button-profile whiteText" (click)="deleteFollow(user._id)"><span
-        class="glyphicon glyphicon-remove whiteText"></span></button>
+        class="glyphicon glyphicon-remove"></span></button>
     </div>
   </div>
 
@@ -77,7 +78,7 @@
   <div *ngIf="albumReady" align="center" class ="hidden-xs mh-roundedCorners">
     <app-album-carousel [albumid]="albumid"></app-album-carousel>
   </div>
-  <div class="container-fluid mh-roundedCornersV2">
+  <div *ngIf="ifIdEqualPosterId()" class="container-fluid mh-roundedCornersV2">
     <div *ngIf="ifIdEqualPosterId()">
       <app-create-post></app-create-post>
     </div>
