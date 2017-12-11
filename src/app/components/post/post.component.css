@@ -21,6 +21,12 @@ label {
   font-family: final_frontier_old_styleRg;
 }
 
+.jj-fontv2 {
+  font-family: final_frontier_old_styleRg;
+  font-size: 18px;
+}
+
+
 .navbar .navbar-header .navbar-brand .jj-font {
   font-family: final_frontier_old_styleRg;
   font-size: xx-large;
@@ -34,3 +40,9 @@ label {
   height: 100%;
 }
 
+.moh-btnWidthPlusMarginV2WithFinalFrontierFont {
+  margin-top: 6px;
+  font-family: final_frontier_old_styleRg;
+  min-width: 152px;
+  max-width: 168px;
+}
