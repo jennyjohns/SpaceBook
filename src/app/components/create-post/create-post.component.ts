@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../services/user.service.client';
 import {environment} from '../../../environments/environment';
 import {SharedService} from '../../services/shared.service.client';
+import {CBService} from '../../services/cb.service.client';
+import {CEService} from '../../services/ce.service.client';
 
 @Component({
   selector: 'app-create-post',
@@ -32,36 +34,18 @@ export class CreatePostComponent implements OnInit {
               private userService: UserService,
               private route: ActivatedRoute,
               private router: Router,
-              private sharedService: SharedService) { }
+              private sharedService: SharedService,
+              private cbService: CBService,
+              private ceService: CEService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.posterId = params['uid'];
-      // this.postId = params['pid']
     });
     this.user = this.sharedService.user;
     this.usernameOfPoster = this.user.username;
-    // this.userService.findUserById(this.posterId)
-    //   .subscribe((user) => {
-    //   this.user = user;
-    //   this.usernameOfPoster = user.username;
-    //   });
     this.tags = [];
-    // this.postService.findPostbyId(this.postId)
-    //   .subscribe((post) => {
-    //     this.post = post;
-    //     this.usernameOfPoster  = post.username;
-    //     this.text = post.text;
-    //     this.usernameOfPoster = post.username;
-    //     this.images = post.images;
-    //     this.date = post.date;
-    //     this.likeAmount = post.likeAmount;
-    //     this.tags = post.tags;
-    //   });
-    // this.postService.findAllPosts()
-    //   .subscribe((posts) => {
-    //   this.posts = posts;
-    // });
+
   }
 
   deleteThisPost(ID) {
@@ -75,26 +59,87 @@ export class CreatePostComponent implements OnInit {
   addTag() {
     this.userService.findUserByUsername(this.tag)
       .subscribe((user) => {
-      if (user) {
-        this.tags.push(this.tag);
-        this.tag = null;
-      } else {
-        alert('user does not exist, tag not added');
-      }
+        console.log('user', user);
+        if (user) {
+          console.log('user', user);
+          console.log('this is a user');
+          this.tags.push(this.tag);
+          this.tag = null;
+        } else {
+          this.cbService.findCBbyText(this.tag)
+            .subscribe((cb) => {
+              if (cb.length > 0) {
+                console.log('cb', cb);
+                console.log('this is a cb');
+                this.tags.push(this.tag);
+                this.tag = null;
+              } else {
+                this.ceService.findCEbyText(this.tag)
+                  .subscribe((ce) => {
+                    if (ce.length > 0) {
+                      console.log('this is a ce');
+                      this.tags.push(this.tag);
+                      this.tag = null;
+                    } else {
+                      alert('tag not valid');
+                      this.tag = null;
+                    }
+                  });
+              }
+            });
+        }
       });
   }
 
   createThisPost() {
     this.tags.push(this.usernameOfPoster);
     const newPost = {poster: this.posterId, text: this.text, likes: 0,
-    date: new Date(), images: [this.url],  tags: this.tags};
+      date: new Date(), images: [this.url],  tags: this.tags};
     this.postService.createPost(newPost)
       .subscribe((posts) => {
-      // this.posts = posts;
-      //   this.router.navigate([this.baseUrl + 'user/', this.posterId]);
-      //   this.ngOnInit();
+        // this.posts = posts;
+        //   this.router.navigate([this.baseUrl + 'user/', this.posterId]);
+        //   this.ngOnInit();
       });
   }
 
 
 }
+
+
+// addTag() {
+//   const startLength = this.tags.length;
+//   var userServiceFinished = false;
+//   var ceServiceFinished = false;
+//   var cbServiceFinished = false;
+//   this.userService.findUserByUsername(this.tag)
+//     .subscribe((user) => {
+//       console.log('user', user);
+//       if (user) {
+//         console.log('user', user);
+//         console.log('this is a user');
+//         this.tags.push(this.tag);
+//         this.tag = null;
+//       }
+//       userServiceFinished = true;
+//     });
+//   this.cbService.findCBbyText(this.tag)
+//     .subscribe((cb) => {
+//       if (cb) {
+//         console.log('cb', cb);
+//         console.log('this is a cb');
+//         this.tags.push(this.tag);
+//         this.tag = null;
+//       }
+//       cbServiceFinished = true;
+//     });
+//   this.ceService.findCEbyText(this.tag)
+//     .subscribe((ce) => {
+//       if (ce) {
+//         console.log('this is a ce');
+//         this.tags.push(this.tag);
+//         this.tag = null;
+//       }
+//       ceServiceFinished = true;
+//     });
+// }

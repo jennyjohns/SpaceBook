@@ -44,6 +44,7 @@ export class CreateObjectComponent implements OnInit {
       this.user.DOB = this.createForm.value.DOB;
       this.user.phone = this.createForm.value.phone;
       this.user.picture = 'https://upload.wikimedia.org/wikipedia/commons/4/48/Creative-Tail-astronaut.svg';
+
       this.user.userType = this.userType;
       this.userService.findUserByUsername(this.user.username)
         .subscribe((usr: any) => {
