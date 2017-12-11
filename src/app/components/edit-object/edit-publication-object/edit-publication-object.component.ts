@@ -27,7 +27,7 @@ export class EditPublicationObjectComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params
       .subscribe((params: any) => {
-        this.pubId = "5a2dc86284a41639e80e13df";
+        this.pubId = "5a2dcace3d8f9437a00a96c2";
         // this.pubId = params['objId'];
       });
     this.pubService.findPubbyId(this.pubId)
@@ -44,6 +44,7 @@ export class EditPublicationObjectComponent implements OnInit {
 
   commit(name, authors, tags, link, abstract, pubDate) {
     console.log('PUB', this.pub);
+    console.log(this.pubId);
     const pub = {name: name, authors: [authors], tags: [tags], link: link, abstract: abstract, pubDate: pubDate };
     console.log('UPDATED PUB', pub);
     this.pubService.updatePub(this.pubId, pub)

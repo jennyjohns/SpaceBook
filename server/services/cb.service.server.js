@@ -32,7 +32,7 @@ module.exports = function (app) {
   }
 
   function updateCB(req, res) {
-    var cbId = req.params['uid'];
+    var cbId = req.params['cbid'];
     var updatedCB = req.body;
     console.log('UPDATED', updatedCB);
     cbModel
