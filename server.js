@@ -4,11 +4,11 @@
 
 // Get the dependencies
 
-const express = require('express');
-const path = require('path');
-const http = require('http');
-const bodyParser = require('body-parser');
-const app = express();
+var express = require('express');
+var path = require('path');
+var http = require('http');
+var bodyParser = require('body-parser');
+var app = express();
 var cookieParser = require('cookie-parser');
 var session      = require('express-session');
 
@@ -50,12 +50,12 @@ app.use(bodyParser.json());
 
 
 
-const port = process.env.PORT || '3100';
+var port = process.env.PORT || '3100';
 app.set('port', port);
 
 
 // Create HTTP server
-const server = http.createServer(app);
+var server = http.createServer(app);
 
 var serverSide = require("./server/app");
 serverSide(app);
@@ -68,7 +68,7 @@ app.get('*', function (req, res) {
 });
 
 
-server.listen( port , () => console.log('Running'));
+server.listen( port, function() {console.log('Running'); });
 
 
 
