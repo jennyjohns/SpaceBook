@@ -36,7 +36,7 @@ const APP_ROUTES: Routes = [
   {path: ':obtype/:uid', component: PublicProfileComponent, canActivate: [AuthGuard]},
   {path: ':obtype/:uid/edit', component: ProfileComponent},
   {path: 'edit/:objId', component: EditObjectComponent},
-  {path: 'edit', component: EditPublicationObjectComponent},
+  // {path: 'edit', component: EditPublicationObjectComponent},
   {path: 'searchAsteroids', component: NasaTestComponent},
   {path: 'login', component: FrontPageComponent},
   {path: 'nasa-pic', component: NasaPictureTestComponent},
