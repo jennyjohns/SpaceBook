@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CBService} from '../../../services/cb.service.client';
 import {CEService} from '../../../services/ce.service.client';
+import {SharedService} from '../../../services/shared.service.client';
 
 @Component({
   selector: 'app-search-ce',
@@ -19,12 +20,15 @@ export class SearchCeComponent implements OnInit {
   originalUserId: String;
   errorFlag: Boolean;
   errorMessage: String;
+  user: any;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private ceService: CEService, private router: Router) {
+              private ceService: CEService, private router: Router,
+              private sharedService: SharedService) {
   }
 
   ngOnInit() {
+    this.user = this.sharedService.user;
     this.activatedRoute.params
       .subscribe((params: any) => {
         this.originalUserId = params['uid'];
@@ -33,6 +37,19 @@ export class SearchCeComponent implements OnInit {
     this.name = this.ce.name;
     this.ceId = this.ce._id;
     this.errorFlag = false;
+  }
+
+  sayHi() {
+    if (this.user.username) {
+      console.log('attempting to route');
+      this.router.navigate(['ce/', this.ceId]);
+    } else {
+      console.log('attempting to else');
+      const wishToLogin = window.confirm('You must sign in to view this page! Would you like to sign in?');
+      if (wishToLogin === true) {
+        this.router.navigate(['login']);
+      }
+    }
   }
 
 

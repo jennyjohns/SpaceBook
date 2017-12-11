@@ -41,6 +41,10 @@ export class FrontPageComponent implements OnInit {
     this.router.navigate(['/searchAsteroids']);
   }
 
+  goToSearch() {
+    this.router.navigate(['/search']);
+  }
+
   goToImageSearch() {
     this.router.navigate(['/nasa-pic']);
   }
