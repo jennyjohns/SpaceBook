@@ -39,7 +39,7 @@
       <div *ngIf="checkUserType()">
       <button routerLink="/new" class="btn btn-success form-control moh-btnWidthPlusMargin">Contribute Content</button>
     </div>
-      <div *ngIf="authorized() && checkMatchingId()">
+      <div *ngIf="authorized() || checkMatchingId() || isAdmin()">
       <button (click)="edit(objId)" class="btn btn-warning form-control moh-btnWidthPlusMargin">Edit Current Page</button>
       </div>
       <div *ngIf="isAdmin()">

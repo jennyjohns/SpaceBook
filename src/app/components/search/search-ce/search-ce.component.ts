@@ -33,10 +33,7 @@ export class SearchCeComponent implements OnInit {
     this.name = this.ce.name;
     this.ceId = this.ce._id;
     this.errorFlag = false;
-    // console.log(this.picture);
   }
 
-  addToFollow(cbId) {
-  }
 
 }

@@ -112,7 +112,7 @@ export class PublicProfileComponent implements OnInit {
   search() {
     this.router.navigate(['user/' + this.objId + '/search']);
   }
-  
+
 
   getCBData(objId) {
     console.log('HELLO CB');
