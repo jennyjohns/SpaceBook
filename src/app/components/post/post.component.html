@@ -1,19 +1,14 @@
 <div class = "mb-search-result-box mh-roundedCorners">
-
-<div>{{text}}</div>
-<!--<label>Images</label>-->
-<!--<div *ngFor = "let image of images">-->
-  <!--<img src="{{image}}" width = "33%"/>-->
-<!--</div>-->
-<label>Date</label>
-<div>{{date}}</div>
-<div class = 'jj-font'> Current Altitude: {{likes}} kilometers
-  <button class = "btn btn-primary" (click)="likeThisPost()">Give More Rocket Fuel</button></div>
-<label>Tags</label>
-<div *ngFor = "let aTag of tags">
-  <a (click)="navigateToTag(aTag)">{{aTag}}</a>
-</div>
-  <div *ngIf="ifIdEqualPosterId()">
-    <button (click)="removeMyTag()" class = "btn btn-danger">Remove My Tag</button>
+  <h4>{{text}}</h4>
+  <h3 class = 'jj-font'> Current Altitude: {{likes}} kilometers
+    <button class = "btn btn-primary" (click)="likeThisPost()">Give More Rocket Fuel</button></h3>
+  <label>Tags</label>
+  <div *ngFor = "let aTag of tags">
+    <a class="jj-fontv2" (click)="navigateToTag(aTag)">{{aTag}}</a>
   </div>
+  <div *ngIf="ifIdEqualPosterId()">
+    <button (click)="removeMyTag()" class = "btn btn-danger moh-btnWidthPlusMarginV2WithFinalFrontierFont">
+      Remove My Tag</button>
+  </div>
+  <label>Posted on {{date}}</label>
 </div>

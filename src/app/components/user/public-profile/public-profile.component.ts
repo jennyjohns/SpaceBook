@@ -125,6 +125,7 @@ export class PublicProfileComponent implements OnInit {
   findPostsForNonUserDataByTag() {
     this.postService.findPostsbyTag(this.objData['name'])
       .subscribe((posts) => {
+        posts = posts.slice(0).reverse();
         this.postsInPublicProfile = posts;
       });
   }
@@ -150,6 +151,7 @@ export class PublicProfileComponent implements OnInit {
   findPostsByTagForUser() {
     this.postService.findPostsbyTag(this.objData['username'])
       .subscribe((posts) => {
+        posts = posts.slice(0).reverse();
         this.postsInPublicProfile = posts;
       });
   }
