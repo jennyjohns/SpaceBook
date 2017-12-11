@@ -1,26 +1,5 @@
-<!DOCTYPE html>
-
-<nav class="navbar navbar-default_blue navbar-fixed-top">
-  <div class="container-fluid">
-    <p class="navbar-header pull-left">
-      <a class="navbar-brand thick">
-        <b class="jj-font">
-          Profile
-        </b>
-      </a>
-    </p>
-
-    <p class="navbar-text pull-right">
-      <button (click)="goToProfile(username, email, firstName, lastName, phone, DOB)" type="submit" class="navbar-link jj-button">
-        <span class="jj-button-text glyphicon glyphicon-ok"></span>
-      </button>
-    </p>
-  </div>
-</nav>
-
-
 <div class="container-fluid jj-body jj-font">
-  <form>
+  <form #f="ngForm">
     <div class="form-group">
       <label for="username">
         Username
@@ -31,7 +10,6 @@
              type="text"
              placeholder="Username"
              class="form-control"/>
-
       <label for="email">
         Email
       </label>
@@ -80,30 +58,40 @@
              type="date"
              class="form-control"/>
     </div>
+    <div class="form-control form-group">
+      <label>Current User Type:</label>
+      <div class='radio-inline'>
+        {{userType[0]}}
+      </div>
+    </div>
+    <div class="form-group form-control">
+      <label>Change User Type:</label>
 
-    <!--<form ngNoForm action="{{baseURL}}/api/upload" method="post" enctype="multipart/form-data"-->
-    <!--class="jj-form container-fluid">-->
-    <!--<input name="myFile" type="file" class="form-control"/>-->
-    <!--<input name="userId" value="{{userId}}" style="display: none"/>-->
-    <!--<button (click)="commit(picture)"-->
-    <!--type="submit" class="btn btn-block btn-primary jj-button-hover" aria-pressed="true">Save Changes-->
-    <!--</button>-->
-    <!--<br/>-->
-    <!--</form>-->
+      <label class="radio-inline">
+        <input type="radio" name="optradio" value='AMATEUR' [(ngModel)]="type" >Amateur Astronomer
+      </label>
+
+      <label class="radio-inline">
+        <input type="radio" name="optradio" value='PROFESSIONAL' [(ngModel)]="type" >Professional Astronomer
+      </label>
+
+      <label class="radio-inline">
+        <input type="radio" name="optradio" value='ORGANIZATION' [(ngModel)]="type" >Space Organization
+      </label>
+
+      <label class="radio-inline">
+        <input type="radio" name="optradio" value='UNIVERSITY' [(ngModel)]="type" >University
+      </label>
+    </div>
   </form>
+  <button class="btn btn-success btn-block jj-button-hover"
+          aria-pressed="true"
+          (click)="commit(username, email, firstName, lastName, phone, DOB, type, remove)">
+    Submit Changes
+  </button>
   <button class="btn btn-danger btn-block jj-button-hover"
           aria-pressed="true"
-          (click)="deleteAccount(userId)">
+          (click)="deleteUser(userId)">
     Delete Account
   </button>
 </div>
-
-<nav class="navbar navbar-default_blue navbar-fixed-bottom">
-  <div class="container-fluid">
-    <p class="navbar-text pull-right">
-      <button class="jj-button" (click)="cancelChanges()">
-        <span class="glyphicon glyphicon-user"></span>
-      </button>
-    </p>
-  </div>
-</nav>

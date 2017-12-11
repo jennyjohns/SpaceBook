@@ -1,0 +1,79 @@
+<div class="container-fluid jj-body">
+  <form>
+    <div >
+      <input name="name"
+             id="name"
+             type="text"
+             placeholder="name"
+             class="form-control"
+             [(ngModel)]="name"/>
+
+      <!--<span class="help-block" *ngIf="!cbname.valid && cbname.touched">-->
+      <!--Please enter name!-->
+      <!--</span>-->
+
+
+      <input name="region"
+             id="region"
+             type="text"
+             placeholder="region"
+             class="form-control"
+             [(ngModel)]="region"/>
+
+      <!--<span class="help-block" *ngIf="!region.valid && region.touched">-->
+      <!--Please enter region!-->
+      <!--</span>-->
+      <input name="types"
+             id="types"
+             type="text"
+             placeholder="types"
+             class="form-control"
+             [(ngModel)]="types"/>
+
+      <!--<span class="help-block" *ngIf="!types.valid && types.touched">-->
+      <!--Please enter types, comma seperated!-->
+      <!--</span>-->
+      <input name="cbWikiLink"
+             id="cbWikiLink"
+             type="text"
+             placeholder="wiki link"
+             class="form-control"
+             [(ngModel)]="wiki"/>
+
+      <!--<span class="help-block" *ngIf="!wiki.valid && wiki.touched">-->
+      <!--Please enter wiki link!-->
+      <!--</span>-->
+      <input name="picture"
+             id="picture"
+             type="text"
+             placeholder="picture url"
+             class="form-control"
+             [(ngModel)]="picture"/>
+
+      <input name="start"
+             id="start"
+             type="date"
+             placeholder="start"
+             class="form-control"
+             [(ngModel)]="start"/>
+
+      <input name="end"
+             id="end"
+             type="date"
+             placeholder="end"
+             class="form-control"
+             [(ngModel)]="end"/>
+
+      <button class="btn btn-success btn-block jj-button-hover"
+              aria-pressed="true"
+              (click)="commit(name, region, types, wiki, picture, start, end)">
+        Submit Changes
+      </button>
+      <button class="btn btn-danger btn-block jj-button-hover"
+              aria-pressed="true"
+              (click)="deletecb()">
+        Delete Account
+      </button>
+    </div>
+  </form>
+</div>

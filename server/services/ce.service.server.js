@@ -32,7 +32,7 @@ module.exports = function (app) {
   }
 
   function updateCE(req, res) {
-    var ceId = req.params['uid'];
+    var ceId = req.params['ceid'];
     var updatedCE = req.body;
     ceModel
       .updateCE(ceId, updatedCE)

@@ -46,6 +46,11 @@ import { SearchPubComponent } from './components/search/search-pub/search-pub.co
 import { SearchNasaDetailComponent } from './components/search/search-nasa/search-nasa-detail/search-nasa-detail.component';
 import { AlbumCarouselComponent } from './components/album-carousel/album-carousel.component';
 import { CarouselModule } from 'angular4-carousel';
+import { EditObjectComponent } from './components/edit-object/edit-object.component';
+import { EditUserObjectComponent } from './components/edit-object/edit-user-object/edit-user-object.component';
+import { EditCelestialBodyObjectComponent } from './components/edit-object/edit-celestial-body-object/edit-celestial-body-object.component';
+import { EditCelestialEventObjectComponent } from './components/edit-object/edit-celestial-event-object/edit-celestial-event-object.component';
+import { EditPublicationObjectComponent } from './components/edit-object/edit-publication-object/edit-publication-object.component';
 
 @NgModule({
   // Declare components here
@@ -79,6 +84,11 @@ import { CarouselModule } from 'angular4-carousel';
     SearchPubComponent,
     SearchNasaDetailComponent,
     AlbumCarouselComponent,
+    EditObjectComponent,
+    EditUserObjectComponent,
+    EditCelestialBodyObjectComponent,
+    EditCelestialEventObjectComponent,
+    EditPublicationObjectComponent,
 
   ],
   imports: [
@@ -90,7 +100,7 @@ import { CarouselModule } from 'angular4-carousel';
   ],
   // Client Side services here
   providers: [NasaServiceClient, UserService, PostService, CBService, CEService, PubService, PictureServiceClient,
-  AlbumServiceClient, SharedService, AuthGuard, HomepageComponent],
+  AlbumServiceClient, SharedService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

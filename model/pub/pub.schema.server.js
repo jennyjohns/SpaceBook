@@ -6,7 +6,7 @@ var PubSchema = mongoose.Schema({
   link: String,
   verified: Boolean,
   abstract: String,
-  pubDate: Date
+  pubDate: String
 }, {collection: 'pub'});
 
 module.exports = PubSchema;

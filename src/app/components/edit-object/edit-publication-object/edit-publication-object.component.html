@@ -1,0 +1,71 @@
+<div class="container-fluid jj-body">
+  <form #f="ngForm">
+    <div class="form-group">
+      <label for="name">
+        Name
+      </label>
+      <input [(ngModel)]="name"
+             name="name"
+             id="name"
+             type="text"
+             placeholder="name"
+             class="form-control"/>
+      <label for="authors">
+        Authors
+      </label>
+      <input [(ngModel)]="authors"
+             name="authors"
+             id="authors"
+             type="text"
+             placeholder="authors"
+             class="form-control"/>
+
+      <label for="tags">
+        Tags
+      </label>
+      <input [(ngModel)]="tags"
+             name="tags"
+             id="tags"
+             type="text"
+             placeholder="tags"
+             class="form-control"/>
+
+      <label for="link">
+        Link
+      </label>
+      <input [(ngModel)]="link"
+             name="link"
+             id="link"
+             type="url"
+             placeholder="link"
+             class="form-control"/>
+      <label for="abstract">
+        Abstract
+      </label>
+      <input [(ngModel)]="abstract"
+             name="abstract"
+             id="abstract"
+             type="url"
+             placeholder="abstract"
+             class="form-control"/>
+      <label for="pubDate">
+        Publication Date
+      </label>
+      <input [(ngModel)]="pubDate"
+             name="pubDate"
+             id="pubDate"
+             type="date"
+             class="form-control"/>
+    </div>
+  </form>
+  <button class="btn btn-success btn-block jj-button-hover"
+          aria-pressed="true"
+          (click)="commit(name, authors, tags, link, abstract, pubDate)">
+    Submit Changes
+  </button>
+  <button class="btn btn-danger btn-block jj-button-hover"
+          aria-pressed="true"
+          (click)="deletePub()">
+    Delete Publication
+  </button>
+</div>

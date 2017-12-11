@@ -114,8 +114,10 @@ export class PublicProfileComponent implements OnInit {
   }
 
   getCBData(objId) {
+    console.log('HELLO CB');
     this.cbService.findCBbyId(this.objId).subscribe((cb: any) => {
       this.objData = cb;
+      console.log(this.objData['picture']);
       this.follows = [];
       this.findPostsForNonUserDataByTag();
       this.dataReady = true;

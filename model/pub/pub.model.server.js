@@ -24,6 +24,7 @@ function findPubById(pubId) {
 }
 
 function updatePub(pubId, pub) {
+  console.log(pubId, pub);
   return PubModel.update({_id: pubId}, pub);
 }
 

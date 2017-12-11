@@ -164,7 +164,10 @@ module.exports = function (app) {
         });
       return;
     }
-    res.json(users);
+    userModel.findAllUsers()
+      .then(function (users) {
+        res.json(users);
+      });
   }
 
   function createUser(req, res) {
