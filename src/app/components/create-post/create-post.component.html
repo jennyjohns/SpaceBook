@@ -2,9 +2,10 @@
 
 
 <div class = "container-fluid">
+  <H2 class="whiteText">Create Post</H2>
   <!--<label>Original Poster</label>-->
   <!--<div class = "form-control">{{usernameOfPoster}}</div>-->
-  <label>Text</label>
+  <label class="whiteText">Text</label>
   <input class="form-control"
          type="text"
          id="text"
@@ -20,11 +21,10 @@
          <!--placeholder="1-100%"-->
          <!--id = "width"-->
          <!--[(ngModel)] = "width" name = "width">-->
-  <label>Tags</label>
+  <label class="whiteText">Tags</label>
   <input type="text" class = "form-control" id = "tag" placeholder="Submit tags here"
          [(ngModel)] = "tag" name = "tag">
-  <button (click)="addTag()" type="button" id="submit">Add Tag</button>
-  <div *ngFor="let aTag of tags">
+  <div *ngFor="let aTag of tags" class="whiteText">
     {{aTag}}
   </div>
   <!--<label>Upload</label>-->
@@ -39,6 +39,7 @@
   <!--<br/>-->
   <!--</form>-->
   <a class = "btn btn-success" (click)="createThisPost()">Create Post</a>
+  <button (click)="addTag()" class="btn btn-primary" type="button" id="submit">Add Tag</button>
   <a class="btn btn-danger"
      (click)="deleteThisPost(postId)">Cancel</a>
 </div>

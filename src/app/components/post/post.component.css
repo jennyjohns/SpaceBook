@@ -24,5 +24,13 @@ label {
 .navbar .navbar-header .navbar-brand .jj-font {
   font-family: final_frontier_old_styleRg;
   font-size: xx-large;
-
 }
+
+.mh-roundedCorners {
+  border-radius: 25px;
+  border: 2px solid #ffffff;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+}
+

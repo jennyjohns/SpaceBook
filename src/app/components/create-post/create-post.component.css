@@ -1,4 +1,17 @@
-moh-padding {
+.moh-padding {
   margin: 100px
 
+}
+
+.whiteText {
+  color: white;
+}
+
+.mh-roundedCorners {
+  border-radius: 25px;
+  border: 2px solid #ffffff;
+  padding: 20px;
+  padding-top: 0px;
+  width: 100%;
+  height: 100%;
 }

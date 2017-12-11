@@ -40,9 +40,7 @@ export class CreatePostComponent implements OnInit {
       // this.postId = params['pid']
     });
     this.user = this.sharedService.user;
-    console.log('user', this.user);
     this.usernameOfPoster = this.user.username;
-    console.log('poster', this.usernameOfPoster);
     // this.userService.findUserById(this.posterId)
     //   .subscribe((user) => {
     //   this.user = user;
@@ -87,14 +85,9 @@ export class CreatePostComponent implements OnInit {
   }
 
   createThisPost() {
-    console.log(this.usernameOfPoster);
     this.tags.push(this.usernameOfPoster);
     const newPost = {poster: this.posterId, text: this.text, likes: 0,
     date: new Date(), images: [this.url],  tags: this.tags};
-    // const newPost = {poster: this.user, text: this.text, images: this.images,
-    //   date: new Date(), likeAmount: 0, tags: this.tags};
-
-    console.log('The post to be posted:', newPost);
     this.postService.createPost(newPost)
       .subscribe((posts) => {
       // this.posts = posts;
