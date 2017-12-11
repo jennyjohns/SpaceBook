@@ -46,7 +46,9 @@ app.use(function(req, res, next) {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
+app.get('/hello', function(req, res){
+  res.send('hello from node js')
+})
 
 
 
