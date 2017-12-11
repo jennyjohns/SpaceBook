@@ -54,6 +54,7 @@ export class PublicProfileComponent implements OnInit {
     this.sharedServiceUserId = this.user._id;
     this.currentURL = window.location.href;
     if (this.currentURL.includes('api/login')) {
+      console.log('entered the flipper trigger');
       this.flipper = false;
     }
     if (this.user.username === undefined) {
@@ -81,6 +82,7 @@ export class PublicProfileComponent implements OnInit {
                       this.getUserData(this.objId);
                       break;
                     case 'org':
+                      this.getUserData(this.objId);
                       break;
                   }
                 });
@@ -89,8 +91,12 @@ export class PublicProfileComponent implements OnInit {
         this.flipper = true;
         this.objId = this.user._id;
         this.objType = 'user';
-        this.getUserData(this.objId);
-        this.router.navigate([this.baseURL, 'user', this.user._id]);
+        this.userService.findUserById(this.objId)
+          .subscribe((user) => {
+          this.objData = user;
+            this.getUserData(this.objId);
+            this.router.navigate([this.baseURL, 'user', this.objId]);
+          });
       }
     }
   }
@@ -112,7 +118,7 @@ export class PublicProfileComponent implements OnInit {
   search() {
     this.router.navigate(['user/' + this.objId + '/search']);
   }
-  
+
 
   getCBData(objId) {
     console.log('HELLO CB');
