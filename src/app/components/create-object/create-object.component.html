@@ -1,11 +1,16 @@
-
+<app-space-banner-default></app-space-banner-default>
+<div *ngIf="errorFlag"
+     class="alert alert-danger">
+  {{errorMessage}}
+</div>
 <div class="container-fluid">
 <form #f="ngForm">
   Select Object to Create:
   <div class="form-group form-control">
+
     <label>Obj Type:</label>
 
-    <label class="radio-inline">
+    <label class="radio-inline" *ngIf="loggedInUserType === 'ADMIN'">
       <input type="radio" name="optradio" value='User' [(ngModel)]="objType" >User
     </label>
 
@@ -13,15 +18,15 @@
       <input type="radio" name="optradio" value='Cb' [(ngModel)]="objType" >Celestial Body
     </label>
 
-    <label class="radio-inline">
+    <label class="radio-inline" *ngIf="loggedInUserType !== 'PROFESSIONAL'">
       <input type="radio" name="optradio" value='Ce' [(ngModel)]="objType" >Celestial Event
     </label>
 
-    <label class="radio-inline">
+    <label class="radio-inline" *ngIf="loggedInUserType === 'ADMIN' || loggedInUserType === 'UNIVERSITY'">
       <input type="radio" name="optradio" value='Pub' [(ngModel)]="objType" >Publication
     </label>
+</div>
 
-  </div>
 
   <div [ngSwitch]="objType">
     <div *ngSwitchCase="'User'">

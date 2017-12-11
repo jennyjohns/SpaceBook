@@ -112,6 +112,7 @@ export class PublicProfileComponent implements OnInit {
   search() {
     this.router.navigate(['user/' + this.objId + '/search']);
   }
+  
 
   getCBData(objId) {
     console.log('HELLO CB');
@@ -214,6 +215,10 @@ export class PublicProfileComponent implements OnInit {
     }
   }
 
+  isAdmin() {
+    return this.sharedService.user['userType'] === 'ADMIN';
+  }
+
   authorized() {
     if (this.sharedService.user['_id'] === this.objId) {
       return true;
@@ -227,6 +232,32 @@ export class PublicProfileComponent implements OnInit {
       return false;
     }
   }
+
+  edit(objId) {
+    this.router.navigate(['edit/' + objId]);
+  }
+
+  findUsers() {
+    this.router.navigate(['admin/user']);
+  }
+
+  checkUserType() {
+    var user = this.sharedService.user;
+    if(user['_id'] !== this.objId || user['userType'] === 'AMATEUR') {
+      return false;
+    }
+    return true;
+  }
+
+  checkMatchingId() {
+    var user = this.sharedService.user;
+    if(user['_id'] !== this.objId) {
+      return false;
+    }
+    return true;
+  }
+
+
 
 }
 

@@ -27,15 +27,18 @@ import {EditUserObjectComponent} from "./components/edit-object/edit-user-object
 import {EditCelestialEventObjectComponent} from "./components/edit-object/edit-celestial-event-object/edit-celestial-event-object.component";
 import {EditCelestialBodyObjectComponent} from "./components/edit-object/edit-celestial-body-object/edit-celestial-body-object.component";
 import {EditPublicationObjectComponent} from "./components/edit-object/edit-publication-object/edit-publication-object.component";
+import {AdminUserListComponent} from "./components/admin-user-list/admin-user-list.component";
+import {AdminServiceClient} from "./services/admin.service.client";
 
 
 const APP_ROUTES: Routes = [
   {path: '', component: HomepageComponent},
   {path: 'default', component: HomepageComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'admin/user', component: AdminUserListComponent, canActivate:[AdminServiceClient]},
+  {path: 'edit/:objId', component: EditObjectComponent},
   {path: ':obtype/:uid', component: PublicProfileComponent, canActivate: [AuthGuard]},
   {path: ':obtype/:uid/edit', component: ProfileComponent},
-  {path: 'edit/:objId', component: EditObjectComponent},
   // {path: 'edit', component: EditPublicationObjectComponent},
   {path: 'searchAsteroids', component: NasaTestComponent},
   {path: 'login', component: FrontPageComponent},

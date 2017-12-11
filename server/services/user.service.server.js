@@ -45,6 +45,8 @@ module.exports = function (app) {
 
   app.get("/api/user/:uid", findUserById);
   app.get("/api/user", findUsers);
+  app.get("/api/admin/isAdmin", isAdmin);
+  app.get("/api/admin/user", checkIsAdmin, findAllUsers);
   app.post("/api/user", createUser);
   app.put("/api/user/:uid", updateUser);
   app.delete("/api/user/:uid", deleteUser);
@@ -60,6 +62,27 @@ module.exports = function (app) {
 
   // app.post("/api/upload", upload.single('myFile'), uploadProfilePicture);
 
+  function checkIsAdmin(req, res, next) {
+    if(req.isAuthenticated() && req.user.userType === 'ADMIN') {
+      next();
+    } else {
+      res.send(403);
+    }
+  }
+
+  function isAdmin(req, res) {
+    if (req.isAuthenticated() && req.user.userType === 'ADMIN') {
+      res.json(req.user);
+    }else{
+      res.send('0');
+    }
+  }
+  function findAllUsers(req, res) {
+    userModel.findAllUsers()
+      .then(function (usrs) {
+        res.json(usrs);
+      });
+  }
 
   function logout(req, res) {
     req.logOut();

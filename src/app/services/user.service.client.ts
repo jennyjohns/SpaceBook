@@ -21,8 +21,34 @@ export class UserService {
     'findUserByCredentials' : this.findUserByCredentials,
     'updateUser' : this.updateUser,
     'deleteUser' : this.deleteUser,
-    'register' : this.register
+    'register' : this.register,
+    'findAllUsers': this.findAllUsers,
+    'isAdmin': this.isAdmin
   };
+
+  isAdmin() {
+    const url = this.baseURL + '/api/admin/isAdmin';
+    this.options.withCredentials = true;
+    return this.http.get(url, this.options)
+      .map((response: Response) => {
+        const user = response.json();
+        if (user !== 0) {
+          this.sharedService.user = user;
+          return true;
+        } else {
+          this.router.navigate(['default']);
+          return false;
+        }
+      });
+  }
+  findAllUsers() {
+    const url = this.baseURL + '/api/admin/user';
+    this.options.withCredentials = true;
+    return this.http.get(url, this.options)
+      .map((response: Response) => {
+        return response.json();
+      });
+  }
 
   logout() {
     const url = this.baseURL + '/api/logout';
@@ -31,8 +57,6 @@ export class UserService {
       .map((status) => {
         return status;
       }); }
-
-
 
   login(username, password) {
     const url = this.baseURL + '/api/login';
@@ -55,11 +79,8 @@ export class UserService {
           const user = res.json();
           if (user !== 0) {
             this.sharedService.user = user; // setting user so as to share with all components
-            console.log('hello from LoggedIn');
-            // this.router.navigate(['user', user._id])
             return true;
           } else {
-            // this.router.navigate(['/login']);
             return false;
           }
         } );
@@ -78,7 +99,8 @@ export class UserService {
       DOB: user.DOB,
       phone: user.phone,
       albums: user.albums,
-      follows: user.follows
+      follows: user.follows,
+      userType: user.userType
     };
     this.options.withCredentials = true;
     return this.http.post(url, credentials, this.options)
@@ -112,7 +134,6 @@ export class UserService {
   }
 
   findUserByUsername(username: String) {
-    console.log(username);
     const url = this.baseURL + '/api/user?username=' + username;
     return this.http.get(url)
       .map((response: Response) => {
@@ -121,7 +142,6 @@ export class UserService {
   }
 
   findUserByCredentials(username: String, password: String) {
-    console.log('IN USER SERVICE TS ', username, password);
     const url = this.baseURL + '/api/user?username=' + username + '&password=' + password;
     return this.http.get(url)
       .map((response: Response) => {
