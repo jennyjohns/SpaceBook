@@ -36,11 +36,16 @@
         {{objData.wiki}}
       </div>
     </div>
+      <div *ngIf="checkUserType()">
       <button routerLink="/new" class="btn btn-success form-control moh-btnWidthPlusMargin">Contribute Content</button>
-      <div *ngIf="authorized()">
+    </div>
+      <div *ngIf="authorized() && checkMatchingId()">
       <button (click)="edit(objId)" class="btn btn-warning form-control moh-btnWidthPlusMargin">Edit Current Page</button>
       </div>
-  <!--</div>-->
+      <div *ngIf="isAdmin()">
+      <button (click)="findUsers()" class="btn btn-info form-control moh-btnWidthPlusMargin">Find All Users</button>
+      </div>
+      <!--</div>-->
   <!--</div>-->
   <button class=" jj-button-profile"
           aria-pressed="true"

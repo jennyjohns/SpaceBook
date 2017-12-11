@@ -1,0 +1,6 @@
+<h1>User List</h1>
+<ul>
+  <div *ngFor="let user of users">
+    <button (click)="goToUserPage(user._id)">{{user.username}}</button>
+  </div>
+</ul>

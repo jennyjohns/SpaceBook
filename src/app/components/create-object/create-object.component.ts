@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {CBService} from '../../services/cb.service.client';
 import {CEService} from '../../services/ce.service.client';
 import {PubService} from '../../services/pub.service.client';
+import {SharedService} from "../../services/shared.service.client";
 
 @Component({
   selector: 'app-create-object',
@@ -25,13 +26,16 @@ export class CreateObjectComponent implements OnInit {
   pub = {name: '', authors: [], link: '', abstract: '', tags: [], pubDate: ''};
   errorFlag: Boolean;
   errorMessage: String;
+  loggedInUserType: any;
 
   constructor(private pubService: PubService, private ceService: CEService,
-              private cbService: CBService, private router: Router, private userService: UserService) {
+              private cbService: CBService, private router: Router, private userService: UserService,
+              private sharedService: SharedService) {
   }
 
   ngOnInit() {
     this.errorFlag = false;
+    this.loggedInUserType = this.sharedService.user['userType'];
   }
 
   create() {

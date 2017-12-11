@@ -21,8 +21,34 @@ export class UserService {
     'findUserByCredentials' : this.findUserByCredentials,
     'updateUser' : this.updateUser,
     'deleteUser' : this.deleteUser,
-    'register' : this.register
+    'register' : this.register,
+    'findAllUsers': this.findAllUsers,
+    'isAdmin': this.isAdmin
   };
+
+  isAdmin() {
+    const url = this.baseURL + '/api/admin/isAdmin';
+    this.options.withCredentials = true;
+    return this.http.get(url, this.options)
+      .map((response: Response) => {
+        const user = response.json();
+        if (user !== 0) {
+          this.sharedService.user = user;
+          return true;
+        } else {
+          this.router.navigate(['default']);
+          return false;
+        }
+      });
+  }
+  findAllUsers() {
+    const url = this.baseURL + '/api/admin/user';
+    this.options.withCredentials = true;
+    return this.http.get(url, this.options)
+      .map((response: Response) => {
+        return response.json();
+      });
+  }
 
   logout() {
     const url = this.baseURL + '/api/logout';
@@ -31,8 +57,6 @@ export class UserService {
       .map((status) => {
         return status;
       }); }
-
-
 
   login(username, password) {
     const url = this.baseURL + '/api/login';

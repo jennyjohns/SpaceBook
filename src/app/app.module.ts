@@ -51,6 +51,8 @@ import { EditUserObjectComponent } from './components/edit-object/edit-user-obje
 import { EditCelestialBodyObjectComponent } from './components/edit-object/edit-celestial-body-object/edit-celestial-body-object.component';
 import { EditCelestialEventObjectComponent } from './components/edit-object/edit-celestial-event-object/edit-celestial-event-object.component';
 import { EditPublicationObjectComponent } from './components/edit-object/edit-publication-object/edit-publication-object.component';
+import { AdminUserListComponent } from './components/admin-user-list/admin-user-list.component';
+import {AdminServiceClient} from "./services/admin.service.client";
 
 @NgModule({
   // Declare components here
@@ -89,6 +91,7 @@ import { EditPublicationObjectComponent } from './components/edit-object/edit-pu
     EditCelestialBodyObjectComponent,
     EditCelestialEventObjectComponent,
     EditPublicationObjectComponent,
+    AdminUserListComponent,
 
   ],
   imports: [
@@ -100,7 +103,7 @@ import { EditPublicationObjectComponent } from './components/edit-object/edit-pu
   ],
   // Client Side services here
   providers: [NasaServiceClient, UserService, PostService, CBService, CEService, PubService, PictureServiceClient,
-  AlbumServiceClient, SharedService, AuthGuard],
+  AlbumServiceClient, SharedService, AuthGuard, AdminServiceClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
