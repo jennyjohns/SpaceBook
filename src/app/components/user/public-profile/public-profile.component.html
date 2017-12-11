@@ -38,7 +38,7 @@
     </div>
       <button routerLink="/new" class="btn btn-success form-control moh-btnWidthPlusMargin">Contribute Content</button>
       <div *ngIf="authorized()">
-      <button routerLink="/edit/{{this.objId}}" class="btn btn-warning form-control moh-btnWidthPlusMargin">Edit Current Page</button>
+      <button (click)="edit(objId)" class="btn btn-warning form-control moh-btnWidthPlusMargin">Edit Current Page</button>
       </div>
   <!--</div>-->
   <!--</div>-->

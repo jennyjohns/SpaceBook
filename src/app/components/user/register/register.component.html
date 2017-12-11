@@ -7,7 +7,27 @@
   </div>
 
   <h1>Register</h1>
-  <form (ngSubmit)="register(username.value, password.value, email.value, firstName.value, lastName.value, DOB.value)" #f="ngForm">
+  <form (ngSubmit)="register(username.value, password.value, email.value, firstName.value, lastName.value, DOB.value, userType)" #f="ngForm">
+    <div class="form-group form-control">
+      <label>User Type:</label>
+
+      <label class="radio-inline">
+        <input type="radio" name="optradio" value='AMATEUR' [(ngModel)]="userType" >Amateur Astronomer
+      </label>
+
+      <label class="radio-inline">
+        <input type="radio" name="optradio" value='PROFESSIONAL' [(ngModel)]="userType" >Professional Astronomer
+      </label>
+
+      <label class="radio-inline">
+        <input type="radio" name="optradio" value='ORGANIZATION' [(ngModel)]="userType" >Space Organization
+      </label>
+
+      <label class="radio-inline">
+        <input type="radio" name="optradio" value='UNIVERSITY' [(ngModel)]="userType" >University
+      </label>
+
+    </div>
     <input name="username"
            id="username"
            type="text"
@@ -102,7 +122,7 @@
            #phone="ngModel"/>
 
   </form>
-  <button (click)="registered(username.value, password.value, firstName.value, lastName.value, email.value, DOB.value, phone.value)"
+  <button (click)="registered(username.value, password.value, firstName.value, lastName.value, email.value, DOB.value, phone.value, userType)"
           class="btn btn-primary btn-block jj-button-hover"
           type="submit"
           aria-pressed="true"

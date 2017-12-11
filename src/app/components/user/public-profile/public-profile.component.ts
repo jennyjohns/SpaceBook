@@ -216,5 +216,9 @@ export class PublicProfileComponent implements OnInit {
     }
   }
 
+  edit(objId) {
+    this.router.navigate(['edit/' + objId]);
+  }
+
 }
 
