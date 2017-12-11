@@ -5,8 +5,10 @@
 
 /* Add a black background color to the top navigation */
 .SpaceNav {
-  background-color: #333;
+  background-color: black;
   overflow: hidden;
+  border: 2px solid #ffffff;
+
 }
 
 
@@ -27,6 +29,7 @@
 .SpaceNav a:hover {
   background-color: #ddd;
   color: black;
+  border: black;
 }
 
 /* Add a color to the active/current link */
@@ -34,5 +37,4 @@
   background-color: #4CAF50;
   color: white;
 }
-
 

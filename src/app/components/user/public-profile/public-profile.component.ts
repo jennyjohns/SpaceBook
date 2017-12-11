@@ -45,93 +45,51 @@ export class PublicProfileComponent implements OnInit {
 
 
   ngOnInit() {
-
+    this.albumReady = false;
     this.dataReady = false;
     this.flipper = true;
-
-    console.log('set to true');
     this.user = this.sharedService.user;
     this.sharedServiceUserId = this.user._id;
-    console.log('PPasdfa the user from sharedService is: ', this.user);
-    this.prepAlbum();
     this.currentURL = window.location.href;
     if (this.currentURL.includes('api/login')) {
       this.flipper = false;
-      console.log('set to false');
     }
-//   console.log('contains API/LOGIN');
-    console.log('whats the username', this.user.username);
     if (this.user.username === undefined) {
-      console.log('was undefined');
       this.router.navigate([this.baseURL, 'user', this.user._id, 'edit']);
     } else {
       if (this.flipper) {
         this.activatedRoute.params
           .subscribe(
             (params: any) => {
-              console.log('entering activated route');
               this.objId = params['uid'];
-              console.log(this.objId);
               this.objType = params['obtype'];
-            }
-          );
-        this.birthday = false;
-        switch (this.objType) {
-          case 'cb':
-            this.getCBData(this.objId);
-            break;
-          case 'ce':
-            break;
-          case 'user':
-            this.getUserData(this.objId);
-            break;
-          case 'org':
-            break;
-        }
+              this.userService.findUserById(this.objId)
+                .subscribe((user) => {
+                  this.objData = user;
+                  this.user = user;
+                  this.birthday = false;
+                  switch (this.objType) {
+                    case 'cb':
+                      this.getCBData(this.objId);
+                      break;
+                    case 'ce':
+                      break;
+                    case 'user':
+                      this.getUserData(this.objId);
+                      break;
+                    case 'org':
+                      break;
+                  }
+                });
+            });
       } else {
+        this.flipper = true;
         this.objId = this.user._id;
         this.objType = 'user';
         this.getUserData(this.objId);
         this.router.navigate([this.baseURL, 'user', this.user._id]);
       }
-      // this.activatedRoute.params
-      //   .subscribe(
-      //     (params: any) => {
-      //       console.log('entering activated route');
-      //       this.objId = params['uid'];
-      //       console.log(this.objId);
-      //       this.objType = params['obtype'];
-      //     }
-      //   );
-      // this.birthday = false;
-      // switch (this.objType) {
-      //   case 'cb':
-      //     this.getCBData(this.objId);
-      //     break;
-      //   case 'ce':
-      //     break;
-      //   case 'user':
-      //     this.getUserData(this.objId);
-      //     break;
-      //   case 'org':
-      //     break;
-      // }
     }
-    // if (this.objType === 'user') {
-    //   console.log('username is this', this.objData['username']);
-    //   this.postService.findPostsbyTag(this.objData['username'])
-    //     .subscribe((posts) => {
-    //     console.log('hello are we here?');
-    //       this.postsInPublicProfile = posts;
-    //       console.log('these are the posts', this.postsInPublicProfile);
-    //     });
-    // } else {
-    //   this.postService.findPostsbyTag(this.objData['name'])
-    //     .subscribe((posts) => {
-    //       this.postsInPublicProfile = posts;
-    //     });
-    // }
-    // console.log(this.follows);
   }
 
   editProfile() {
@@ -140,7 +98,7 @@ export class PublicProfileComponent implements OnInit {
 
   goToUserProfile(objId) {
     this.router.navigate(['user/' + objId]);
-    this.ngOnInit();
+    // this.ngOnInit();
   }
 
   navigateToPost() {
@@ -169,25 +127,24 @@ export class PublicProfileComponent implements OnInit {
   findPostsForNonUserDataByTag() {
     this.postService.findPostsbyTag(this.objData['name'])
       .subscribe((posts) => {
+        posts = posts.slice(0).reverse();
         this.postsInPublicProfile = posts;
       });
   }
 
 
-  getUserData(objId){
-    this.objData = this.sharedService.user;
-
-    var f = [];
-    for (var i = 0; i < this.objData['follows'].length; i++) {
-            this.userService.findUserById(this.objData['follows'][i])
-              .subscribe((user1: any) => {
-                f.push(user1);
-              });
-            this.follows = f;
-          }
+  getUserData(objId) {
+    const f = [];
+    for (let i = 0; i < this.objData['follows'].length; i++) {
+      this.userService.findUserById(this.objData['follows'][i])
+        .subscribe((user1: any) => {
+          f.push(user1);
+        });
+      this.follows = f;
+    }
     this.findPostsByTagForUser();
+    this.prepAlbum();
     this.dataReady = true;
-
   }
 
   /**
@@ -196,21 +153,19 @@ export class PublicProfileComponent implements OnInit {
   findPostsByTagForUser() {
     this.postService.findPostsbyTag(this.objData['username'])
       .subscribe((posts) => {
-        console.log('hello are we here?');
+        posts = posts.slice(0).reverse();
         this.postsInPublicProfile = posts;
-        console.log('these are the posts', this.postsInPublicProfile);
       });
   }
 
   deleteFollow(objId) {
-    console.log(objId);
-    for (var i = 0; i < this.follows.length; i++) {
+    for (let i = 0; i < this.follows.length; i++) {
       if (this.follows[i]._id === objId) {
         this.follows.splice(i, 1);
       }
     }
     this.sharedService.user['follows'] = [];
-    for(var i = 0; i < this.follows.length; i++) {
+    for(let i = 0; i < this.follows.length; i++) {
       this.sharedService.user['follows'].push(this.follows[i]._id);
     }
     this.userService.updateUser(this.objId, this.sharedService.user)
@@ -233,58 +188,33 @@ export class PublicProfileComponent implements OnInit {
       });
   }
 
+  /**
+   * Still is not able to deal with the bug that if a
+   * user has multiple albums and then deletes the first one, otherwise appears to function.
+   */
   prepAlbum() {
+    console.log('prepping album', this.albumid);
+    if (this.user.albums.length > 0) {
+      console.log('there is an album');
+      console.log('album', this.user.albums[0]);
+      this.albumid = this.user.albums[0];
+      this.albumReady = true;
+    }
+  }
 
-      if (this.user.albums.length > 0) {
-        this.albumid = this.user.albums[0];
-        console.log(this.albumid);
-        this.albumReady = true;
-      }
+  authorized() {
+    if (this.sharedService.user['_id'] === this.objId) {
+      return true;
+    } else if ((this.objType === 'user') && (this.sharedService.isType('ADMIN'))) {
+      return true;
+    } else if ((this.objType === 'ce') && (this.sharedService.isType('PROFESSIONAL'))) {
+      return true;
+    } else if ((this.objType === 'cb') && (this.sharedService.isType('ORGANIZATION'))) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }
 
-//
-//
-// if (this.currentURL.includes('api/login')) {
-//   console.log('contains API/LOGIN');
-//   this.objId = this.user._id;
-//   this.objType = 'user';
-//   this.birthday = false;
-//   switch (this.objType) {
-//     case 'cb':
-//       this.getCBData(this.objId);
-//       break;
-//     case 'ce':
-//       break;
-//     case 'user':
-//       this.getUserData(this.objId);
-//       break;
-//     case 'org':
-//       break;
-//   }
-// } else {
-//   this.activatedRoute.params
-//     .subscribe(
-//       (params: any) => {
-//         console.log('entering activated route');
-//         this.objId = params['uid'];
-//         console.log(this.objId);
-//         this.objType = params['obtype'];
-//         this.birthday = false;
-//         switch (this.objType) {
-//           case 'cb':
-//             this.getCBData(this.objId);
-//             break;
-//           case 'ce':
-//             break;
-//           case 'user':
-//             this.getUserData(this.objId);
-//             break;
-//           case 'org':
-//             break;
-//         }
-//       }
-//     );
-// }
-// }

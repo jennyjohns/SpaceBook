@@ -1,3 +1,23 @@
+.mh-backgroundColor {
+  background-color: #333;
+  border-bottom: 2px solid white;
+  border-right: 2px solid white;
+  border-left: 2px solid white;
+
+}
+
+b {
+  color: white;
+}
+
+h3 {
+  color: white;
+}
+
+p {
+  color: white;
+}
+
 /* from: https://www.w3schools.com/howto/howto_css_cards.asp*/
 .jj-card {
   /* Add shadows to create the "card" effect */
@@ -19,6 +39,14 @@
   max-width: 200px;
 }
 
+.mh-paddingAwayFromNavBar {
+  padding-top: 1%;
+}
+
+.mh-paddingAwayFromNavBarTriple {
+  padding-top: 3%;
+}
+
 .jj-img-padding {
   padding-top: 25px;
   width: 100%;
@@ -36,4 +64,48 @@
 
 .glyphicon.glyphicon-picture {
   font-size: 75px;
+  color: white;
+}
+
+.glyphicon.glyphicon-remove {
+  color: white;
+}
+
+
+.mh-roundedCorners {
+  border-radius: 25px;
+  border: 2px solid #ffffff;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.mh-roundedCornersForSmallButtons {
+  border-radius: 25px;
+  border: 2px solid #ffffff;
+  padding: 10px;
+  width: 50%;
+  height: 100%;
+}
+
+.mh-roundedCornersV2 {
+  border-radius: 25px;
+  border: 2px solid #ffffff;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.moh-buttonPadding {
+  padding: 50px;
+}
+
+.moh-max-height {
+  height: 100%;
+}
+
+.moh-btnWidthPlusMargin {
+  margin: 6px;
+  min-width: 152px;
+  max-width: 168px;
 }

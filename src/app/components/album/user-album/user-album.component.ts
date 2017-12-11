@@ -15,6 +15,7 @@ export class UserAlbumComponent implements OnInit {
   album: {};
   title: String;
   description: String;
+  picturesForDisplay = [];
 
   constructor(private albumService: AlbumServiceClient, private router: Router, private activatedRoute: ActivatedRoute,
               private pictureService: PictureServiceClient) {
@@ -30,19 +31,12 @@ export class UserAlbumComponent implements OnInit {
       .subscribe((album: any) => {
         this.album = album;
         this.pictures = album['pictures'];
-        console.log('these are the pictures', this.pictures);
-        console.log('albumId', this.albumId);
-        this.pictureService.findPicturesByAlbum(this.albumId).
-          subscribe((picturesFromAlbum) => {
-          this.pictures = picturesFromAlbum;
-          console.log('picturesFromAlbum is', picturesFromAlbum);
-        });
         this.title = album['title'];
         this.description = album['description'];
         for (var i = 0; i < album.pictures.length; i++) {
           this.pictureService.findPictureById(album.pictures[i])
             .subscribe((pic: any) => {
-              this.pictures.push(pic);
+              this.picturesForDisplay.push(pic);
             });
         }
       });
@@ -56,7 +50,6 @@ export class UserAlbumComponent implements OnInit {
   }
 
   goToPicture(picId) {
-    console.log(picId);
     this.router.navigate(['user/' + this.userId + '/album/' + this.albumId + '/pic/' + picId]);
   }
 
