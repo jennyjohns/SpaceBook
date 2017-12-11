@@ -40,7 +40,7 @@ export class CreateObjectComponent implements OnInit {
       this.user.picture = 'https://upload.wikimedia.org/wikipedia/commons/4/48/Creative-Tail-astronaut.svg';
       this.user.userType = [this.userType];
 
-      this.userService.createUser(this.user).subscribe((user: any) => {
+      this.userService.register(this.user, this.user.password).subscribe((user: any) => {
         console.log('User Created!');
       });
 
